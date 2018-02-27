@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static bootstrap3 i18n %}
+
+
+{% block css %}
+<style>
+#map{
+  width: 100%;
+  height: 600px;
+}
+th{
+  width: 10%;
+}
+</style>
+{% endblock css %}
+
+
+{% block main %}
+<div class="table-reponsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <td>Content</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Picture</th>
+        <td> <img src="{{position.picture.url}}" alt="{{position.myname}}"> </td> 
+      </tr>
+      <tr>
+        <th>Location</th>
+        <td> 
+            Latitude : {{position.lat}} <br>
+            Longitude : {{position.lng}} 
+        </td> 
+      </tr>
+      <tr>
+        <th>Anchor</th>
+        <td> 
+            <a href="http://{{ request.get_host }}/apicall/{{position.id}}/" target="blank">
+              http://{{ request.get_host }}/apicall/{{position.id}}/
+            </a>
+<pre>&lt;a href='http://{{ request.get_host }}/apicall/{{position.id}}/' target='blank'&gt;
+    &lt;img src='{{position.picture.url}}' alt='{{position.myname}}'&gt;
+&lt;/a&gt;</pre> 
+        </td> 
+      </tr>
+      <tr>
+        <th>onMap</th>
+        <td> 
+            <div id="map"></div>
+        </td> 
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock main %}
+
+
+{% block javascript %}
+
+<script>
+function initMap() {
+
+  var pos = { lat: {{position.lat}}, lng: {{position.lng }} }
+
+  map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: pos
+  });
+
+  var image = '{{position.picture.url}}';
+
+  var marker = new google.maps.Marker({
+        position: pos,
+        icon: image,
+        map: map
+      });
+}
+</script>
+
+<script async defer
+src="http://ditu.google.cn/maps/api/js?key=AIzaSyDXY6uFicQrbFZ-ddMHg2eQrFT9BAVqLOo&callback=initMap">
+</script>
+{% endblock javascript %}

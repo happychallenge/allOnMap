@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static bootstrap3 i18n %}
+
+
+{% block css %}
+
+</style>
+{% endblock css %}
+
+
+{% block main %}
+<div class="table-reponsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Picture</th>
+        <th>Location</th>
+        <th>Anchor</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for position in positions %}
+      <tr>
+        <td> <a href="{{ position.get_absolute_url }}"> {{position.id}} </a></td>
+        <td> <a href="{{ position.get_absolute_url }}"> 
+          <img src="{{position.picture.url}}" alt="{{position.myname}}"> </a></td> 
+        <td> 
+            Latitude : {{position.lat}} <br>
+            Longitude : {{position.lng}} 
+        </td> 
+        <td> 
+          {% if position.lat != 0.0 %}
+            <a href="http://{{ request.get_host }}/apicall/{{position.id}}">
+              http://{{ request.get_host }}/apicall/{{position.id}}
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+{% endblock main %}
+
+
+{% block javascript %}
+
+{% endblock javascript %}

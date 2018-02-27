@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static bootstrap3 i18n %}
+
+
+{% block css %}
+<link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
+{% endblock css %}
+
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-offset-2 col-sm-8">
+          <div class="user-title">
+            <h1 class="form-title"> {% trans "New Post" %} </h1>
+          </div>
+
+          <form action="" method="post" enctype="multipart/form-data" id="form-post">
+            <div class="preview">
+              <div class="upload">
+                <span class="preview-bg"></span>
+                <p class="preview-title"> {% trans "Add post picture" %} </p>
+              </div>
+              <p><img src="" alt="" id="img_id" style="width: 400px; object-fit: cover"></p>
+            </div>
+
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            
+            <input type="submit" id="btn_ok" class="btn btn-lg btn-primary btn-block" value="Confirm" />
+          </form>
+      </div>
+      <div class="dummy"></div>
+  </div>
+</div>
+{% endblock main %}
+
+
+{% block javascript %}
+<script src="{% static 'js/exif.js' %}"></script> 
+
+<script type="text/javascript">
+function upload_img(input){
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e){
+        $("#img_id").attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0])
+  }
+  $(".preview-bg").remove();
+  $(".preview-title").remove();
+}
+
+$("#id_picture").change(function(){
+    upload_img(this);
+});
+
+$(document).on('click', '.upload', function(){
+    $("#id_picture").click();
+});
+
+
+$("#img_id").onload = function () {
+    EXIF.getData(this, function () {
+      var long = EXIF.getTag(this, 'GPSLongitude');
+      console.log("GPSLongitude :"+long);
+    })
+}; 
+</script>
+
+{% endblock javascript %}

@@ -1,0 +1,69 @@
+{% extends "call.html" %}
+{% load static bootstrap3 i18n %}
+
+
+{% block css %}
+<style>
+#map{
+  width: 100%;
+  height: 800px;
+}
+
+#floating-theme {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background-color: #ccc;
+  font-size: 16px;
+  padding: 5px !important;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 15px;
+}
+</style>
+{% endblock css %}
+
+
+{% block main %}
+<div id="map">
+  
+</div>
+
+<div id="floating-theme">
+    <button type=button value="" class="btn" data-url="#">{{user.first_name}}'s {{position.myname}} </button>
+</div> 
+{% endblock main %}
+
+
+{% block javascript %}
+
+<script>
+
+var map_height = $(window).height();
+$("#map").height(map_height);
+
+
+function initMap() {
+
+  var pos = { lat: {{position.lat}}, lng: {{position.lng }} }
+
+  map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: pos
+  });
+
+  var image = '{{position.picture.url}}';
+
+  var marker = new google.maps.Marker({
+        position: pos,
+        icon: image,
+        map: map
+      });
+}
+</script>
+
+<script async defer
+src="http://ditu.google.cn/maps/api/js?key=AIzaSyDXY6uFicQrbFZ-ddMHg2eQrFT9BAVqLOo&callback=initMap">
+</script>
+{% endblock javascript %}
