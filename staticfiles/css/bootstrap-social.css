@@ -4,7 +4,7 @@
  * Copyright 2013-2016 Panayiotis Lipiridis
  * Licensed under the MIT License
  *
- * https://github.com/lipis/bootstrap-social
+ * https://weixin.com/lipis/bootstrap-social
  */
 
 .btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
@@ -40,16 +40,16 @@
 .btn-naver.disabled:hover,.btn-naver[disabled]:hover,fieldset[disabled] .btn-naver:hover,.btn-naver.disabled:focus,.btn-naver[disabled]:focus,fieldset[disabled] .btn-naver:focus,.btn-naver.disabled.focus,.btn-naver[disabled].focus,fieldset[disabled] .btn-naver.focus{background-color:#ff0084;border-color:rgba(0,0,0,0.2)}
 .btn-naver .badge{color:#ff0084;background-color:#fff}
 
-.btn-foursquare{color:#fff;background-color:#f94877;border-color:rgba(0,0,0,0.2)}.btn-foursquare:focus,.btn-foursquare.focus{color:#fff;background-color:#f71752;border-color:rgba(0,0,0,0.2)}
-.btn-foursquare:hover{color:#fff;background-color:#f71752;border-color:rgba(0,0,0,0.2)}
-.btn-foursquare:active,.btn-foursquare.active,.open>.dropdown-toggle.btn-foursquare{color:#fff;background-color:#f71752;border-color:rgba(0,0,0,0.2)}.btn-foursquare:active:hover,.btn-foursquare.active:hover,.open>.dropdown-toggle.btn-foursquare:hover,.btn-foursquare:active:focus,.btn-foursquare.active:focus,.open>.dropdown-toggle.btn-foursquare:focus,.btn-foursquare:active.focus,.btn-foursquare.active.focus,.open>.dropdown-toggle.btn-foursquare.focus{color:#fff;background-color:#e30742;border-color:rgba(0,0,0,0.2)}
-.btn-foursquare:active,.btn-foursquare.active,.open>.dropdown-toggle.btn-foursquare{background-image:none}
-.btn-foursquare.disabled:hover,.btn-foursquare[disabled]:hover,fieldset[disabled] .btn-foursquare:hover,.btn-foursquare.disabled:focus,.btn-foursquare[disabled]:focus,fieldset[disabled] .btn-foursquare:focus,.btn-foursquare.disabled.focus,.btn-foursquare[disabled].focus,fieldset[disabled] .btn-foursquare.focus{background-color:#f94877;border-color:rgba(0,0,0,0.2)}
-.btn-foursquare .badge{color:#f94877;background-color:#fff}
+.btn-kakao{color:#000;background-color:#FFD732;border-color:rgba(0,0,0,0.2)}.btn-kakao:focus,.btn-kakao.focus{color:#000;background-color:#f71752;border-color:rgba(0,0,0,0.2)}
+.btn-kakao:hover{color:#000;background-color:#f71752;border-color:rgba(0,0,0,0.2)}
+.btn-kakao:active,.btn-kakao.active,.open>.dropdown-toggle.btn-kakao{color:#000;background-color:#f71752;border-color:rgba(0,0,0,0.2)}.btn-kakao:active:hover,.btn-kakao.active:hover,.open>.dropdown-toggle.btn-kakao:hover,.btn-kakao:active:focus,.btn-kakao.active:focus,.open>.dropdown-toggle.btn-kakao:focus,.btn-kakao:active.focus,.btn-kakao.active.focus,.open>.dropdown-toggle.btn-kakao.focus{color:#000;background-color:#e30742;border-color:rgba(0,0,0,0.2)}
+.btn-kakao:active,.btn-kakao.active,.open>.dropdown-toggle.btn-kakao{background-image:none}
+.btn-kakao.disabled:hover,.btn-kakao[disabled]:hover,fieldset[disabled] .btn-kakao:hover,.btn-kakao.disabled:focus,.btn-kakao[disabled]:focus,fieldset[disabled] .btn-kakao:focus,.btn-kakao.disabled.focus,.btn-kakao[disabled].focus,fieldset[disabled] .btn-kakao.focus{background-color:#FFD732;border-color:rgba(0,0,0,0.2)}
+.btn-kakao .badge{color:#FFD732;background-color:#000}
 
-.btn-github{color:#fff;background-color:#444;border-color:rgba(0,0,0,0.2)}.btn-github:focus,.btn-github.focus{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}
-.btn-github:hover{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}
-.btn-github:active,.btn-github.active,.open>.dropdown-toggle.btn-github{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}.btn-github:active:hover,.btn-github.active:hover,.open>.dropdown-toggle.btn-github:hover,.btn-github:active:focus,.btn-github.active:focus,.open>.dropdown-toggle.btn-github:focus,.btn-github:active.focus,.btn-github.active.focus,.open>.dropdown-toggle.btn-github.focus{color:#fff;background-color:#191919;border-color:rgba(0,0,0,0.2)}
-.btn-github:active,.btn-github.active,.open>.dropdown-toggle.btn-github{background-image:none}
-.btn-github.disabled:hover,.btn-github[disabled]:hover,fieldset[disabled] .btn-github:hover,.btn-github.disabled:focus,.btn-github[disabled]:focus,fieldset[disabled] .btn-github:focus,.btn-github.disabled.focus,.btn-github[disabled].focus,fieldset[disabled] .btn-github.focus{background-color:#444;border-color:rgba(0,0,0,0.2)}
-.btn-github .badge{color:#444;background-color:#fff}
+.btn-weixin{color:#fff;background-color:#40A940;border-color:rgba(0,0,0,0.2)}.btn-weixin:focus,.btn-weixin.focus{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}
+.btn-weixin:hover{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}
+.btn-weixin:active,.btn-weixin.active,.open>.dropdown-toggle.btn-weixin{color:#fff;background-color:#2b2b2b;border-color:rgba(0,0,0,0.2)}.btn-weixin:active:hover,.btn-weixin.active:hover,.open>.dropdown-toggle.btn-weixin:hover,.btn-weixin:active:focus,.btn-weixin.active:focus,.open>.dropdown-toggle.btn-weixin:focus,.btn-weixin:active.focus,.btn-weixin.active.focus,.open>.dropdown-toggle.btn-weixin.focus{color:#fff;background-color:#191919;border-color:rgba(0,0,0,0.2)}
+.btn-weixin:active,.btn-weixin.active,.open>.dropdown-toggle.btn-weixin{background-image:none}
+.btn-weixin.disabled:hover,.btn-weixin[disabled]:hover,fieldset[disabled] .btn-weixin:hover,.btn-weixin.disabled:focus,.btn-weixin[disabled]:focus,fieldset[disabled] .btn-weixin:focus,.btn-weixin.disabled.focus,.btn-weixin[disabled].focus,fieldset[disabled] .btn-weixin.focus{background-color:#40A940;border-color:rgba(0,0,0,0.2)}
+.btn-weixin .badge{color:#40A940;background-color:#fff}
