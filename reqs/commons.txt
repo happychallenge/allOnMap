@@ -4,3 +4,4 @@ pillow
 python-dateutil
 dj-database-url
 psycopg2
+django-allauth
