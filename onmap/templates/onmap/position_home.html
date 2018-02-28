@@ -24,17 +24,15 @@
       <tr>
         <td> <a href="{{ position.get_absolute_url }}"> {{position.id}} </a></td>
         <td> <a href="{{ position.get_absolute_url }}"> 
-          <img src="{{position.picture.url}}" alt="{{position.myname}}"> </a></td> 
-        <td> 
-            Latitude : {{position.lat}} <br>
-            Longitude : {{position.lng}} 
+          {{position.name}} </a>
         </td> 
         <td> 
-          {% if position.lat != 0.0 %}
+            # {{ position.pictures.all | length }} Pictures 
+        </td> 
+        <td> 
             <a href="http://{{ request.get_host }}/apicall/{{position.id}}">
               http://{{ request.get_host }}/apicall/{{position.id}}
             </a>
-          {% endif %}
         </td>
       </tr>
     {% endfor %}

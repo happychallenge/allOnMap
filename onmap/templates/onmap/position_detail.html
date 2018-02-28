@@ -26,14 +26,11 @@ th{
     </thead>
     <tbody>
       <tr>
-        <th>Picture</th>
-        <td> <img src="{{position.picture.url}}" alt="{{position.myname}}"> </td> 
-      </tr>
-      <tr>
-        <th>Location</th>
-        <td> 
-            Latitude : {{position.lat}} <br>
-            Longitude : {{position.lng}} 
+        <th>Pictures</th>
+        <td>
+          {% for picture in position.pictures.all %}
+            <img src="{{picture.file.url}}" alt="{picture.name}}"> 
+          {% endfor %}
         </td> 
       </tr>
       <tr>
@@ -62,22 +59,47 @@ th{
 {% block javascript %}
 
 <script>
-function initMap() {
+var markers = [];
+var pos, map;
 
-  var pos = { lat: {{position.lat}}, lng: {{position.lng }} }
+function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: pos
   });
 
-  var image = '{{position.picture.url}}';
+  bounds = new google.maps.LatLngBounds();
 
-  var marker = new google.maps.Marker({
-        position: pos,
-        icon: image,
-        map: map
+  var locations = [
+    {% for picture in position.pictures.all %}
+        {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+    {% endfor %}
+  ];
+
+  for (var i = 0; i < locations.length; i++) {
+      pos = locations[i].location;
+      var id = locations[i].id;
+      var title = locations[i].title;
+      var icon = locations[i].icon;
+
+
+      var marker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          icon: icon,
+          id: id
       });
+
+      markers.push(marker);
+      bounds.extend(marker.position);
+  }
+    // console.log("FitBounds function", theme);
+  if (locations.length >= 2) {
+      map.fitBounds(bounds);
+  } else {
+      map.panTo(pos);
+  }
 }
 </script>
 

@@ -3,8 +3,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.views import serve
 
+from accounts import views as login_views
+
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^xmlyoon/', admin.site.urls),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^login', login_views.login, name='login'),
+    url(r'^logout', login_views.logout, name='logout'),
     url(r'^', include('onmap.urls', namespace="onmap")),
 ]
 

@@ -3,24 +3,29 @@ from django.contrib.auth.decorators import login_required
 from PIL import Image
 from .getGPS import get_lat_lon_dt
 from .adjust_location import transform
-from .models import Position
+from .models import Position, Picture
 from .forms import PositionForm
 
 # Create your views here.
 def home(request):
+    return render(request, "onmap/home.html")
+
+@login_required
+def myhome(request):
     user = request.user
-    positions = Position.objects.filter(author=user)
+    positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return render(request, "onmap/position_home.html", {'positions': positions})
 
+@login_required
 def detail(request, id):
-    position = get_object_or_404(Position, id=id)
+    position = Position.objects.prefetch_related('pictures').get(id=id)
     return render(request, "onmap/position_detail.html", {'position': position})
+
 
 def apicall(request, id):
     position = get_object_or_404(Position, id=id)
     client_ip = request.META['REMOTE_ADDR']
     country = getCountry(client_ip)
-    print("Country : ", country)
     if country == "CN" or country == "ZZ":
         template = "onmap/position_call_cn.html"
     else:
@@ -35,51 +40,83 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 @login_required
 def add(request):
     mgLat, mgLng = (0.0, 0.0)
+    picture_files = []
+
     if request.method == 'POST':
         form = PositionForm(request.POST, request.FILES)
         if form.is_valid():
+            name = request.POST.get('name')
             position = form.save(commit=False)
             position.author = request.user
-            picture = position.picture
+            
+            pictures = request.FILES.getlist('pictures')
 
-            image = Image.open(picture)
-        # 위도 경도 값 가져오기
-            lat, lng, dt = get_lat_lon_dt(image)
-            if lat != 0.0:
-                mgLat, mgLng = transform(lat, lng)
+            index = 0
+            file_length = len(pictures)
 
-            if mgLat:
-                position.lat = mgLat
-                position.lng = mgLng
-                position.locname, position.address = getAddress(mgLat, mgLng)
+            for filename in pictures:
+                
+                index += 1
+                picture = Picture()
 
-        # 사진의 수직/수평 조정
-            try:
-                exif = dict(image._getexif().items())
-                if exif:
-                    if exif[274] == 3:
-                        image = image.rotate(180, expand=True)
-                        image.save(picture)
-                    elif exif[274] == 6:
-                        image = image.rotate(270, expand=True)
-                        image.save(picture)
-                    elif exif[274] == 8:
-                        image = image.rotate(90, expand=True)
-                        image.save(picture)
-            except:
-                print("There is no EXIF INFO")
-        
-        # 사진 축약 
-            output = BytesIO()
-            image = image.resize((50,50))
-            image.save(output, format='JPEG', quality=90)
-            output.seek(0)
+                picture.author = request.user
+                if file_length >= 2:
+                    tempname = name + " " + str(index)
+                else:
+                    tempname = name
 
-            position.picture = InMemoryUploadedFile(output,  
-                    'ImageField', "%s.jpg" % picture.name.split('.')[0], 
-                    'image/jpeg', sys.getsizeof(output), None)
+                picture.name = tempname
+                image = Image.open(filename)
+            # 위도 경도 값 가져오기
+                lat, lng, dt = get_lat_lon_dt(image)
+                if lat != 0.0:
+                    mgLat, mgLng = transform(lat, lng)
+
+                if mgLat:
+                    picture.lat = mgLat
+                    picture.lng = mgLng
+                    picture.locname, picture.address = getAddress(mgLat, mgLng)
+
+            # 사진의 수직/수평 조정
+                try:
+                    exif = dict(image._getexif().items())
+                    if exif:
+                        if exif[274] == 3:
+                            image = image.rotate(180, expand=True)
+                            image.save(filename)
+                        elif exif[274] == 6:
+                            image = image.rotate(270, expand=True)
+                            image.save(filename)
+                        elif exif[274] == 8:
+                            image = image.rotate(90, expand=True)
+                            image.save(filename)
+                except:
+                    print("There is no EXIF INFO")
+            
+            # 사진 축약 
+                output = BytesIO()
+                image = image.resize((50,50))
+                image.save(output, format='JPEG', quality=90)
+                output.seek(0)
+
+                picture.file = InMemoryUploadedFile(output,  
+                        'ImageField', "%s.jpg" % filename.name.split('.')[0], 
+                        'image/jpeg', sys.getsizeof(output), None)
+
+                picture.save()
+                picture_files.append(picture)
+
+                if file_length >= 2:
+                    pos = Position()
+                    pos.name = tempname
+                    pos.author = request.user
+                    pos.save()
+
+                    pos.pictures.add(picture)
+
 
             position.save()
+            position.pictures.set(picture_files)
             
             return redirect('onmap:detail', position.id)
 

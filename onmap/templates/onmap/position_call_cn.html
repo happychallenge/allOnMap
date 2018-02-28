@@ -31,7 +31,7 @@
 </div>
 
 <div id="floating-theme">
-    <button type=button value="" class="btn" data-url="#">{{user.first_name}}'s {{position.myname}} </button>
+    <button type=button value="" class="btn" data-url="#">{{position.author.first_name}}'s {{position.name}} </button>
 </div> 
 {% endblock main %}
 
@@ -42,24 +42,47 @@
 
 var map_height = $(window).height();
 $("#map").height(map_height);
-
+var markers = [];
+var pos, map;
 
 function initMap() {
-
-  var pos = { lat: {{position.lat}}, lng: {{position.lng }} }
 
   map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,
       center: pos
   });
 
-  var image = '{{position.picture.url}}';
+  bounds = new google.maps.LatLngBounds();
 
-  var marker = new google.maps.Marker({
-        position: pos,
-        icon: image,
-        map: map
+  var locations = [
+    {% for picture in position.pictures.all %}
+        {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+    {% endfor %}
+  ];
+
+  for (var i = 0; i < locations.length; i++) {
+      pos = locations[i].location;
+      var id = locations[i].id;
+      var title = locations[i].title;
+      var icon = locations[i].icon;
+
+
+      var marker = new google.maps.Marker({
+          map: map,
+          position: pos,
+          icon: icon,
+          id: id
       });
+
+      markers.push(marker);
+      bounds.extend(marker.position);
+  }
+    // console.log("FitBounds function", theme);
+  if (locations.length >= 2) {
+      map.fitBounds(bounds);
+  } else {
+      map.panTo(pos);
+  }
 }
 </script>
 
