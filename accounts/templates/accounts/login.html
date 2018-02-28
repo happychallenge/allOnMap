@@ -1,0 +1,66 @@
+{% extends "call.html" %}
+
+{% load socialaccount static %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static "css/bootstrap-social.css" %}"> 
+<style>
+body{
+    background-color: #000;
+}
+.wrapper{
+    width: 400px;
+    height: 400px;
+    position: fixed;
+    margin-left: -200px;
+    margin-top: -200px;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+}
+.body{
+    margin: 10px;
+}
+</style>
+{% endblock css %}
+
+{% block main %}
+
+<div class="wrapper">
+    <h2> &nbsp; Social Login</h2>
+    <hr>
+    <div class="body">
+    {% for provider in providers %}
+        {% if provider.name == 'Facebook'  %}
+            <a class="btn btn-block btn-social btn-lg btn-facebook">
+                <span class="fa fa-facebook"></span> Sign in with Facebook
+            </a>
+        {% endif %}
+        {% if provider.name == 'Google'  %}
+            <a class="btn btn-block btn-social btn-lg btn-google">
+                <span class="fa fa-google"></span> Sign in with Google
+            </a>
+        {% endif %}
+        {% if provider.name == 'Naver'  %}
+            <a class="btn btn-block btn-social btn-lg btn-naver">
+                <span class="fa fa-naver"></span> Sign in with Naver
+            </a>
+        {% endif %}
+        {% if provider.name == 'Kakao'  %}
+            <a class="btn btn-block btn-social btn-lg btn-kakao">
+                <span class="fa fa-kakao"></span> Sign in with Kakao
+            </a>
+        {% endif %}
+        {% if provider.name == 'Weixin'  %}
+            <a class="btn btn-block btn-social btn-lg btn-weixin">
+                <span class="fa fa-weixin"></span> Sign in with Weixin
+            </a>
+        {% endif %}
+
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock main %}
