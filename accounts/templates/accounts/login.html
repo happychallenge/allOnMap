@@ -11,7 +11,7 @@ body{
 }
 .wrapper{
     width: 400px;
-    height: 400px;
+    height: 410px;
     position: fixed;
     margin-left: -200px;
     margin-top: -200px;
@@ -28,8 +28,11 @@ body{
 {% block main %}
 
 <div class="wrapper">
-    <h2> &nbsp; Social Login</h2>
+    <h3> &nbsp; Social Login</h3>
     <hr>
+    <div class="container"> 
+        User Privacy Policy : <a href="{% url 'onmap:privacy' %}"> privacy-policy-html-english </a>
+    </div>
     <div class="body">
     {% for provider in providers %}
         {% if provider.name == 'Facebook'  %}

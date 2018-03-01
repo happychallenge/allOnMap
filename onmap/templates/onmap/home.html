@@ -16,6 +16,14 @@
   </div>
 </div>
 
+{% if not user.is_authenticated %}
+  <div class="container-fluid">
+    <h4>
+    If you sign up, all records will be saved and available for future use.<a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
+     
+  </div>
+{% endif %}
+
 {% include 'onmap/partial/pos_add.html' %}
 
 {% endblock main %}

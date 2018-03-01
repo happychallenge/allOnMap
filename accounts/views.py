@@ -1,4 +1,6 @@
 from django.conf import settings
+from django.contrib import auth
+from django.shortcuts import redirect
 from django.contrib.auth.views import login as auth_login
 from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.templatetags.socialaccount import get_providers
@@ -22,4 +24,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('login')
+    return redirect('home')

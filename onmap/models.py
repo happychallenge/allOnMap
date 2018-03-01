@@ -23,6 +23,9 @@ class Position(models.Model):
     def get_pictures(self):
         return self.pictures.all()[:3]
 
+    def get_picture_count(self):
+        return self.pictures.count()
+
 
 class Picture(models.Model):
     """

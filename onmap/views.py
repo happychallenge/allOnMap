@@ -14,8 +14,12 @@ def home(request):
 def manual(request):
     return render(request, "onmap/manual.html")
 
+def privacy(request):
+    return render(request, "onmap/privacy-policy-html-english.html")
+
+
 @login_required
-def myhome(request):
+def mylist(request):
     user = request.user
     positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return render(request, "onmap/position_home.html", {'positions': positions})

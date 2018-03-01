@@ -1,49 +1,8 @@
-{% extends "call.html" %}
-{% load static bootstrap3 i18n %}
-
-
-{% block css %}
-<style>
-#map{
-  width: 100%;
-  height: 800px;
-}
-
-#floating-theme {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 5;
-  background-color: #ccc;
-  font-size: 16px;
-  padding: 5px !important;
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 15px;
-}
-</style>
-{% endblock css %}
-
-
-{% block main %}
-<div id="map">
-  
-</div>
-
-<div id="floating-theme">
-    <button type=button value="" class="btn" data-url="#">{{position.author.first_name}}'s {{position.name}} </button>
-</div> 
-{% endblock main %}
-
-
-{% block javascript %}
-
 <script>
-
-var map_height = $(window).height();
-$("#map").height(map_height);
 var markers = [];
-var pos, map, position, bounds;
+var pos, map;
+
+
 
 function initMap() {
 
@@ -67,18 +26,11 @@ function initMap() {
 
       new CustomMarker(position, map, pictures[i].icon);
 
-      // var marker = new google.maps.Marker({
-      //     map: map,
-      //     position: position,
-      //     icon: icon,
-      //     id: id
-      // });
-
       bounds.extend(position);
       console.log("Position Lat : " + position.lat() + " " + position.lng());
-      console.log("Bounds Lat   :   " + bounds.f.b + " " + bounds.b.f );
+      console.log("Bounds Lat :   " + bounds.f.b + " " + bounds.b.f );
   }
-
+  
     // console.log("FitBounds function", theme);
   if (pictures.length >= 2) {
       map.fitBounds(bounds);
@@ -138,14 +90,3 @@ CustomMarker.prototype.getPosition = function () {
     return this.latlng_;
 };
 </script>
-
-{% if china %}
-  <script async defer
-src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
-</script>
-{% else %}
-  <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
-{% endif %}
-
-{% endblock javascript %}
