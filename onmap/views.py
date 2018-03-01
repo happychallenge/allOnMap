@@ -8,7 +8,11 @@ from .forms import PositionForm
 
 # Create your views here.
 def home(request):
-    return render(request, "onmap/home.html")
+    form = PositionForm()
+    return render(request, "onmap/home.html", {'form': form})
+
+def manual(request):
+    return render(request, "onmap/manual.html")
 
 @login_required
 def myhome(request):
@@ -16,7 +20,6 @@ def myhome(request):
     positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return render(request, "onmap/position_home.html", {'positions': positions})
 
-@login_required
 def detail(request, id):
     position = Position.objects.prefetch_related('pictures').get(id=id)
     return render(request, "onmap/position_detail.html", {'position': position})
@@ -37,18 +40,20 @@ import sys
 from django.utils.six import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-@login_required
 def add(request):
     mgLat, mgLng = (0.0, 0.0)
     picture_files = []
 
+    print("Login Check : ", request.user)
     if request.method == 'POST':
         form = PositionForm(request.POST, request.FILES)
         if form.is_valid():
             name = request.POST.get('name')
             position = form.save(commit=False)
             position.name += " All" 
-            position.author = request.user
+
+            if request.user.is_authenticated():
+                position.author = request.user
             
             pictures = request.FILES.getlist('pictures')
 
@@ -60,7 +65,6 @@ def add(request):
                 index += 1
                 picture = Picture()
 
-                picture.author = request.user
                 if file_length >= 2:
                     tempname = name + " " + str(index)
                 else:
@@ -110,7 +114,8 @@ def add(request):
                 if file_length >= 2:
                     pos = Position()
                     pos.name = tempname
-                    pos.author = request.user
+                    if request.user.is_authenticated():
+                        pos.author = request.user
                     pos.save()
 
                     pos.pictures.add(picture)

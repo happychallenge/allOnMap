@@ -1,0 +1,29 @@
+{% load i18n bootstrap3 %}
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-offset-2 col-sm-8">
+          <div class="user-title">
+            <h2 class="form-title"> {% trans "Add Picture" %} </h2>
+          </div>
+          <div class="body">
+            <form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
+
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              
+              <div class="preview">
+                <div class="upload">
+                  <span class="preview-bg"></span>
+                  <p class="preview-title"> {% trans "Add picture" %} </p>
+                </div>
+                <div id="img_id"></div>
+              </div>
+              
+              <input type="submit" id="btn_ok" class="btn btn-lg btn-primary btn-block" value="Confirm" />
+            </form>
+          </div>
+      </div>
+      <div class="dummy"></div>
+  </div>
+</div>

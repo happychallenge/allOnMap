@@ -8,8 +8,8 @@ class Position(models.Model):
     Description: Model Description
     """
     name = models.CharField("My Name", max_length=200)
-    pictures = models.ManyToManyField("Picture")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='positions')
+    pictures = models.ManyToManyField("Picture", related_name='positions')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='positions', blank=True, null=True)
 
     class Meta:
         ordering = ('-id',)
@@ -19,6 +19,9 @@ class Position(models.Model):
 
     def get_absolute_url(self):
         return reverse('onmap:detail', args=[self.id])
+
+    def get_pictures(self):
+        return self.pictures.all()[:3]
 
 
 class Picture(models.Model):
@@ -31,7 +34,7 @@ class Picture(models.Model):
     address = models.CharField(max_length=100, blank=True, null=True)
     lat = models.FloatField(default=0, blank=True, null=True)
     lng = models.FloatField(default=0, blank=True, null=True)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pictures')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pictures', blank=True, null=True)
 
     class Meta:
         ordering = ('-id',)

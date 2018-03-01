@@ -14,6 +14,7 @@
         <li><a href="{% url 'onmap:home' %}">Home</a></li>
         <li><a href="{% url 'onmap:add' %}">Add</a></li> 
         <li><a href="{% url 'onmap:myhome' %}">List</a></li>
+        <li><a href="{% url 'onmap:manual' %}">Manual</a></li>
         
     {% if user.is_authenticated %}
         <li>
@@ -22,7 +23,7 @@
     {% else %}
         <li>
           <a href="{% url 'login' %}"> 
-               로그인 
+               SignUp/Login
           </a>
         </li>
     {% endif %}

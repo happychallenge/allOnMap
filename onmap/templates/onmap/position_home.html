@@ -13,24 +13,25 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Picture</th>
-        <th>Location</th>
+        <th>Name</th>
+        <th>Pictures</th>
         <th>Anchor</th>
       </tr>
     </thead>
     <tbody>
     {% for position in positions %}
       <tr>
-        <td> <a href="{{ position.get_absolute_url }}"> {{position.id}} </a></td>
         <td> <a href="{{ position.get_absolute_url }}"> 
           {{position.name}} </a>
         </td> 
         <td> 
-            # {{ position.pictures.all | length }} Pictures 
+           {% for picture in position.get_pictures %}
+              <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+           {% endfor %}
+           total : # {{ position.pictures.all | length }} pictures
         </td> 
         <td> 
-            <a href="http://{{ request.get_host }}/apicall/{{position.id}}">
+            <a href="http://{{ request.get_host }}/apicall/{{position.id}}" target="_blank">
               http://{{ request.get_host }}/apicall/{{position.id}}
             </a>
         </td>

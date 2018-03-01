@@ -6,7 +6,7 @@ from .models import Position, Picture
 class PositionAdmin(admin.ModelAdmin):
     class Meta:
         model = Position
-    list_display = ['id', 'name', ]
+    list_display = ['id', 'name', 'author']
 
 
 @admin.register(Picture)

@@ -3,51 +3,32 @@
 
 
 {% block css %}
+<link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
 {% endblock css %}
 
 
 {% block main %}
 <div class="container-fluid">
   <div class="jumbotron">
-    <h1>Picture on Map</h1>
-    <p>...</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    <h3>Picture on Map</h3>
+    <p>Please see the location of all the photos on the map.</p>
+    <p><a class="btn btn-primary btn-lg" href="{% url 'onmap:manual' %}" role="button">Learn more</a></p> 
   </div>
 </div>
+
+{% include 'onmap/partial/pos_add.html' %}
+
 {% endblock main %}
 
 
 {% block javascript %}
 <script src="{% static 'js/exif.js' %}"></script> 
+<script src="{% static 'js/pictureadd.js' %}"></script> 
 
-<script type="text/javascript">
-function upload_img(input){
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e){
-        $("#img_id").attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0])
-  }
-  $(".preview-bg").remove();
-  $(".preview-title").remove();
-}
-
-$("#id_picture").change(function(){
-    upload_img(this);
-});
-
-$(document).on('click', '.upload', function(){
-    $("#id_picture").click();
-});
-
-
-$("#img_id").onload = function () {
-    EXIF.getData(this, function () {
-      var long = EXIF.getTag(this, 'GPSLongitude');
-      console.log("GPSLongitude :"+long);
-    })
-}; 
-</script>
+{% if not user.is_authenticated %}
+  <script>
+  $("#id_name").val("Test Name");
+  </script>
+{% endif %}
 
 {% endblock javascript %}

@@ -3,12 +3,13 @@
 
 
 {% block css %}
+<link rel="stylesheet" href="{% static 'css/custommarker.css' %}"> 
 <style>
 #map{
   width: 100%;
   height: 600px;
 }
-th{
+th.header{
   width: 10%;
 }
 </style>
@@ -16,20 +17,37 @@ th{
 
 
 {% block main %}
+
+{% if not user.is_authenticated %}
+  <div class="container-fluid">
+    <h4>
+    If you sign up, all records will be saved and available for future use.<a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
+     
+  </div>
+{% endif %}
+
 <div class="table-reponsive">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <td>Content</td>
+        <th class="header">#</th>
+        <th>Content</td>
       </tr>
     </thead>
     <tbody>
       <tr>
         <th>Pictures</th>
         <td>
+          <p>You can see the location of all the individual pictures.</p>
           {% for picture in position.pictures.all %}
-            <img src="{{picture.file.url}}" alt="{picture.name}}"> 
+            {% for pos in picture.positions.all %}
+              {% if position != pos %}
+                <a href="{{ pos.get_absolute_url }}"> 
+                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+                </a>
+              {% endif %}
+            {% endfor %}
+              
           {% endfor %}
         </td> 
       </tr>
@@ -38,9 +56,15 @@ th{
         <td> 
             <a href="http://{{ request.get_host }}/apicall/{{position.id}}/" target="blank">
               http://{{ request.get_host }}/apicall/{{position.id}}/
-            </a>
+            </a> 
+            <div class="tooltip">
+              <button class="btn btn-primary" onclick="myFunction()" onmouseout="outFunc()">
+                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+                Copy
+              </button>
+            </div>
 <pre>&lt;a href='http://{{ request.get_host }}/apicall/{{position.id}}/' target='blank'&gt;
-    &lt;img src='{{position.picture.url}}' alt='{{position.myname}}'&gt;
+    &lt;img src='Picture Name' alt='{{position.name}}'&gt;
 &lt;/a&gt;</pre> 
         </td> 
       </tr>
@@ -57,10 +81,64 @@ th{
 
 
 {% block javascript %}
+<script async defer
+src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
+</script>
 
 <script>
 var markers = [];
 var pos, map;
+
+//adapted from http://gmaps-samples-v3.googlecode.com/svn/trunk/overlayview/custommarker.html
+function CustomMarker(latlng, map, imageSrc) {
+    this.latlng_ = latlng;
+    this.imageSrc = imageSrc;
+    // Once the LatLng and text are set, add the overlay to the map.  This will
+    // trigger a call to panes_changed which should in turn call draw.
+    this.setMap(map);
+}
+
+CustomMarker.prototype = new google.maps.OverlayView();
+
+CustomMarker.prototype.draw = function () {
+    // Check if the div has been created.
+    var div = this.div_;
+    if (!div) {
+        // Create a overlay text DIV
+        div = this.div_ = document.createElement('div');
+        // Create the DIV representing our CustomMarker
+        div.className = "customMarker"
+
+
+        var img = document.createElement("img");
+        img.src = this.imageSrc;
+        div.appendChild(img);
+
+
+        // Then add the overlay to the DOM
+        var panes = this.getPanes();
+        panes.overlayImage.appendChild(div);
+    }
+
+    // Position the overlay 
+    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+    if (point) {
+        div.style.left = point.x + 'px';
+        div.style.top = point.y + 'px';
+    }
+};
+
+CustomMarker.prototype.remove = function () {
+    // Check if the overlay was on the map and needs to be removed.
+    if (this.div_) {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+    }
+};
+
+CustomMarker.prototype.getPosition = function () {
+    return this.latlng_;
+};
 
 function initMap() {
 
@@ -78,11 +156,11 @@ function initMap() {
   ];
 
   for (var i = 0; i < locations.length; i++) {
-      pos = locations[i].location;
+      pos = new google.maps.LatLng(locations[i].location);
+      // pos = locations[i].location;
       var id = locations[i].id;
       var title = locations[i].title;
       var icon = locations[i].icon;
-
 
       var marker = new google.maps.Marker({
           map: map,
@@ -91,8 +169,10 @@ function initMap() {
           id: id
       });
 
+      // var marker = new CustomMarker(pos, map, icon);
+
       markers.push(marker);
-      bounds.extend(marker.position);
+      bounds.extend(pos);
   }
     // console.log("FitBounds function", theme);
   if (locations.length >= 2) {
@@ -103,7 +183,8 @@ function initMap() {
 }
 </script>
 
-<script async defer
-src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
+<script>
+
 </script>
+
 {% endblock javascript %}
