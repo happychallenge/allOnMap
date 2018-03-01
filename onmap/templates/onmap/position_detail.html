@@ -38,7 +38,9 @@ th.header{
       <tr>
         <th>Pictures</th>
         <td>
-          <p>You can see the location of all the individual pictures.</p>
+          {% if len(position.pictures.all) > 1 %}
+            <p>You can see the location of all the individual pictures.</p>
+          {% endif %}
           {% for picture in position.pictures.all %}
             {% for pos in picture.positions.all %}
               {% if position != pos %}
