@@ -33,27 +33,27 @@ body{
     <div class="body">
     {% for provider in providers %}
         {% if provider.name == 'Facebook'  %}
-            <a class="btn btn-block btn-social btn-lg btn-facebook">
+            <a class="btn btn-block btn-social btn-lg btn-facebook" href="{% provider_login_url provider.id %}"> 
                 <span class="fa fa-facebook"></span> Sign in with Facebook
             </a>
         {% endif %}
         {% if provider.name == 'Google'  %}
-            <a class="btn btn-block btn-social btn-lg btn-google">
+            <a class="btn btn-block btn-social btn-lg btn-google" href="{% provider_login_url provider.id %}">
                 <span class="fa fa-google"></span> Sign in with Google
             </a>
         {% endif %}
         {% if provider.name == 'Naver'  %}
-            <a class="btn btn-block btn-social btn-lg btn-naver">
+            <a class="btn btn-block btn-social btn-lg btn-naver" href="{% provider_login_url provider.id %}">
                 <span class="fa fa-naver"></span> Sign in with Naver
             </a>
         {% endif %}
         {% if provider.name == 'Kakao'  %}
-            <a class="btn btn-block btn-social btn-lg btn-kakao">
+            <a class="btn btn-block btn-social btn-lg btn-kakao" href="{% provider_login_url provider.id %}">
                 <span class="fa fa-kakao"></span> Sign in with Kakao
             </a>
         {% endif %}
         {% if provider.name == 'Weixin'  %}
-            <a class="btn btn-block btn-social btn-lg btn-weixin">
+            <a class="btn btn-block btn-social btn-lg btn-weixin" href="{% provider_login_url provider.id %}">
                 <span class="fa fa-weixin"></span> Sign in with Weixin
             </a>
         {% endif %}

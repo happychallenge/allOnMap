@@ -47,6 +47,7 @@ def add(request):
         if form.is_valid():
             name = request.POST.get('name')
             position = form.save(commit=False)
+            position.name += " All" 
             position.author = request.user
             
             pictures = request.FILES.getlist('pictures')
