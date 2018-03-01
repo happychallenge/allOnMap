@@ -27,11 +27,11 @@ def apicall(request, id):
     client_ip = request.META['REMOTE_ADDR']
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":
-        template = "onmap/position_call_cn.html"
+        context = {'position': position, 'china': True}
     else:
-        template = "onmap/position_call_global.html"
+        context = {'position': position, 'china': False}
 
-    return render(request, template, {'position': position})
+    return render(request, "onmap/position_call.html", context)
 
 import sys
 from django.utils.six import BytesIO
@@ -127,10 +127,11 @@ def add(request):
 import requests
 import json
 def getAddress(lat, lng):
-    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(lat)+","+str(lng)+"&key=AIzaSyDXY6uFicQrbFZ-ddMHg2eQrFT9BAVqLOo"
+    url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(lat)+","+str(lng)+"&key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"
     response = requests.get(url)
+    print(response.text)
     result = json.loads(response.text)
-    return (result["results"][0]["address_components"][3]["long_name"] ,result["results"][0]["formatted_address"])
+    return (result["results"][0]["address_components"][3]["long_name"], result["results"][0]["formatted_address"])
 
 
 def getCountry(ipaddress):

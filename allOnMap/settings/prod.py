@@ -3,6 +3,7 @@ import dj_database_url
 import raven
 
 DEBUG = False
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [ 'raven.contrib.django.raven_compat', ]
 
