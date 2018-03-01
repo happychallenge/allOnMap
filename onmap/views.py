@@ -22,11 +22,17 @@ def myhome(request):
 
 def detail(request, id):
     position = Position.objects.prefetch_related('pictures').get(id=id)
-    return render(request, "onmap/position_detail.html", {'position': position})
+    client_ip = request.META['REMOTE_ADDR']
+    country = getCountry(client_ip)
+    if country == "CN" or country == "ZZ":
+        context = {'position': position, 'china': True}
+    else:
+        context = {'position': position, 'china': False}
+    return render(request, "onmap/position_detail.html", context)
 
 
 def apicall(request, id):
-    position = get_object_or_404(Position, id=id)
+    position = Position.objects.prefetch_related('pictures').get(id=id)
     client_ip = request.META['REMOTE_ADDR']
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":

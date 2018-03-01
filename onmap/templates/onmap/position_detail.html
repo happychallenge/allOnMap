@@ -47,7 +47,6 @@ th.header{
                 </a>
               {% endif %}
             {% endfor %}
-              
           {% endfor %}
         </td> 
       </tr>
@@ -81,9 +80,15 @@ th.header{
 
 
 {% block javascript %}
-<script async defer
-src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
+
+{% if china %}
+  <script async defer
+src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
 </script>
+{% else %}
+  <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap">
+{% endif %}
 
 <script>
 var markers = [];
