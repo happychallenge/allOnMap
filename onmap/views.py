@@ -4,7 +4,7 @@ from PIL import Image
 from .getGPS import get_lat_lon_dt
 from .adjust_location import transform
 from .models import Position, Picture
-from .forms import PositionForm
+from .forms import PositionForm, PositionEditForm
 
 # Create your views here.
 def home(request):
@@ -32,6 +32,47 @@ def detail(request, slug):
     else:
         context = {'position': position, 'china': False}
     return render(request, "onmap/position_detail.html", context)
+
+@login_required
+def edit(request, slug):
+    position = Position.objects.prefetch_related('pictures').get(slug=slug)
+    user = request.user 
+    add_picture_set = []
+
+    if request.method == "POST":
+        form = PositionEditForm(request.POST, instance=position)
+        if form.is_valid():
+            position = form.save()
+
+            add_pictures = request.POST.getlist('add_pictures')
+            print("Picture ID : ", add_pictures)
+
+            for picture_id in add_pictures:
+                picture = get_object_or_404(Picture, id=picture_id)
+                add_picture_set.append(picture)
+
+            position.pictures.set(add_picture_set)
+
+            return redirect(position)
+    else:
+        form = PositionEditForm(instance=position)
+        pictures = position.pictures.all()
+
+        picture_ids = [ picture.id for picture in pictures ]
+        notpictures = Picture.objects.filter(author=user).exclude(id__in=picture_ids)
+
+    return render(request, "onmap/position_edit.html", 
+            {'form': form, 'pictures':pictures, 'notpictures':notpictures})
+
+@login_required
+def delete(request, slug):
+    position = Position.objects.prefetch_related('pictures').get(slug=slug)
+
+    if request.method == "POST":
+        pass
+    
+    return render(request, "onmap/position_edit.html", 
+            {'position': position, })
 
 
 def apicall(request, slug):
@@ -132,7 +173,7 @@ def add(request):
             position.save()
             position.pictures.set(picture_files)
             
-            return redirect('onmap:detail', position.slug)
+            return redirect(position)
 
     else:
         form = PositionForm()

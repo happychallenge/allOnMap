@@ -14,4 +14,4 @@ class PositionAdmin(admin.ModelAdmin):
 class PictureAdmin(admin.ModelAdmin):
     class Meta:
         model = Picture
-    list_display = ['id', 'name', 'locname', 'address', 'file']
+    list_display = ['id', 'name', 'locname', 'lat', 'lng', 'file']

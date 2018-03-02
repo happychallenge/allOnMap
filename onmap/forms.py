@@ -10,3 +10,12 @@ class PositionForm(forms.ModelForm):
     class Meta:
         model = Position
         fields = ['name', 'pictures', ]
+
+class PositionEditForm(forms.ModelForm):
+    name = forms.CharField(required=True, 
+        widget=forms.TextInput(attrs={'placeholder': 'More than 2 words....'}))
+
+
+    class Meta:
+        model = Position
+        fields = ['name', ]

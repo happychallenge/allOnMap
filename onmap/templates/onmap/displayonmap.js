@@ -20,7 +20,8 @@ function initMap() {
   ];
 
   for (var i = 0; i < pictures.length; i++) {
-      position = new google.maps.LatLng( pictures[i].location );
+      position = new google.maps.LatLng( parseFloat(pictures[i].location.lat), 
+            parseFloat(pictures[i].location.lng) );
       var id = pictures[i].id;
       var icon = pictures[i].icon;
 
@@ -33,8 +34,8 @@ function initMap() {
       });
 
       bounds.extend(position);
-      console.log("Position Lat : " + position.lat() + " " + position.lng());
-      console.log("Bounds Lat :   " + bounds.f.b + " " + bounds.b.f );
+      // console.log("Position Lat : " + position.lat() + " " + position.lng());
+      // console.log("Bounds   Lat : " + bounds.f.b + " " + bounds.b.f );
   }
   
     // console.log("FitBounds function", theme);

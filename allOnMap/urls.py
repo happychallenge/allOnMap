@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^onmap/', include('onmap.urls', namespace="onmap")),
 ]
 
-handler404 = 'ohttomobile.https.handler404'
-handler500 = 'ohttomobile.https.handler500'
+handler404 = 'allOnMap.https.handler404'
+handler500 = 'allOnMap.https.handler500'
 
 if settings.DEBUG == True:
     from django.conf.urls.static import static

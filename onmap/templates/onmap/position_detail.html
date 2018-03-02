@@ -7,7 +7,7 @@
 <style>
 #map{
   width: 100%;
-  height: 800px;
+  height: 700px;
 }
 
 .container{
@@ -30,22 +30,22 @@
 {% endif %}
 
 <div class="container">
-
+  <div class="col-xs-12 col-sm-2">
+    <strong>Name</strong>
+  </div>
+  <div class="col-xs-12 col-sm-10">
+    {{position.name}} &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> Edit </a> 
+    <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> Delete </a>
+  </div>
   <div class="col-xs-12 col-sm-2">
     <strong>Pictures</strong>
   </div>
   <div class="col-xs-12 col-sm-10">
-    {% if position.get_picture_count > 1 %}
-      <p>You can see the location of all the individual pictures.</p>
-    {% endif %}
     {% for picture in position.pictures.all %}
-      {% for pos in picture.positions.all %}
-        {% if position != pos %}
-          <a href="{{ pos.get_absolute_url }}"> 
-            <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-          </a>
-        {% endif %}
-      {% endfor %}
+      <a href="{{ pos.get_absolute_url }}"> 
+        <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+      </a>
     {% endfor %}
   </div> 
   <hr>
@@ -55,7 +55,7 @@
   <div class="col-xs-12 col-sm-10">
     <a href="http://{{ request.get_host }}/onmap/{{position.slug}}/" target="blank">
       <span> http://{{ request.get_host }}/onmap/{{position.slug}}/</span>
-    </a> <button class="btn btn-danger" onclick="copyToClipboard()">
+    </a> <button class="btn btn-warning pull-right" onclick="copyToClipboard()">
       Copy to clipboard
     </button><br>
     <input type="text" id="id_copyurl" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >

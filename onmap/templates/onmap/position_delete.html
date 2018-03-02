@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static  %}
+
+
+{% block css %}
+<link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
+
+{% endblock css %}
+
+
+{% block main %}
+
+{% include 'onmap/partial/pos_add.html' %}
+
+{% endblock main %}
+
+
+{% block javascript %}
+
+<script src="{% static 'js/pictureadd.js' %}"></script> 
+
+{% endblock javascript %}
