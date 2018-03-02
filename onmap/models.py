@@ -19,7 +19,6 @@ class Position(models.Model):
         ordering = ('-id',)
 
     def save(self, *args, **kwargs):
-        print(self.name)
         if not self.id:
             self.slug = re.sub('[\s+]', "-", self.name) + "-" + datetime.now().strftime("%Y%m%d%H%M%S")
         super(Position, self).save(*args, **kwargs)

@@ -1,12 +1,12 @@
 {% load i18n bootstrap3 %}
 
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-      <div class="col-sm-offset-1 col-sm-10">
-          <div class="user-title">
+      <div class="col-sm-12">
+          <div class="user-title col-sm-12">
             <h2 class="form-title"> {% trans "Add Picture" %} </h2>
           </div>
-          <div class="body">
+          <div class="body col-sm-12">
             <form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
 
               {% csrf_token %}
@@ -24,6 +24,11 @@
             </form>
           </div>
       </div>
-      <div class="dummy"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 dummy"></div>
   </div>
 </div>

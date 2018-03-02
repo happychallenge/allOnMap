@@ -14,22 +14,33 @@
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'onmap:add' %}">Add</a></li> 
         <li><a href="{% url 'onmap:manual' %}">Manual</a></li>
-        
+      </ul>
     {% if user.is_authenticated %}
+      <ul class="nav navbar-nav pull-right">
         <li><a href="{% url 'onmap:mylist' %}">My List</a></li>
         <li>
-            <a href="{% url 'logout' %}"> {{user.first_name}} </a> 
+          <a href="{% url 'logout' %}">
+            {% if user.first_name %}
+              {{user.first_name}} 
+            {% else %}
+              You don't have a name.              
+            {% endif %}
+          </a> 
         </li>
+      </ul>
     {% else %}
+      <ul class="nav navbar-nav pull-right">
         <li>
           <a href="{% url 'login' %}"> 
                SignUp/Login
           </a>
         </li>
+      </ul>
     {% endif %}
-
       </ul>
      
+
+
     </div><!--/.nav-collapse -->
   </div>
 </nav>
