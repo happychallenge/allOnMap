@@ -1,18 +1,26 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Position(models.Model):
     """
     Description: Model Description
     """
-    name = models.CharField("My Name", max_length=200)
+    name = models.CharField("Name", max_length=200)
+    slug = models.SlugField('SLUG', unique=True, allow_unicode=True)
     pictures = models.ManyToManyField("Picture", related_name='positions')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='positions', blank=True, null=True)
 
     class Meta:
         ordering = ('-id',)
+
+    def save(self, *args, **kwargs):
+        print(self.name)
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Position, self).save(*args, **kwargs)
 
     def __str__(self):
         return "{} - {}".format(self.id, self.name)

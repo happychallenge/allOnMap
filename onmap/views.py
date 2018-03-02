@@ -60,7 +60,6 @@ def add(request):
         if form.is_valid():
             name = request.POST.get('name')
             position = form.save(commit=False)
-            position.name += " All" 
 
             if request.user.is_authenticated():
                 position.author = request.user
@@ -145,7 +144,6 @@ import json
 def getAddress(lat, lng):
     url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+str(lat)+","+str(lng)+"&key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"
     response = requests.get(url)
-    print(response.text)
     result = json.loads(response.text)
     return (result["results"][0]["address_components"][3]["long_name"], result["results"][0]["formatted_address"])
 

@@ -6,7 +6,8 @@ from .models import Position, Picture
 class PositionAdmin(admin.ModelAdmin):
     class Meta:
         model = Position
-    list_display = ['id', 'name', 'author']
+    list_display = ['slug', 'name', 'author']
+    prepopulated_fields = {'slug':('name',)} # 5
 
 
 @admin.register(Picture)

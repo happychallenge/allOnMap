@@ -143,4 +143,4 @@ LOGOUT_URL = reverse_lazy('logout')
 LOGIN_REDIRECT_URL = reverse_lazy('onmap:home')
 LOGOUT_REDIRECT_URL = reverse_lazy('onmap:home')
 
-
+ALLOW_UNICODE_SLUGS = True
