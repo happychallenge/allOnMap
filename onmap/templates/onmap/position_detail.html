@@ -7,10 +7,13 @@
 <style>
 #map{
   width: 100%;
-  height: 600px;
+  height: 800px;
 }
-th.header{
-  width: 10%;
+
+.container{
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 0px;
 }
 </style>
 {% endblock css %}
@@ -26,57 +29,47 @@ th.header{
   </div>
 {% endif %}
 
-<div class="table-reponsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th class="header">#</th>
-        <th>Content</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th>Pictures</th>
-        <td>
-          {% if position.get_picture_count > 1 %}
-            <p>You can see the location of all the individual pictures.</p>
-          {% endif %}
-          {% for picture in position.pictures.all %}
-            {% for pos in picture.positions.all %}
-              {% if position != pos %}
-                <a href="{{ pos.get_absolute_url }}"> 
-                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-                </a>
-              {% endif %}
-            {% endfor %}
-          {% endfor %}
-        </td> 
-      </tr>
-      <tr>
-        <th>Anchor</th>
-        <td> 
-            <a href="http://{{ request.get_host }}/apicall/{{position.id}}/" target="blank">
-              http://{{ request.get_host }}/apicall/{{position.id}}/
-            </a> 
-            <div class="tooltip">
-              <button class="btn btn-primary" onclick="myFunction()" onmouseout="outFunc()">
-                <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-                Copy
-              </button>
-            </div>
-<pre>&lt;a href='http://{{ request.get_host }}/apicall/{{position.id}}/' target='blank'&gt;
+<div class="container">
+
+  <div class="col-xs-12 col-sm-2">
+    <strong>Pictures</strong>
+  </div>
+  <div class="col-xs-12 col-sm-10">
+    {% if position.get_picture_count > 1 %}
+      <p>You can see the location of all the individual pictures.</p>
+    {% endif %}
+    {% for picture in position.pictures.all %}
+      {% for pos in picture.positions.all %}
+        {% if position != pos %}
+          <a href="{{ pos.get_absolute_url }}"> 
+            <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div> 
+  <hr>
+  <div class="col-xs-12 col-sm-2">
+    <strong>Anchor</strong>
+  </div>  
+  <div class="col-xs-12 col-sm-10">
+    <a href="http://{{ request.get_host }}/onmap/{{position.slug}}/" target="blank">
+      <span> http://{{ request.get_host }}/onmap/{{position.slug}}/</span>
+    </a> <button class="btn btn-danger" onclick="copyToClipboard()">
+      Copy to clipboard
+    </button><br>
+    <input type="text" id="id_copyurl" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
+    
+<pre>&lt;a href='http://{{ request.get_host }}/onmap/{{position.slug}}/' target='blank'&gt;
     &lt;img src='Picture Name' alt='{{position.name}}'&gt;
 &lt;/a&gt;</pre> 
-        </td> 
-      </tr>
-      <tr>
-        <th>onMap</th>
-        <td> 
-            <div id="map"></div>
-        </td> 
-      </tr>
-    </tbody>
-  </table>
+  </div>  
+  <div class="col-xs-12 col-sm-2">
+    <strong>Map</strong>
+  </div>  
+  <div class="col-xs-12 col-sm-10">
+    <div id="map"></div>
+  </div>
 </div>
 {% endblock main %}
 
@@ -93,5 +86,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06
 {% endif %}
 
 {% include 'onmap/displayonmap.js' %}
+<script>
+function copyToClipboard() {
+  var copyText = document.getElementById("id_copyurl");
+  copyText.select();
+  document.execCommand("Copy");
+  alert("Copied the url: " + copyText.value);
+}
+</script>
 
 {% endblock javascript %}

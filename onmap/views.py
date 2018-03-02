@@ -17,15 +17,14 @@ def manual(request):
 def privacy(request):
     return render(request, "onmap/privacy-policy-html-english.html")
 
-
 @login_required
 def mylist(request):
     user = request.user
     positions = Position.objects.prefetch_related('pictures').filter(author = user)
-    return render(request, "onmap/position_home.html", {'positions': positions})
+    return render(request, "onmap/position_mylist.html", {'positions': positions})
 
-def detail(request, id):
-    position = Position.objects.prefetch_related('pictures').get(id=id)
+def detail(request, slug):
+    position = Position.objects.prefetch_related('pictures').get(slug=slug)
     client_ip = request.META['REMOTE_ADDR']
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":
@@ -35,8 +34,8 @@ def detail(request, id):
     return render(request, "onmap/position_detail.html", context)
 
 
-def apicall(request, id):
-    position = Position.objects.prefetch_related('pictures').get(id=id)
+def apicall(request, slug):
+    position = Position.objects.prefetch_related('pictures').get(slug=slug)
     client_ip = request.META['REMOTE_ADDR']
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":
@@ -133,7 +132,7 @@ def add(request):
             position.save()
             position.pictures.set(picture_files)
             
-            return redirect('onmap:detail', position.id)
+            return redirect('onmap:detail', position.slug)
 
     else:
         form = PositionForm()

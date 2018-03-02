@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static bootstrap3 i18n %}
+
+
+{% block css %}
+
+<style>
+.container{
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 0px;
+}
+</style>
+
+{% endblock css %}
+
+
+{% block main %}
+<div class="container">
+
+  <div class="col-xs-12 col-sm-2">
+    <strong>Pictures</strong>
+  </div>
+
+{% for position in positions %}
+  
+  <div class="col-xs-12 col-sm-2">
+    <a href="{{ position.get_absolute_url }}"> 
+      {{position.name}} </a>
+  </div>
+
+  <div class="col-xs-12 col-sm-5">
+    {% for picture in position.get_pictures %}
+          <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+       {% endfor %}
+       total : # {{ position.pictures.all | length }} pictures
+  </div>
+
+  <div class="col-xs-12 col-sm-5">
+    <a href="http://{{ request.get_host }}/onmap/{{position.slug}}" target="_blank">
+          http://{{ request.get_host }}/onmap/{{position.slug}}/
+    </a>
+    <button class="btn btn-warning pull-right" id="id_btn-{{ forloop.counter }}" onclick="copyToClipboard()">
+      Copy to clipboard
+    </button><br>
+    <input type="text" id="id_copyurl-{{ forloop.counter }}" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
+
+  </div>
+
+{% endfor %}
+      
+
+</div>
+{% endblock main %}
+
+
+{% block javascript %}
+
+{% endblock javascript %}

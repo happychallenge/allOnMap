@@ -24,7 +24,13 @@ function initMap() {
       var id = pictures[i].id;
       var icon = pictures[i].icon;
 
-      new CustomMarker(position, map, pictures[i].icon);
+      // new CustomMarker(position, map, pictures[i].icon);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: position,
+          icon: icon,
+          id: id
+      });
 
       bounds.extend(position);
       console.log("Position Lat : " + position.lat() + " " + position.lng());

@@ -16,10 +16,11 @@
   z-index: 5;
   background-color: #ccc;
   font-size: 16px;
-  padding: 5px !important;
+  padding: 8px !important;
   text-align: center;
   font-family: 'Roboto','sans-serif';
-  line-height: 15px;
+  line-height: 14px;
+  border: solid #333 1px;
 }
 </style>
 {% endblock css %}
@@ -31,7 +32,7 @@
 </div>
 
 <div id="floating-theme">
-    <button type=button value="" class="btn" data-url="#">{{position.author.first_name}}'s {{position.name}} </button>
+    {{position.author.first_name}}'s {{position.name}} 
 </div> 
 {% endblock main %}
 
@@ -65,14 +66,14 @@ function initMap() {
       var id = pictures[i].id;
       var icon = pictures[i].icon;
 
-      new CustomMarker(position, map, pictures[i].icon);
+      // new CustomMarker(position, map, pictures[i].icon);
 
-      // var marker = new google.maps.Marker({
-      //     map: map,
-      //     position: position,
-      //     icon: icon,
-      //     id: id
-      // });
+      var marker = new google.maps.Marker({
+          map: map,
+          position: position,
+          icon: icon,
+          id: id
+      });
 
       bounds.extend(position);
       console.log("Position Lat : " + position.lat() + " " + position.lng());

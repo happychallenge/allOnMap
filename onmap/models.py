@@ -1,7 +1,9 @@
+import re
+from datetime import datetime
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.template.defaultfilters import slugify
+# from django.template.defaultfilters import slugify
 
 # Create your models here.
 class Position(models.Model):
@@ -19,14 +21,14 @@ class Position(models.Model):
     def save(self, *args, **kwargs):
         print(self.name)
         if not self.id:
-            self.slug = slugify(self.name)
+            self.slug = re.sub('[\s+]', "-", self.name) + "-" + datetime.now().strftime("%Y%m%d%H%M%S")
         super(Position, self).save(*args, **kwargs)
 
     def __str__(self):
         return "{} - {}".format(self.id, self.name)
 
     def get_absolute_url(self):
-        return reverse('onmap:detail', args=[self.id])
+        return reverse('onmap:detail', args=[self.slug])
 
     def get_pictures(self):
         return self.pictures.all()[:3]
