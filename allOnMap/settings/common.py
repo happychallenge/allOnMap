@@ -140,7 +140,7 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
-LOGIN_REDIRECT_URL = reverse_lazy('onmap:home')
-LOGOUT_REDIRECT_URL = reverse_lazy('onmap:home')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 ALLOW_UNICODE_SLUGS = True
