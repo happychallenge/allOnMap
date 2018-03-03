@@ -23,8 +23,8 @@
 
 {% if not user.is_authenticated %}
   <div class="container-fluid">
-    <h4>
-    If you sign up, all records will be saved and available for future use.<a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
+    <h4> {% trans "If you sign up, all records will be saved and available for future use." %}
+    <a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
      
   </div>
 {% endif %}
@@ -35,11 +35,11 @@
   </div>
   <div class="col-xs-12 col-sm-10">
     {{position.name}} &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> Edit </a> 
-    <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> Delete </a>
+    <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> {% trans "Edit" %} </a> 
+    <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> {% trans "Delete" %} </a>
   </div>
   <div class="col-xs-12 col-sm-2">
-    <strong>Pictures</strong>
+    <strong>{% trans "Pictures" %} </strong>
   </div>
   <div class="col-xs-12 col-sm-10">
     {% for picture in position.pictures.all %}
@@ -50,13 +50,13 @@
   </div> 
   <hr>
   <div class="col-xs-12 col-sm-2">
-    <strong>Anchor</strong>
+    <strong>{% trans "Anchor" %} </strong>
   </div>  
   <div class="col-xs-12 col-sm-10">
     <a href="http://{{ request.get_host }}/onmap/{{position.slug}}/" target="blank">
       <span> http://{{ request.get_host }}/onmap/{{position.slug}}/</span>
     </a> <button class="btn btn-warning pull-right" onclick="copyToClipboard()">
-      Copy to clipboard
+      {% trans "Copy to clipboard" %}
     </button><br>
     <input type="text" id="id_copyurl" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
     
@@ -96,3 +96,4 @@ function copyToClipboard() {
 </script>
 
 {% endblock javascript %}
+

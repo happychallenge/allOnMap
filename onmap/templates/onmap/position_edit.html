@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static  %}
+{% load static bootstrap3 i18n %}
 
 
 {% block css %}
@@ -16,8 +16,6 @@
 
 {% block main %}
 
-{% load i18n bootstrap3 %}
-
 <div class="container">
   <div class="row">
       <div class="col-sm-offset-1 col-sm-10">
@@ -31,8 +29,8 @@
               {% bootstrap_form form %}
               
               <div class="container"> 
-                <h4 class="text-info">Pictures which already were included </h4>
-                <p class="text-danger">If you select it, it will be deleted from [{{form.instance.name}}] </p>
+                <h4 class="text-info"> {% trans "Pictures which already were included" %}  </h4>
+                <p class="text-danger"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </p>
                 {% for picture in pictures %}
                   <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
                     <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
@@ -45,8 +43,8 @@
               <div class="container" style="height: 20px"></div>
               
               <div class="container"> 
-                <h4 class="">Pictures which were not included. </h4>
-                <p class="text-warning">If you select it, it will be added to [{{form.instance.name}}] </p>
+                <h4 class="">{% trans "Pictures which were not included." %}  </h4>
+                <p class="text-warning">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </p>
                 {% for picture in notpictures %}
                   <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
                     <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>

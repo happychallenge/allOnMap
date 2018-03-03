@@ -46,9 +46,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.weixin',
+    # 'allauth.socialaccount.providers.weixin',
 # Mine
     'onmap',
     'accounts',
@@ -115,9 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGES = [
-    ('ko', _('Korean')),
     ('en', _('English')),
-    ('cn', _('Chinese')),
+    ('ko', _('Korean')),
+    # ('cn', _('Chinese')),
 ]
 
 LOCALE_PATHS = (

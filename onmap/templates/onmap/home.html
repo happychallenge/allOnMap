@@ -10,16 +10,16 @@
 {% block main %}
 <div class="container">
   <div class="jumbotron">
-    <h3>Picture on Map</h3>
-    <p>Please see the location of all the photos on the map.</p>
-    <p><a class="btn btn-primary btn-lg" href="{% url 'onmap:manual' %}" role="button">Learn more</a></p> 
+    <h3>{% trans "Picture on Map" %}</h3>
+    <p>{% trans "Please see the location of all the photos on the map." %} </p>
+    <p><a class="btn btn-primary btn-lg" href="{% url 'onmap:manual' %}" role="button">{% trans "Learn more" %}</a></p> 
   </div>
 </div>
 
 {% if not user.is_authenticated %}
 <div class="container">
-  <h4>
-  If you sign up, all records will be saved and available for future use.<a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
+  <h4>{% trans "If you sign up, all records will be saved and available for future use." %}
+  <a href="{% url 'login' %}"> <button class="btn btn-primary">{% trans "Sign Up" %} </button> </a></h4>
    
 </div>
 {% endif %}
@@ -29,7 +29,14 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <div class="fb-like" data-href="https://www.pictureonmap.com/" data-layout="standard" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+      <div class="fb-like" 
+          data-href="https://www.pictureonmap.com/" 
+          data-layout="standard" 
+          data-action="like" 
+          data-size="large" 
+          data-show-faces="true" 
+          data-share="true">
+      </div>
       <div id="fb-root"></div>
     </div>
   </div>
