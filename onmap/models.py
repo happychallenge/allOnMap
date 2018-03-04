@@ -12,6 +12,9 @@ class Position(models.Model):
     """
     name = models.CharField("Name", max_length=200)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True)
+    likes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
+    public = models.BooleanField(default=True)
     pictures = models.ManyToManyField("Picture", related_name='positions')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='positions', blank=True, null=True)
 

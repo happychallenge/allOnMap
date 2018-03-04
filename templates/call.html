@@ -1,36 +1,45 @@
+{% extends "base.html" %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name=”keywords” content="ohtto,lbs,sns" > 
-<meta name="viewport" content="width=device-width,
-     height=device-height, initial-scale=1, minimum-scale=1,
-     maximum-scale=1.5, user-scalable=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113713739-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-113713739-1');
-</script>
-<title>Picture On Map</title>
 
-<!-- Bootstrap core CSS --> 
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" /> 
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+<style>
+body {
+  min-height: 1024px;
+  padding-top: 70px;
+}
+.navbar{
+    background-color: #2f4050;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #ccc;
+}
+.navbar-default .navbar-brand {
+    color: #ccc;
+}
+.jumbotron{
+    padding: 10px;
+}
+h3{
+    margin: 10px;
+}
+</style>
 
 {% block css %}
-  
+    
 {% endblock css %}
-</head>
 
-<body>
-<!-- Fixed navbar -->
+{% endblock header %}
+
+
+{% block body %}
+
+{% include 'header_menu.html' %}
 
 <div class="main">
 {% block main %}
@@ -38,6 +47,16 @@
 {% endblock main %}
 </div> <!-- /container -->
 
+<footer class="footer">
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        &copy;www.ohtto.com since 2018. &nbsp;&nbsp;&nbsp;&nbsp; Mission : Gives all content the vitality of location <a mailto:pictureonmap@outlook.com></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 {% block modal %}
 
@@ -46,12 +65,17 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script> 
-<script src="{% static 'js/bootstrap.min.js' %}"></script> 
 
+{% endblock body %}
+
+
+{% block tail %}
+  
+<script src="{% static 'js/bootstrap.min.js' %}"></script> 
 {% block javascript %}
   
 {% endblock javascript %}
+ 
+{% endblock tail %}
 
-</body>
-</html>
+

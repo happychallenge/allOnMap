@@ -1,8 +1,9 @@
-{% extends "base.html" %}
+{% extends "call.html" %}
 {% load static bootstrap3 i18n %}
 
 
 {% block css %}
+<link href="{% static 'css/switchery.css' %}" rel="stylesheet">
 <link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
 <style>
 .container{
@@ -66,5 +67,14 @@
 {% block javascript %}
 
 <script src="{% static 'js/pictureadd.js' %}"></script> 
-
+<script src="{% static 'js/switchery.js' %}"></script>
+<script>
+    var elem1 = document.querySelector('.js-switch');
+    {% if form.instance.public %}
+      elem1.checked = true;
+    {% else %}
+      elem1.checked = false;
+    {% endif %}
+    var init1 = new Switchery(elem1, { color: '#1AB394' });
+</script>
 {% endblock javascript %}

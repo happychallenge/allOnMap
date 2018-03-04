@@ -1,31 +1,28 @@
 <script>
 var markers = [];
-var pos, map;
 
-
-
-function initMap() {
-
-  map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
-      center: pos
-  });
-
-  bounds = new google.maps.LatLngBounds();
-
-  var pictures = [
+var pictures = [
     {% for picture in position.pictures.all %}
         {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
     {% endfor %}
   ];
 
+function initMap() {
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: pos
+  });
+
+  var bounds = new google.maps.LatLngBounds();
+
   for (var i = 0; i < pictures.length; i++) {
-      position = new google.maps.LatLng( parseFloat(pictures[i].location.lat), 
-            parseFloat(pictures[i].location.lng) );
+      var position = new google.maps.LatLng( pictures[i].location );
       var id = pictures[i].id;
       var icon = pictures[i].icon;
 
       // new CustomMarker(position, map, pictures[i].icon);
+
       var marker = new google.maps.Marker({
           map: map,
           position: position,

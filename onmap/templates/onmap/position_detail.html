@@ -1,19 +1,19 @@
-{% extends "base.html" %}
+{% extends "call.html" %}
 {% load static bootstrap3 i18n %}
 
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/custommarker.css' %}"> 
+<link href="{% static 'css/switchery.css' %}" rel="stylesheet">
+<link href="{% static 'css/custommarker.css' %}" rel="stylesheet"> 
 <style>
 #map{
   width: 100%;
-  height: 700px;
+  height: 600px;
 }
-
 .container{
-  margin-left: 2px;
-  margin-right: 2px;
-  padding: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
 }
 </style>
 {% endblock css %}
@@ -25,50 +25,71 @@
   <div class="container-fluid">
     <h4> {% trans "If you sign up, all records will be saved and available for future use." %}
     <a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
-     
   </div>
 {% endif %}
 
 <div class="container">
-  <div class="col-xs-12 col-sm-2">
-    <strong>Name</strong>
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <strong>Name</strong>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+      {{position.name}} &nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> {% trans "Edit" %} </a> 
+      <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> {% trans "Delete" %} </a>
+    </div>
   </div>
-  <div class="col-xs-12 col-sm-10">
-    {{position.name}} &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> {% trans "Edit" %} </a> 
-    <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> {% trans "Delete" %} </a>
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <strong>Count</strong>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+      {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;&nbsp;
+      {{position.likes}} {% trans "likes" %}
+    </div>
   </div>
-  <div class="col-xs-12 col-sm-2">
-    <strong>{% trans "Pictures" %} </strong>
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <strong>Public</strong>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+      <input type="checkbox" class="js-switch" {% if position.public %} checked {% endif %} /> 
+    </div>
   </div>
-  <div class="col-xs-12 col-sm-10">
-    {% for picture in position.pictures.all %}
-      <a href="{{ pos.get_absolute_url }}"> 
-        <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-      </a>
-    {% endfor %}
-  </div> 
-  <hr>
-  <div class="col-xs-12 col-sm-2">
-    <strong>{% trans "Anchor" %} </strong>
-  </div>  
-  <div class="col-xs-12 col-sm-10">
-    <a href="http://{{ request.get_host }}/onmap/{{position.slug}}/" target="blank">
-      <span> http://{{ request.get_host }}/onmap/{{position.slug}}/</span>
-    </a> <button class="btn btn-warning pull-right" onclick="copyToClipboard()">
-      {% trans "Copy to clipboard" %}
-    </button><br>
-    <input type="text" id="id_copyurl" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
-    
-<pre>&lt;a href='http://{{ request.get_host }}/onmap/{{position.slug}}/' target='blank'&gt;
-    &lt;img src='Picture Name' alt='{{position.name}}'&gt;
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <strong>{% trans "Pictures" %} </strong>
+    </div>
+    <div class="col-xs-12 col-sm-10">
+      {% for picture in position.pictures.all %}
+        <a href="{{ pos.get_absolute_url }}"> 
+          <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+        </a>
+      {% endfor %}
+    </div> 
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <strong>{% trans "Anchor" %} </strong>
+    </div>  
+    <div class="col-xs-12 col-sm-10">
+      <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank"> 
+        <span> http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}</span>
+      </a> 
+      <button class="btn btn-warning pull-right" onclick="copyToClipboard()">
+        {% trans "Copy to clipboard" %}
+      </button><br>
+      <input type="text" id="id_copyurl" value="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" >
+      
+<pre>&lt;a href='http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}' target='_blank'&gt;
+      &lt;img src='Picture Name' alt='{{position.name}}'&gt;
 &lt;/a&gt;</pre> 
-  </div>  
-  <div class="col-xs-12 col-sm-2">
-    <strong>Map</strong>
-  </div>  
-  <div class="col-xs-12 col-sm-10">
-    <div id="map"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="map"></div>
+    </div>
   </div>
 </div>
 {% endblock main %}
@@ -77,15 +98,95 @@
 {% block javascript %}
 
 {% if china %}
-  <script async defer
-src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap"></script>
-</script>
+<script src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% else %}
-  <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do&callback=initMap"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% endif %}
 
-{% include 'onmap/displayonmap.js' %}
+<script>
+
+function CustomMarker(latlng, map, imageSrc) {
+    this.latlng_ = latlng;
+    this.imageSrc = imageSrc;
+    // Once the LatLng and text are set, add the overlay to the map.  This will
+    // trigger a call to panes_changed which should in turn call draw.
+    this.setMap(map);
+}
+
+CustomMarker.prototype = new google.maps.OverlayView();
+
+CustomMarker.prototype.draw = function () {
+    // Check if the div has been created.
+    var div = this.div_;
+    if (!div) {
+        // Create a overlay text DIV
+        div = this.div_ = document.createElement('div');
+        // Create the DIV representing our CustomMarker
+        div.className = "customMarker"
+
+
+        var img = document.createElement("img");
+        img.src = this.imageSrc;
+        div.appendChild(img);
+        // google.maps.event.addDomListener(div, "click", function (event) {
+        //     google.maps.event.trigger(me, "click");
+        // });
+
+        // Then add the overlay to the DOM
+        var panes = this.getPanes();
+        panes.overlayImage.appendChild(div);
+    }
+
+    // Position the overlay 
+    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+    if (point) {
+        div.style.left = point.x + 'px';
+        div.style.top = point.y + 'px';
+    }
+};
+
+CustomMarker.prototype.remove = function () {
+    // Check if the overlay was on the map and needs to be removed.
+    if (this.div_) {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+    }
+};
+
+CustomMarker.prototype.getPosition = function () {
+    return this.latlng_;
+};
+
+var pictures = [
+    {% for picture in position.pictures.all %}
+        {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+    {% endfor %}
+];
+
+function initialize(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 10,
+        // center: new google.maps.LatLng(36.0078916666667, 128.260222222222),
+    });
+
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < pictures.length; i++) {
+        var position = new google.maps.LatLng( pictures[i].location );
+        var id = pictures[i].id;
+        var icon = pictures[i].icon;
+
+        new CustomMarker(position, map, pictures[i].icon);
+
+        bounds.extend(position);
+        // console.log("Position Lat : " + position.lat() + " " + position.lng());
+        // console.log("Bounds Lat :   " + bounds.f.b + " " + bounds.b.f );
+    }
+    map.fitBounds(bounds)
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
 <script>
 function copyToClipboard() {
   var copyText = document.getElementById("id_copyurl");
@@ -95,5 +196,10 @@ function copyToClipboard() {
 }
 </script>
 
+<script src="{% static 'js/switchery.js' %}"></script>
+<script>
+    var elem1 = document.querySelector('.js-switch');
+    var init1 = new Switchery(elem1, { color: '#1AB394' }).disable();
+</script>
 {% endblock javascript %}
 

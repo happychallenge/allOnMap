@@ -1,9 +1,9 @@
-{% extends "call.html" %}
+{% extends "base.html" %}
 
 {% load socialaccount static i18n %}
 
 
-{% block css %}
+{% block header %}
 <link rel="stylesheet" href="{% static "css/bootstrap-social.css" %}"> 
 <style>
 body{
@@ -23,9 +23,9 @@ body{
     margin: 10px;
 }
 </style>
-{% endblock css %}
+{% endblock header %}
 
-{% block main %}
+{% block body %}
 
 <div class="wrapper">
     <h3> &nbsp; Social Login</h3>
@@ -66,4 +66,4 @@ body{
 </div>
 
 
-{% endblock main %}
+{% endblock body %}

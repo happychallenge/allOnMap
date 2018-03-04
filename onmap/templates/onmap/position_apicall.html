@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/custommarker.css' %}">
+<script src="https://use.fontawesome.com/658bb4caf7.js"></script>
+<style>
+body{
+  margin: 0px;
+  padding: 0px;
+}
+</style>
+{% endblock header %}
+
+
+{% block body %}
+
+{% if error %}
+    <h3> {% trans "This contents is not public. You don't have a access privilages." %} </h3>
+{% else %}
+ 
+<div id="map"></div>
+<div id="floating-theme">
+    {{position.author.first_name}}'s {{position.name}} 
+</div>
+<div id="floating-like">
+    <a class="btn btn-default btn-circle btn-lg" href="http://www.pictureonmap.com">
+        <i class="fa fa-home fa-3"></i>
+    </a>&nbsp;&nbsp; &nbsp;&nbsp;
+    <div class="pull-right">
+        <button class="btn-default btn-circle btn-lg" data-url="{{position.slug}}">
+            <i class="fa fa-link fa-3"></i> 
+        </button>
+        <span class="like-count" id="likecount-{{position.slug}}"> {{position.views}} viewed</span>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+        <button class="btn-danger btn-circle btn-lg like" data-url="{{position.slug}}">
+            <i class="fa fa-heart-o fa-3"></i> 
+        </button>
+        <span class="like-count" id="likecount-{{position.slug}}"> {{position.likes}} </span>
+    </div>
+</div>
+{% endif %}
+
+{% endblock body %}
+
+
+{% block tail %}
+  
+<script src="{% static 'js/bootstrap.min.js' %}"></script> 
+{% if china %}
+<script src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+{% else %}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+{% endif %}
+
+<script>
+var map_height = $(window).height();
+$("#map").height(map_height);
+
+// Like and Cancel
+$(document).on('click', '.like', function(){
+  var slug = $(this).attr('data-url');
+  console.log('slug : ' + slug);
+
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'onmap:userlike' %}",
+    data: {'slug': slug, 'csrfmiddlewaretoken': '{{csrf_token}}' },
+    dataType: 'json',
+
+    // response expression from Server 
+    // { 'like_count': post.like_count, 'message': message }
+    success: function(response){
+      $("#likecount-"+slug).html(response.like_count);
+    },
+
+    error: function(request, status, error) {
+        console.log(error);
+    },
+  });
+});
+
+</script>
+
+<script>
+
+function CustomMarker(latlng, map, imageSrc) {
+    this.latlng_ = latlng;
+    this.imageSrc = imageSrc;
+    // Once the LatLng and text are set, add the overlay to the map.  This will
+    // trigger a call to panes_changed which should in turn call draw.
+    this.setMap(map);
+}
+
+CustomMarker.prototype = new google.maps.OverlayView();
+
+CustomMarker.prototype.draw = function () {
+    // Check if the div has been created.
+    var div = this.div_;
+    if (!div) {
+        // Create a overlay text DIV
+        div = this.div_ = document.createElement('div');
+        // Create the DIV representing our CustomMarker
+        div.className = "customMarker"
+
+
+        var img = document.createElement("img");
+        img.src = this.imageSrc;
+        div.appendChild(img);
+        // google.maps.event.addDomListener(div, "click", function (event) {
+        //     google.maps.event.trigger(me, "click");
+        // });
+
+        // Then add the overlay to the DOM
+        var panes = this.getPanes();
+        panes.overlayImage.appendChild(div);
+    }
+
+    // Position the overlay 
+    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+    if (point) {
+        div.style.left = point.x + 'px';
+        div.style.top = point.y + 'px';
+    }
+};
+
+CustomMarker.prototype.remove = function () {
+    // Check if the overlay was on the map and needs to be removed.
+    if (this.div_) {
+        this.div_.parentNode.removeChild(this.div_);
+        this.div_ = null;
+    }
+};
+
+CustomMarker.prototype.getPosition = function () {
+    return this.latlng_;
+};
+
+var pictures = [
+    {% for picture in position.pictures.all %}
+        {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+    {% endfor %}
+];
+
+var position;
+
+function initialize(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: new google.maps.LatLng(36.0078916666667, 128.260222222222),
+    });
+
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < pictures.length; i++) {
+        position = new google.maps.LatLng( pictures[i].location );
+        var id = pictures[i].id;
+        var icon = pictures[i].icon;
+
+        new CustomMarker(position, map, pictures[i].icon);
+
+        bounds.extend(position);
+    }
+
+    if (pictures.length >= 2) {
+        map.fitBounds(bounds);
+    } else {
+        map.panTo(position);
+    }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+{% endblock tail %}
+
+
+

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "call.html" %}
 {% load static bootstrap3 i18n %}
 
 
@@ -11,7 +11,8 @@
 <div class="container">
   <div class="jumbotron">
     <h3>{% trans "Picture on Map" %}</h3>
-    <p>{% trans "Please see the location of all the photos on the map." %} </p>
+    <p>{% trans "Please see the location of all the photos on the map." %} 
+    {% trans "Please see the location of all the photos on the map." %} </p>
     <p><a class="btn btn-primary btn-lg" href="{% url 'onmap:manual' %}" role="button">{% trans "Learn more" %}</a></p> 
   </div>
 </div>

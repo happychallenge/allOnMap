@@ -1,5 +1,10 @@
+from django.http import JsonResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
+from django.views.decorators.http import require_POST
+
 from PIL import Image
 from .getGPS import get_lat_lon_dt
 from .adjust_location import transform
@@ -11,17 +16,40 @@ def home(request):
     form = PositionForm()
     return render(request, "onmap/home.html", {'form': form})
 
+
 def manual(request):
     return render(request, "onmap/manual.html")
 
+
 def privacy(request):
     return render(request, "onmap/privacy-policy-html-english.html")
+
+    
+def _position_list(request, template, position_list):
+    paginator = Paginator(position_list, 5)
+    page = request.GET.get('page')
+    try:
+        position_list = paginator.page(page)
+    except PageNotAnInteger:
+        position_list = paginator.page(1)
+    except EmptyPage:
+        position_list = paginator.page(paginator.num_pages)
+
+    context = {'positions': position_list}
+    return render(request, template, context)
+
 
 @login_required
 def mylist(request):
     user = request.user
     positions = Position.objects.prefetch_related('pictures').filter(author = user)
-    return render(request, "onmap/position_mylist.html", {'positions': positions})
+    return _position_list(request, "onmap/position_mylist.html", positions)
+
+
+def popularlist(request):
+    positions = Position.objects.prefetch_related('pictures').order_by('-likes')
+    return _position_list(request, "onmap/position_popularlist.html", positions)
+
 
 def detail(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
@@ -32,6 +60,7 @@ def detail(request, slug):
     else:
         context = {'position': position, 'china': False}
     return render(request, "onmap/position_detail.html", context)
+
 
 @login_required
 def edit(request, slug):
@@ -64,6 +93,7 @@ def edit(request, slug):
     return render(request, "onmap/position_edit.html", 
             {'form': form, 'pictures':pictures, 'notpictures':notpictures})
 
+
 @login_required
 def delete(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
@@ -76,15 +106,33 @@ def delete(request, slug):
 
 
 def apicall(request, slug):
-    position = Position.objects.prefetch_related('pictures').get(slug=slug)
-    client_ip = request.META['REMOTE_ADDR']
-    country = getCountry(client_ip)
-    if country == "CN" or country == "ZZ":
-        context = {'position': position, 'china': True}
-    else:
-        context = {'position': position, 'china': False}
+    position = Position.objects.select_related('author') \
+        .prefetch_related('pictures').get(slug=slug)
+    if position.author == request.user:
+        position.views = F('views') + 1;
+        position.save();
+        position.refresh_from_db()
 
-    return render(request, "onmap/position_call.html", context)
+        client_ip = request.META['REMOTE_ADDR']
+        country = getCountry(client_ip)
+        if country == "CN" or country == "ZZ":
+            context = {'position': position, 'china': True}
+        else:
+            context = {'position': position, 'china': False}
+    else:
+        context = {'error': True}
+    return render(request, "onmap/position_apicall.html", context)
+
+
+@require_POST
+def userlike(request):
+    slug = request.POST.get('slug', None)
+    position = get_object_or_404(Position, slug=slug)
+    position.likes = F('likes') + 1;
+    position.save()
+    position.refresh_from_db()
+    return JsonResponse({'like_count': position.likes })
+
 
 import sys
 from django.utils.six import BytesIO

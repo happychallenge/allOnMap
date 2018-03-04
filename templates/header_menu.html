@@ -13,7 +13,7 @@
       <ul class="nav navbar-nav">
         <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'onmap:add' %}">Add</a></li> 
-        <li><a href="{% url 'onmap:manual' %}">Manual</a></li>
+        <li><a href="{% url 'onmap:popularlist' %}">Popular</a></li>
       </ul>
     {% if user.is_authenticated %}
       <ul class="nav navbar-nav pull-right">
