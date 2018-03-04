@@ -120,7 +120,7 @@ def delete(request, slug):
 def apicall(request, slug):
     position = Position.objects.select_related('author') \
         .prefetch_related('pictures').get(slug=slug)
-    if position.author == request.user:
+    if position.public == True:
         position.views = F('views') + 1;
         position.save();
         position.refresh_from_db()
