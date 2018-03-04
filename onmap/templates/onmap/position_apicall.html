@@ -33,7 +33,7 @@ body{
         <button class="btn-default btn-circle btn-lg" data-url="{{position.slug}}">
             <i class="fa fa-link fa-3"></i> 
         </button>
-        <span class="like-count" id="likecount-{{position.slug}}"> {{position.views}} viewed</span>
+        <span class="like-count"> {{position.views}} viewed</span>
         &nbsp;&nbsp; &nbsp;&nbsp;
         <button class="btn-danger btn-circle btn-lg like" data-url="{{position.slug}}">
             <i class="fa fa-heart-o fa-3"></i> 
@@ -50,7 +50,7 @@ body{
   
 <script src="{% static 'js/bootstrap.min.js' %}"></script> 
 {% if china %}
-<script src="https://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% else %}
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% endif %}

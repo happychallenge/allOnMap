@@ -26,7 +26,7 @@ def privacy(request):
 
     
 def _position_list(request, template, position_list):
-    paginator = Paginator(position_list, 5)
+    paginator = Paginator(position_list, 8)
     page = request.GET.get('page')
     try:
         position_list = paginator.page(page)
@@ -46,9 +46,21 @@ def mylist(request):
     return _position_list(request, "onmap/position_mylist.html", positions)
 
 
+@login_required
+def mylist_ajax(request):
+    user = request.user
+    positions = Position.objects.prefetch_related('pictures').filter(author = user)
+    return _position_list(request, "onmap/position_mylist_ajax.html", positions)
+
+
 def popularlist(request):
     positions = Position.objects.prefetch_related('pictures').order_by('-likes')
     return _position_list(request, "onmap/position_popularlist.html", positions)
+
+
+def popularlist_ajax(request):
+    positions = Position.objects.prefetch_related('pictures').order_by('-likes')
+    return _position_list(request, "onmap/position_popularlist_ajax.html", positions)
 
 
 def detail(request, slug):
@@ -197,7 +209,7 @@ def add(request):
             
             # 사진 축약 
                 output = BytesIO()
-                image = image.resize((50,50))
+                image = image.resize((80,80))
                 image.save(output, format='JPEG', quality=90)
                 output.seek(0)
 

@@ -1,0 +1,29 @@
+{% load static i18n %}
+
+{% for position in positions %}
+  
+  <div class="col-xs-12 col-sm-4 col-md-2">
+    <a href="{{ position.get_absolute_url }}"> 
+      {{position.name}} 
+    </a>
+    <div class="pull-right"> {{position.views}} views &nbsp;&nbsp;&nbsp;&nbsp; {{position.likes}} like </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-4 col-md-4">
+    {% for picture in position.get_pictures %}
+          <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+    {% endfor %}
+       total : # {{ position.pictures.all | length }} pictures
+  </div>
+
+  <div class="col-xs-12 col-sm-4 col-md-6">
+    <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank">
+          http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}
+    </a>
+    <button class="btn btn-warning pull-right" id="id_btn-{{ forloop.counter }}" onclick="copyToClipboard('id_copyurl-{{ forloop.counter }}')">
+      Copy to clipboard
+    </button><br>
+    <input type="text" id="id_copyurl-{{ forloop.counter }}" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
+  </div>
+
+{% endfor %}
