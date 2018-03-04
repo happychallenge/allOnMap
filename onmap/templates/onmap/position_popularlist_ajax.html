@@ -1,0 +1,28 @@
+{% load static i18n %}
+
+{% for position in positions %}
+  
+  <div class="row">
+    <div class="col-xs-6 col-sm-3">
+      <a href="{% url 'onmap:apicall' position.slug %}" target="_blank">{{position.name}}</a> 
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      {{position.author.first_name}}
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      {{position.views}} viewed 
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      {{position.likes}} likes
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      {% for picture in position.get_pictures %}
+            <img class="ratio img-circle" src="{{picture.file.url}}" width="50px" alt="{{picture.name}}">
+      {% endfor %}
+         total : # {{ position.pictures.all | length }} pictures
+    </div>
+  </div>
+
+{% endfor %}
