@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Position, Picture
+from accounts.models import Profile
 
 # Register your models here.
 @admin.register(Position)
@@ -16,3 +17,10 @@ class PictureAdmin(admin.ModelAdmin):
     class Meta:
         model = Picture
     list_display = ['id', 'name', 'locname', 'lat', 'lng', 'file']
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Profile
+    list_display = ['nickname', 'picture']

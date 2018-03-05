@@ -2,7 +2,7 @@
 
 {% for position in positions %}
   
-  <div class="col-xs-12 col-sm-4 col-md-2">
+  <div class="col-xs-12 col-sm-4 col-md-4">
     <a href="{{ position.get_absolute_url }}"> 
       {{position.name}} 
     </a>
@@ -16,7 +16,7 @@
        total : # {{ position.pictures.all | length }} pictures
   </div>
 
-  <div class="col-xs-12 col-sm-4 col-md-6">
+  <div class="col-xs-12 col-sm-4 col-md-4">
     <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank">
           http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}
     </a>

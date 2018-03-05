@@ -14,6 +14,11 @@ class PositionForm(forms.ModelForm):
     class Meta:
         model = Position
         fields = ['name', 'public', 'pictures', ]
+        widgets = {
+            'pictures': forms.FileInput(attrs={
+                'accept': 'image/*'  # this is not an actual validation! don't rely on that!
+            })
+        }
 
 
 class PositionEditForm(forms.ModelForm):

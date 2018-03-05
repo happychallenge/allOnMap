@@ -41,7 +41,7 @@ $(window).scroll(function(){
     var scrollHeight = $(window).scrollTop() + $(window).height();
     var documentHeight = $(document).height();
     
-    if (scrollHeight + 5 >= documentHeight){
+    if (scrollHeight + 50 >= documentHeight){
         var page = $("#page").val();
         callMorePostAjax(parseInt(page)+1);
         $("#page").val(parseInt(page)+1);

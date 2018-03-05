@@ -20,44 +20,44 @@
 <div class="container">
   <div class="row">
       <div class="col-sm-offset-1 col-sm-10">
-          <div class="user-title">
-            <h2 class="form-title"> {% trans "Edit Positions" %} </h2>
-          </div>
-          <div class="body">
-            <form action="" method="post" id="form-post"> 
+        <div class="user-title">
+          <h2 class="form-title"> {% trans "Edit Positions" %} </h2>
+        </div>
+        <div class="body">
+          <form action="" method="post" id="form-post"> 
 
-              {% csrf_token %}
-              {% bootstrap_form form %}
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            
+            <div class="container"> 
+              <h4 class="text-info"> {% trans "Pictures which already were included" %}  </h4>
+              <p class="text-danger"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </p>
+              {% for picture in pictures %}
+                <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
+                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
+                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" checked value="{{picture.id}}">
+                </div>
+              {% endfor %}
               
-              <div class="container"> 
-                <h4 class="text-info"> {% trans "Pictures which already were included" %}  </h4>
-                <p class="text-danger"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </p>
-                {% for picture in pictures %}
-                  <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
-                    <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
-                    <input class="form-check-input position-static" type="checkbox" name="add_pictures" checked value="{{picture.id}}">
-                  </div>
-                {% endfor %}
-                
-              </div>
+            </div>
 
-              <div class="container" style="height: 20px"></div>
-              
-              <div class="container"> 
-                <h4 class="">{% trans "Pictures which were not included." %}  </h4>
-                <p class="text-warning">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </p>
-                {% for picture in notpictures %}
-                  <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
-                    <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
-                    <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
-                  </div>
-                {% endfor %}
-              </div>
-              <input type="submit" id="btn_ok" class="btn btn-lg btn-primary btn-block" value="Confirm" />
-            </form>
-          </div>
-      </div>
-      <div class="dummy"></div>
+            <div class="container" style="height: 20px"></div>
+            
+            <div class="container"> 
+              <h4 class="">{% trans "Pictures which were not included." %}  </h4>
+              <p class="text-warning">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </p>
+              {% for picture in notpictures %}
+                <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
+                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
+                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
+                </div>
+              {% endfor %}
+            </div>
+            <input type="submit" id="btn_ok" class="btn btn-lg btn-primary btn-block" value="Confirm" />
+          </form>
+        </div>
+    </div>
+    <div class="dummy"></div>
   </div>
 </div>
 
@@ -67,14 +67,5 @@
 {% block javascript %}
 
 <script src="{% static 'js/pictureadd.js' %}"></script> 
-<script src="{% static 'js/switchery.js' %}"></script>
-<script>
-    var elem1 = document.querySelector('.js-switch');
-    {% if form.instance.public %}
-      elem1.checked = true;
-    {% else %}
-      elem1.checked = false;
-    {% endif %}
-    var init1 = new Switchery(elem1, { color: '#1AB394' });
-</script>
+lo
 {% endblock javascript %}

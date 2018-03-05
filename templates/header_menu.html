@@ -19,14 +19,15 @@
       <ul class="nav navbar-nav pull-right">
         <li><a href="{% url 'onmap:mylist' %}">My List</a></li>
         <li>
-          <a href="{% url 'logout' %}">
-            {% if user.first_name %}
-              {{user.first_name}} 
+          <a href="{% url 'profile' %}">
+            {% if user.profile.nickname %}
+              {{user.profile.nickname}} 
             {% else %}
               You don't have a name.              
             {% endif %}
           </a> 
         </li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
       </ul>
     {% else %}
       <ul class="nav navbar-nav pull-right">

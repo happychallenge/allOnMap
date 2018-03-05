@@ -7,7 +7,7 @@
       <a href="{% url 'onmap:apicall' position.slug %}" target="_blank">{{position.name}}</a> 
     </div>
     <div class="col-xs-6 col-sm-3">
-      {{position.author.first_name}}
+      {{position.author.profile.nickname}}
     </div>
     <div class="col-xs-6 col-sm-3">
       {{position.views}} viewed 

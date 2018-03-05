@@ -115,15 +115,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGES = [
-    ('en', _('English')),
-    ('ko', _('Korean')),
-    # ('cn', _('Chinese')),
-]
+# LANGUAGES = [
+#     ('en', _('English')),
+#     ('ko', _('Korean')),
+#     # ('cn', _('Chinese')),
+# ]
 
-LOCALE_PATHS = (
-    join(BASE_DIR, 'locale'),
-)
+# LOCALE_PATHS = (
+#     join(BASE_DIR, 'locale'),
+# )
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
