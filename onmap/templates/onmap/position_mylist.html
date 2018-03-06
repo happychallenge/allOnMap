@@ -3,10 +3,8 @@
 {% block css %}
 
 <style>
-.container{
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px;
+img {
+  border-radius: 50%;
 }
 </style>
 
@@ -14,17 +12,25 @@
 
 
 {% block main %}
-<div class="container">
-  <h3> {% trans "My List" %} </h3>
-</div>
-<div class="container" id="position_list">
 
-{% include "onmap/position_mylist_ajax.html" %}
-      
-</div>
+<main>
+  <section>
 
-<button class="btn btn-primary btn-block" id="callmorepost">{% trans "More Positions" %}</button>
-<input type="hidden" id="page" value="1"> 
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "My List" %}</span></div>
+    <div class="form-divider"></div>
+
+    <div class="container" id="position_list">
+      {% include "onmap/position_mylist_ajax.html" %}
+    </div>
+
+    <button class="button circle block green" id="callmorepost">
+      {% trans "More Positions" %}
+    </button>
+    <input type="hidden" id="page" value="1"> 
+
+  </section>
+</main>
 
 {% endblock main %}
 
@@ -41,7 +47,7 @@ $(window).scroll(function(){
     var scrollHeight = $(window).scrollTop() + $(window).height();
     var documentHeight = $(document).height();
     
-    if (scrollHeight + 50 >= documentHeight){
+    if (scrollHeight + 200 >= documentHeight){
         var page = $("#page").val();
         callMorePostAjax(parseInt(page)+1);
         $("#page").val(parseInt(page)+1);

@@ -1,28 +1,31 @@
-{% load static i18n %}
+{% load static i18n humanize %}
 
 {% for position in positions %}
   
-  <div class="row">
-    <div class="col-xs-6 col-sm-3">
-      <a href="{% url 'onmap:apicall' position.slug %}" target="_blank">{{position.name}}</a> 
+  {# Positon Info #}
+    <div class="post-item">
+      <div class="post-header">
+        <strong class="post-title">
+          <a href="{% url 'onmap:apicall' position.slug %}" target="_blank"> 
+            {{position.name}}
+          </a>
+        </strong>
+        <small> written by : {{position.author.profile.nickname}} </small>
+        <div>
+          <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
+          <span class="post-comment">
+            <i class="fa fa-comments"></i> {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;
+            <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
+          </span>
+        </div>
+        
+      </div>
+      <div class="post-content">
+          {% for picture in position.get_pictures %}
+              <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+          {% endfor %}
+          total : # {{ position.pictures.all | length }} pictures
+      </div>    
     </div>
-    <div class="col-xs-6 col-sm-3">
-      {{position.author.profile.nickname}}
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      {{position.views}} viewed 
-    </div>
-    <div class="col-xs-6 col-sm-3">
-      {{position.likes}} likes
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12">
-      {% for picture in position.get_pictures %}
-            <img class="ratio img-circle" src="{{picture.file.url}}" width="50px" alt="{{picture.name}}">
-      {% endfor %}
-         total : # {{ position.pictures.all | length }} pictures
-    </div>
-  </div>
 
 {% endfor %}

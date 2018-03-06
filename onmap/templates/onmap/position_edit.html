@@ -3,63 +3,67 @@
 
 
 {% block css %}
-<link href="{% static 'css/switchery.css' %}" rel="stylesheet">
 <link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
-<style>
-.container{
-  margin-left: 2px;
-  margin-right: 2px;
-  padding: 0px;
-}
-</style>
 {% endblock css %}
 
 
 {% block main %}
 
-<div class="container">
-  <div class="row">
-      <div class="col-sm-offset-1 col-sm-10">
-        <div class="user-title">
-          <h2 class="form-title"> {% trans "Edit Positions" %} </h2>
-        </div>
-        <div class="body">
-          <form action="" method="post" id="form-post"> 
+<main>
+  <section class="container">
 
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            
-            <div class="container"> 
-              <h4 class="text-info"> {% trans "Pictures which already were included" %}  </h4>
-              <p class="text-danger"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </p>
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Edit Position" %}</span></div>
+    <div class="form-divider"></div>
+
+    <form action="" method="post" enctype="multipart/form-data" id="form-post"> 
+      {% csrf_token %}
+
+    {# Map Name #}
+      <div class="form-row-group with-icons">
+          <div class="form-row no-padding">
+              <i class="fa fa-vcard-o"></i>
+              <input type="text" name="name" id="id_name" class="form-element" value="{{form.instance.name}}">
+          </div>
+      </div>
+
+    {# Pictures Included #}
+      <div class="form-mini-divider"></div>
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <div class="txt-bold"> {% trans "Pictures which already were included" %}  </div>
+          <div class="txt-blue"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </div>
+            <div>
               {% for picture in pictures %}
-                <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
-                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
-                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" checked value="{{picture.id}}">
-                </div>
-              {% endfor %}
-              
-            </div>
-
-            <div class="container" style="height: 20px"></div>
-            
-            <div class="container"> 
-              <h4 class="">{% trans "Pictures which were not included." %}  </h4>
-              <p class="text-warning">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </p>
-              {% for picture in notpictures %}
-                <div class="col-xs-3 col-sm-3 col-md-2 justify-content-between">
-                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}" /> <br>
-                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
-                </div>
+                <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+                <input class="form-check-input position-static" type="checkbox" name="add_pictures" checked value="{{picture.id}}" >
               {% endfor %}
             </div>
-            <input type="submit" id="btn_ok" class="btn btn-lg btn-primary btn-block" value="Confirm" />
-          </form>
         </div>
-    </div>
-    <div class="dummy"></div>
-  </div>
-</div>
+      </div>
+    
+    {# Pictures Not included #}
+      <div class="form-mini-divider"></div>
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <div class="txt-bold">{% trans "Pictures which were not included." %}</div>
+          <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
+            <div>
+              {% for picture in notpictures %}
+                <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+                <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
+              {% endfor %}
+            </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
+      </div>
+    </form>
+
+  </section>
+</main>
 
 {% endblock main %}
 

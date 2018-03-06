@@ -1,19 +1,23 @@
 {% extends "call.html" %}
-{% load static bootstrap3 i18n %}
+{% load static i18n humanize %}
 
 
 {% block css %}
-<link href="{% static 'css/switchery.css' %}" rel="stylesheet">
 <link href="{% static 'css/custommarker.css' %}" rel="stylesheet"> 
 <style>
 #map{
   width: 100%;
   height: 600px;
 }
-.container{
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
+.well {
+  border: 1px solid #e7eaec;
+  box-shadow: none;
+  background-color: #ccc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px 10px;
+  font-size: 13px;
+  line-height: 16px;
 }
 </style>
 {% endblock css %}
@@ -21,84 +25,83 @@
 
 {% block main %}
 
-{% if not user.is_authenticated %}
-  <div class="container-fluid">
-    <h4> {% trans "If you sign up, all records will be saved and available for future use." %}
-    <a href="{% url 'login' %}"> <button class="btn btn-primary">Sign Up</button> </a></h4>
-  </div>
-{% endif %}
+<main>
+  <section>
+  {# Notification for Signup #}
+    {% if not user.is_authenticated %}
+    <div class="comment-container">
+      <div class="comment-header">
+        <span class="user-name">{% trans "Infomation" %}</span>
+      </div>
+      <div class="comment-content">
+        <h4> {% trans "If you sign up, all records will be saved and available for future use." %}
+        <a href="{% url 'login' %}"> 
+          <button class="button darkblue">Sign Up</button> </a></h4>
+      </div>
+    </div>
+    {% endif %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12 col-sm-2">
-      <strong>Name</strong>
-    </div>
-    <div class="col-xs-12 col-sm-10">
-      {{position.name}} &nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="{% url 'onmap:edit' position.slug %}" class="btn btn-sm btn-info"> {% trans "Edit" %} </a> 
-      <a href="{% url 'onmap:delete' position.slug %}" class="btn btn-sm btn-danger"> {% trans "Delete" %} </a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-2">
-      <strong>Count</strong>
-    </div>
-    <div class="col-xs-12 col-sm-10">
-      {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;&nbsp;
-      {{position.likes}} {% trans "likes" %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-2">
-      <strong>Public</strong>
-    </div>
-    <div class="col-xs-12 col-sm-10">
-      <input type="checkbox" class="js-switch" {% if position.public %} checked {% endif %} /> 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-2">
-      <strong>{% trans "Pictures" %} </strong>
-    </div>
-    <div class="col-xs-12 col-sm-10">
-      {% for picture in position.pictures.all %}
-        <a href="{{ pos.get_absolute_url }}"> 
-          <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-        </a>
-      {% endfor %}
+  {# Positon Info #}
+
+    <div class="post-item">
+    {# Name #}
+      <div class="post-header">
+        <strong class="post-title">
+          {{position.name}}
+        </strong>
+        <div>
+          <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
+          <span class="post-comment">
+            <i class="fa fa-comments"></i> {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;
+            <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
+          </span>
+        </div>
+      </div>
+    {# Button #}
+      <div class="post-content">
+          <a href="{% url 'onmap:edit' position.slug %}" class="button darkblue"> {% trans "Edit" %} </a> 
+          <button class="button red" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
+      </div>   
+    {# Pictures #}
+      <div class="post-content">
+          {% for picture in position.pictures.all %}
+              <img src="{{picture.file.url}}" alt="{{picture.name}}">
+          {% endfor %}
+      </div>   
+    {# URL Copy #}
+      <div class="post-content">
+        <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank"> 
+          <small>  http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %} </small>
+        </a> 
+        <button class="button darkblue pull-right" onclick="copyToClipboard()">
+          {% trans "Copy to clipboard" %}
+        </button><br>
+        <input type="text" id="id_copyurl" value="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" >
+        <div class="well">
+<pre>&lt;a href='http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}' 
+target='_blank'&gt;
+    &lt;img src='Picture Name' alt='{{position.name}}'&gt;
+&lt;/a&gt;</pre>
+        </div>
+      </div> 
+    {# Map #}
+      <div class="post-content">
+          <div id="map"></div>
+      </div>
     </div> 
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-2">
-      <strong>{% trans "Anchor" %} </strong>
-    </div>  
-    <div class="col-xs-12 col-sm-10">
-      <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank"> 
-        <span> http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}</span>
-      </a> 
-      <button class="btn btn-warning pull-right" onclick="copyToClipboard()">
-        {% trans "Copy to clipboard" %}
-      </button><br>
-      <input type="text" id="id_copyurl" value="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" >
-      
-<pre>&lt;a href='http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}' target='_blank'&gt;
-      &lt;img src='Picture Name' alt='{{position.name}}'&gt;
-&lt;/a&gt;</pre> 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div id="map"></div>
-    </div>
-  </div>
-</div>
+
+  </section>
+</main>
+
+  
+
 {% endblock main %}
 
 
 {% block javascript %}
 
 {% if china %}
-<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+  <script src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% else %}
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% endif %}
@@ -196,10 +199,9 @@ function copyToClipboard() {
 }
 </script>
 
-<script src="{% static 'js/switchery.js' %}"></script>
 <script>
-    var elem1 = document.querySelector('.js-switch');
-    var init1 = new Switchery(elem1, { color: '#1AB394' }).disable();
+  
 </script>
+
 {% endblock javascript %}
 

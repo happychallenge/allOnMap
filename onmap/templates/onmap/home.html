@@ -8,53 +8,73 @@
 
 
 {% block main %}
-<div class="container">
-  <div class="jumbotron">
-    <h3>{% trans "Picture on Map" %}</h3>
-    <p>{% trans "Please see the location of all the photos on the map." %} 
-    {% trans "Please see the location of all the photos on the map." %} </p>
-    <p><a class="btn btn-primary btn-lg" href="{% url 'onmap:manual' %}" role="button">{% trans "Learn more" %}</a></p> 
-  </div>
-</div>
-
-{% if not user.is_authenticated %}
-<div class="container">
-  <h4>{% trans "If you sign up, all records will be saved and available for future use." %}
-  <a href="{% url 'login' %}"> <button class="btn btn-primary">{% trans "Sign Up" %} </button> </a></h4>
-   
-</div>
-{% endif %}
-
-{% include 'onmap/partial/pos_add.html' %}
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="fb-like" 
-          data-href="https://www.pictureonmap.com/" 
-          data-layout="standard" 
-          data-action="like" 
-          data-size="large" 
-          data-show-faces="true" 
-          data-share="true">
+<main class="wizard-page">
+  <div class="wizard">
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a4.png' %}" width="300px"> 
+          <p>{% trans "Just upload a picture of your smartphone or digital camera to the site and the location of the photo is displayed on the map." %} </p>
+          <p>{% trans "Please record your goals or accomplishments on your map." %} </p>
+          <div class="form-mini-divider"></div>
+          <a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a>
+      
       </div>
-      <div id="fb-root"></div>
     </div>
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a1.png' %}" width="300px"> 
+          <p>{% trans "Select the first Add menu." %} 
+          <p><a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a></p>
+      </div>
+    </div>
+
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a2.png' %}" width="300px"> 
+          <p>{% trans "Second, please upload a picture of your smartphone or digital camera to the site based on the topic" %} 
+          <p><a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a></p>
+      </div>
+    </div>
+
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a3.png' %}" width="300px"> 
+          <p>{% trans "Third, the photo automatically displays on map where the picture was taken." %}
+          <p><a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a></p>
+      </div>
+    </div>
+  
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a5.png' %}" width="300px"> 
+          <p>{% trans "Fourth, you can add photos that you uploaded elsewhere through editing to enrich the topic." %}
+          <p><a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a></p>
+      </div>
+    </div>
+
+    <div class="wizard-item">
+      {# item 1 #}
+      <div class="wizard-content">
+          <img src="{% static 'images/a6.png' %}" width="300px"> 
+          <p>{% trans "Fifth, you can share with map links posted by others.." %}
+          <p><a class="button circle green" href="{% url 'onmap:add' %}" role="button">{% trans "Try..." %}</a></p>
+      </div>
+    </div>
+
   </div>
-</div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1130433950309278&autoLogAppEvents=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+</main>
 
 {% endblock main %}
 
 
 {% block javascript %}
-<script src="{% static 'js/exif.js' %}"></script> 
+
+<script src="{% static 'js/turbo.min.js' %}"></script> 
 <script src="{% static 'js/pictureadd.js' %}"></script> 
 
 {% if not user.is_authenticated %}
@@ -63,4 +83,12 @@
   </script>
 {% endif %}
 
+<script>
+    $(document).ready(function() {
+        $(".wizard").Turbo({
+            items:1,
+            circular:false
+        });
+    });
+</script>
 {% endblock javascript %}

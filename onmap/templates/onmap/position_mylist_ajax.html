@@ -1,29 +1,32 @@
-{% load static i18n %}
+{% load static i18n humanize %}
 
 {% for position in positions %}
   
-  <div class="col-xs-12 col-sm-4 col-md-4">
-    <a href="{{ position.get_absolute_url }}"> 
-      {{position.name}} 
-    </a>
-    <div class="pull-right"> {{position.views}} views &nbsp;&nbsp;&nbsp;&nbsp; {{position.likes}} like </div>
-  </div>
+  {# Positon Info #}
+    <div class="post-item">
+      <div class="post-header">
+        <strong class="post-title">
+          <a href="{{ position.get_absolute_url }}"> 
+            {{position.name}}
+          </a>
+        </strong>
+         
+        <div>
+          <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
+          <span class="post-comment">
+            <i class="fa fa-comments"></i> {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;
+            <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
+          </span>
+        </div>
+        
+      </div>
+      <div class="post-content">
+          {% for picture in position.get_pictures %}
+              <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+          {% endfor %}
+          total : # {{ position.pictures.all | length }} pictures
+      </div>    
+    </div>
 
-  <div class="col-xs-12 col-sm-4 col-md-4">
-    {% for picture in position.get_pictures %}
-          <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-    {% endfor %}
-       total : # {{ position.pictures.all | length }} pictures
-  </div>
-
-  <div class="col-xs-12 col-sm-4 col-md-4">
-    <a href="http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}" target="_blank">
-          http://{{ request.get_host }}{% url 'onmap:apicall' position.slug %}
-    </a>
-    <button class="btn btn-warning pull-right" id="id_btn-{{ forloop.counter }}" onclick="copyToClipboard('id_copyurl-{{ forloop.counter }}')">
-      Copy to clipboard
-    </button><br>
-    <input type="text" id="id_copyurl-{{ forloop.counter }}" value="http://{{ request.get_host }}/onmap/{{position.slug}}/" >
-  </div>
 
 {% endfor %}

@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^login/$', login_views.login, name='login'),
     url(r'^logout/$', login_views.logout, name='logout'),
-    url(r'^profile/$', login_views.profile, name='profile'),
+    url(r'^myprofile/$', login_views.myprofile, name='myprofile'),
     url(r'^onmap/', include('onmap.urls', namespace="onmap")),
 ]
 

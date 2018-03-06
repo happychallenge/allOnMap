@@ -86,7 +86,6 @@ def edit(request, slug):
             position = form.save()
 
             add_pictures = request.POST.getlist('add_pictures')
-            print("Picture ID : ", add_pictures)
 
             for picture_id in add_pictures:
                 picture = get_object_or_404(Picture, id=picture_id)
@@ -98,9 +97,11 @@ def edit(request, slug):
     else:
         form = PositionEditForm(instance=position)
         pictures = position.pictures.all()
-
         picture_ids = [ picture.id for picture in pictures ]
-        notpictures = Picture.objects.filter(author=user).exclude(id__in=picture_ids)
+        notpictures = Picture.objects.filter(author=user).all()
+        print(notpictures)
+        notpictures = notpictures.exclude(id__in=picture_ids)
+        print(notpictures)
 
     return render(request, "onmap/position_edit.html", 
             {'form': form, 'pictures':pictures, 'notpictures':notpictures})
@@ -180,6 +181,7 @@ def add(request):
                     tempname = name
 
                 picture.name = tempname
+                picture.author = request.user
                 image = Image.open(filename)
             # 위도 경도 값 가져오기
                 lat, lng, dt = get_lat_lon_dt(image)

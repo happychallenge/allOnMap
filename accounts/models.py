@@ -20,7 +20,9 @@ class Profile(models.Model):
     @property
     def pictures_count(self):
         user = self.user
-        return user.pictures.count()
+        pictures = user.picture_set.all()
+        print("Pictures : ", pictures)
+        return user.picture_set.count()
 
 def create_user_profile(sender, instance, created, **kwargs):
     print("Create User Profile")

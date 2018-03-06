@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 # 3rd party
     'bootstrap3',
     'allauth',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.naver',
+    # 'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
     # 'allauth.socialaccount.providers.weixin',
 # Mine

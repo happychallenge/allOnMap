@@ -8,6 +8,7 @@ from allauth.socialaccount.models import SocialApp
 from allauth.socialaccount.templatetags.socialaccount import get_providers
 
 from .forms import ProfileForm
+from onmap.models import Position
 
 def login(request):
     providers = []
@@ -30,7 +31,7 @@ def logout(request):
 
 
 @login_required
-def profile(request):
+def myprofile(request):
     profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
@@ -40,8 +41,9 @@ def profile(request):
             return redirect('profile')
     else:
         form = ProfileForm(instance=profile)
-        context = {'form':form}
-    return render(request, 'accounts/profile.html', context)
+        positions = Position.objects.prefetch_related('pictures').filter(author = request.user)
+        context = {'form':form, 'positions':positions}
+    return render(request, 'accounts/myprofile.html', context)
 
 
 def logout(request):
