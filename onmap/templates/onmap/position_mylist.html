@@ -58,9 +58,13 @@ function callMorePostAjax(page) {
       url: "{% url 'onmap:mylist_ajax' %}",
       data: {'page': page, },
       success: function(response){
-        $("#position_list").append(response);
+        $("#position_list").append(response.html);
+        console.log(response.next_page);
+        if(response.next_page == false ){
+          $("#callmorepost").hide();
+        }
       },
-      dataType: 'html'
+      dataType: 'json'
     });
 }
 </script>

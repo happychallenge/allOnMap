@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.template import RequestContext
@@ -38,14 +39,13 @@ def _position_list(request, template, position_list):
 
     if( page == paginator.num_pages):
         next_page = False
-        print("No More Pages")
     else:
         next_page = True
-        print("Has More Pages")
     return render(request, template, {'positions': position_list, 'next_page':next_page})
 
     
 def _position_list_ajax(request, template, position_list):
+    data = {}
     paginator = Paginator(position_list, 8)
     page = request.GET.get('page')
     try:
@@ -55,20 +55,23 @@ def _position_list_ajax(request, template, position_list):
     except EmptyPage:
         position_list = paginator.page(paginator.num_pages)
 
-    if( page == paginator.num_pages):
+    print("Page : ", page, " Paginator.num_pages : ", paginator.num_pages)
+    if( int(page) == paginator.num_pages):
         next_page = False
     else:
         next_page = True
+    print("Next Page : ", next_page)
     context = {'positions': position_list}
-    html = render_to_response(template, context, context_instance=RequestContext(request))
-    return JsonResponse({'html': html, 'next_page':next_page})
+    data["next_page"] = next_page
+    data["html"] = render_to_string(template, context)
+    return JsonResponse(data, safe=False)
 
 
 
 @login_required
 def mylist(request):
     user = request.user
-    positions = Position.objects.prefetch_related('pictures').filter(author = user)[:8]
+    positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return _position_list(request, "onmap/position_mylist.html", positions)
 
 @login_required
@@ -79,7 +82,7 @@ def mylist_ajax(request):
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')[:8]
+    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')
     return _position_list(request, "onmap/position_popularlist.html", positions)
 
 
