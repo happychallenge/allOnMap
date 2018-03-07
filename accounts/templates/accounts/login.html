@@ -3,39 +3,37 @@
 {% load socialaccount static i18n %}
 
 {% block main %}
-<main>
-    <section class="container">
-        <div><h3> &nbsp; Social Login</h3></div>
-        
-        <div class="container"> 
-            {% trans "User Privacy Policy" %} : <a href="{% url 'onmap:privacy' %}"> privacy-policy-html-english </a>
-        </div>
 
-    {% for provider in providers %}
-        {% if provider.name == 'Facebook'  %}
-        <div class="form-row">
-            <a href="{% provider_login_url provider.id %}" class="button circle block blue"> 
-                <i class="fa fa-facebook"></i> {% trans "Sign in with Facebook" %} </a>
-        </div>
-        {% endif %}
-        {% if provider.name == 'Google'  %}
-        <div class="form-row">
-            <a href="{% provider_login_url provider.id %}" class="button circle block red"><i class="fa fa-google"></i> {% trans "Sign in with Google" %} </a>
-        </div>
-        {% endif %}
-        
-        {% if provider.name == 'Naver'  %}
-        <div class="form-row">
-            <a href="{% provider_login_url provider.id %}" class="button circle block green"><i class="fa fa-naver"></i> {% trans "Sign in with Naver" %} </a>
-        </div>
-        {% endif %}
-        {% if provider.name == 'Kakao'  %}
-        <div class="form-row">
-            <a href="{% provider_login_url provider.id %}" class="button circle block yellow"><i class="fa fa-naver"></i> {% trans "Sign in with Kakao" %} </a>
-        </div>
-        {% endif %}
-    {% endfor %}
+    <div><h3> &nbsp; Social Login</h3></div>
+    
+    <div class="container"> 
+        {% trans "User Privacy Policy" %} : <a href="{% url 'onmap:privacy' %}"> privacy-policy-html-english </a>
+    </div>
 
-    </section>
-</main>
+{% for provider in providers %}
+    {% if provider.name == 'Facebook'  %}
+    <div class="form-row">
+        <a href="{% provider_login_url provider.id %}" class="button circle block blue"> 
+            <i class="fa fa-facebook"></i> {% trans "Sign in with Facebook" %} </a>
+    </div>
+    {% endif %}
+    {% if provider.name == 'Google'  %}
+    <div class="form-row">
+        <a href="{% provider_login_url provider.id %}" class="button circle block red"><i class="fa fa-google"></i> {% trans "Sign in with Google" %} </a>
+    </div>
+    {% endif %}
+    
+    {% if provider.name == 'Naver'  %}
+    <div class="form-row">
+        <a href="{% provider_login_url provider.id %}" class="button circle block green"><i class="fa fa-naver"></i> {% trans "Sign in with Naver" %} </a>
+    </div>
+    {% endif %}
+    {% if provider.name == 'Kakao'  %}
+    <div class="form-row">
+        <a href="{% provider_login_url provider.id %}" class="button circle block yellow"><i class="fa fa-naver"></i> {% trans "Sign in with Kakao" %} </a>
+    </div>
+    {% endif %}
+{% endfor %}
+
+
 {% endblock main %}

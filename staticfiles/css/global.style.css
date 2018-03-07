@@ -305,6 +305,10 @@ section.container{
 	padding: 0 10px;
 }
 
+footer.container{
+	padding: 0 10px;
+}
+
 .form-row{
 	display: block;
 	width: 100%;

@@ -38,7 +38,7 @@ def myprofile(request):
         if form.is_valid():
             profile = form.save()
             
-            return redirect('profile')
+            return redirect('myprofile')
     else:
         form = ProfileForm(instance=profile)
         positions = Position.objects.prefetch_related('pictures').filter(author = request.user)

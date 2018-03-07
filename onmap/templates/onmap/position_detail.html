@@ -25,8 +25,6 @@
 
 {% block main %}
 
-<main>
-  <section>
   {# Notification for Signup #}
     {% if not user.is_authenticated %}
     <div class="comment-container">
@@ -50,7 +48,7 @@
           {{position.name}}
         </strong>
         <div>
-          <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
+          <span class="post-date"><i class="fa fa-clock-o"></i> {% trans "create time" %}: {{position.create_dt|naturaltime }} </span>
           <span class="post-comment">
             <i class="fa fa-comments"></i> {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;
             <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
@@ -89,11 +87,6 @@ target='_blank'&gt;
           <div id="map"></div>
       </div>
     </div> 
-
-  </section>
-</main>
-
-  
 
 {% endblock main %}
 

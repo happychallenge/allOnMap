@@ -1,14 +1,10 @@
 {% load i18n bootstrap3 %}
 
-<main>
+<div class="form-divider"></div>
+<div class="form-label-divider"><span>{% trans "Add Picture" %}</span></div>
+<div class="form-divider"></div>
 
-  <section class="container">
-
-    <div class="form-divider"></div>
-    <div class="form-label-divider"><span>{% trans "Add Picture" %}</span></div>
-    <div class="form-divider"></div>
-
-  <form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
+<form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
     {% csrf_token %}
 
   {# Name #}
@@ -51,8 +47,5 @@
     <div class="form-row">
       <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
     </div>
-  </form>
-
-  </section>
-</main>
+</form>
 

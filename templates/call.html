@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static %}
+{% load static i18n %}
 
 
 {% block header %}
@@ -42,10 +42,43 @@ footer{
     </header>
     <!-- Header area end -->
     <!-- Page content start -->
-        
+    <main>
+      <section>
   {% block main %}
-    
+  
+
   {% endblock main %}
+
+  {% block footer %}
+    <div class="form-divider"></div>
+    <footer class="container">
+      &nbsp;&nbsp;&nbsp;&nbsp; &copy;www.ohtto.com &copy;www.pictureonmap.com since 2018. <br>
+      &nbsp;&nbsp;&nbsp;&nbsp; Mission : {% trans "gives all content the vitality of location" %} <a mailto:pictureonmap@outlook.com></a>
+
+      <div class="fb-like" 
+          data-href="https://www.pictureonmap.com/" 
+          data-layout="standard" 
+          data-action="like" 
+          data-size="large" 
+          data-show-faces="true" 
+          data-share="true">
+      </div>
+      <div id="fb-root"></div>
+
+
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=1130433950309278&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+    </footer>
+    <div class="form-divider"></div>
+  {% endblock footer %}
+    </section>
+  </main>
 
         <!-- Page content end -->
   </div>
@@ -59,17 +92,10 @@ footer{
   </div>
 </div>
 
-<footer class="footer">
-  
-</footer>
 
 {% block modal %}
 
 {% endblock modal %}
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 
 {% endblock body %}
 

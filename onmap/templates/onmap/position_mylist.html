@@ -13,9 +13,6 @@ img {
 
 {% block main %}
 
-<main>
-  <section>
-
     <div class="form-divider"></div>
     <div class="form-label-divider"><span>{% trans "My List" %}</span></div>
     <div class="form-divider"></div>
@@ -24,15 +21,16 @@ img {
       {% include "onmap/position_mylist_ajax.html" %}
     </div>
 
+  {% if next_page %}
     <button class="button circle block green" id="callmorepost">
       {% trans "More Positions" %}
     </button>
+  {% endif %}
     <input type="hidden" id="page" value="1"> 
 
-  </section>
-</main>
 
 {% endblock main %}
+
 
 
 {% block javascript %}
@@ -60,7 +58,7 @@ function callMorePostAjax(page) {
       url: "{% url 'onmap:mylist_ajax' %}",
       data: {'page': page, },
       success: function(response){
-        $("#position_list").append(response)
+        $("#position_list").append(response);
       },
       dataType: 'html'
     });

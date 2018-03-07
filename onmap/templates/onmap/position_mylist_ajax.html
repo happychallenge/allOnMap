@@ -18,8 +18,8 @@
             <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
           </span>
         </div>
-        
       </div>
+  {# Content #}
       <div class="post-content">
           {% for picture in position.get_pictures %}
               <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
@@ -27,6 +27,5 @@
           total : # {{ position.pictures.all | length }} pictures
       </div>    
     </div>
-
 
 {% endfor %}

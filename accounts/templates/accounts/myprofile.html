@@ -5,7 +5,7 @@
 {% block css %}
 <link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
 <style>
-img {
+.post-content img {
   border-radius: 50%;
 }
 .upload img{
@@ -18,21 +18,19 @@ img {
 
 {% block main %}
 
-<main>
-  <section>
     <div class="comment-container">
       <div class="comment-header">
         <span class="user-name">
-          {% trans "User name and Picture" %}  
+          {% trans "User name and Profile" %}  
         </span>
       </div>
 
     <form method="POST" enctype='multipart/form-data' class="form-horizontal" id="formProfile">
-        
+        {% csrf_token %}
       <div class="form-row-group with-icons">
         <div class="form-row no-padding">
           <i class="fa fa-vcard-o"></i>
-          <input type="text" name="name" id="id_name" class="form-element" value="{{form.instance.nickname}}">
+          <input type="text" name="nickname" id="id_nickname" class="form-element" value="{{form.instance.nickname}}">
         </div>
       </div>
 
@@ -56,7 +54,7 @@ img {
 
 
       <div class="form-row">
-          <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
+          <button id="btn-profile" type="submit" class="button circle block green" style="display: none;">{% trans "Confirm" %}</button>
       </div>
     </form>
 
@@ -78,39 +76,26 @@ img {
 {# List of Map #}
     {% include 'onmap/position_mylist_ajax.html' %}
 
-  </section>
-</main>
-
 {% endblock main %}
 
 {% block modal %}
-<div class="modal fade" id="modalCrop">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type='button' data-dismiss='modal' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-                <h4 class="modal-title">{% trans "Crop the photo" %} </h4>
-            </div>
-            <div class="modal-body">
-                <img src="" id='image' style='max-width: 100%'>
-            </div>
-            <div class="modal-footer">
-                <div class="btn-group pull-left" role='group'>
-                    <button type='button' class="btn btn-default js-zoom-in">
-                        <i class="icon-zoom-out icon-3"></i>  
-                    </button>
-                    <button type='button' class="btn btn-default js-zoom-out">
-                        <i class="icon-zoom-in icon-3"></i>
-                    </button>
-                </div>
-                <button type='button' class="btn btn-default" data-dismiss='modal'>Cancel</button>
-                <button type='button' class="btn btn-primary btn-crop" data-dismiss='modal'>{% trans "Crop and Upload" %}</button>
-            </div>
+
+<div class="popup-overlay" id="modalCrop"> <!-- if you dont want overlay add class .no-overlay -->
+    <div class="popup-container">
+        <div class="popup-header">
+            <h3 class="popup-title">{% trans "Crop the photo" %}</h3>
+            <span class="popup-close" data-dismiss="true"><i class="fa fa-times"></i></span>
+        </div>
+        <div class="popup-content">
+            <img src="" id='image' style='max-width: 100%'>
+        </div>
+        <div class="popup-footer">
+            <button class="button" data-dismiss="true">Cancel</button>
+            <button class="button green btn-crop">{% trans "Crop and Upload" %}</button>
         </div>
     </div>
-</div> 
+</div>
+
 {% endblock modal %}
 
 {% block javascript %}
@@ -124,7 +109,7 @@ $(function(){
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#image').attr('src', e.target.result);
-                $('#modalCrop').modal("show");
+                $('#modalCrop').fadeIn('fast');
             }
             reader.readAsDataURL(this.files[0]);
         }
@@ -135,29 +120,31 @@ $(function(){
     var cropBoxData;
     var canvasData;
 
-    $('#modalCrop').on('shown.bs.modal', function(){
+    $image.on('load', function(){
         $image.cropper({
             viewMode: 1,
-            aspectRatio: 1/1,
+            aspectRatio: 1 / 1,
             minCropBoxWidth: 200,
             minCropBoxHeight: 200,
-            ready: function(){
+            ready: function() {
                 $image.cropper('setCanvasData', canvasData);
                 $image.cropper('setCropBoxData', cropBoxData);
-            }
+            },
         });
-    }).on('hidden.bs.modal', function(){
+        cropData = $image.cropper('getData');
+        console.log("first : "+cropData);
+    }).on('fadeout', function() {
         cropBoxData = $image.cropper('getCropBoxData');
         canvasData = $image.cropper('getCanvasData');
         $image.cropper('destory');
-    });
+    });;
 
-    $(".js-zoom-in").click(function(){
-        $image.cropper('zoom', 0.1);
-    })
-    $(".js-zoom-out").click(function(){
-        $image.cropper('zoom', -0.1);
-    });
+    // $(".js-zoom-in").click(function(){
+    //     $image.cropper('zoom', 0.1);
+    // })
+    // $(".js-zoom-out").click(function(){
+    //     $image.cropper('zoom', -0.1);
+    // });
 
     // SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER
     $('.btn-crop').click(function(){

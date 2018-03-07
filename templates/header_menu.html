@@ -8,7 +8,7 @@
           <img src="{% if user.profile.picture %} {{ user.profile.picture.url }}{% else %} {% static 'images/nouser.png' %}{% endif %}" width="150px" class="" width="160"> 
       </a>
       <h3 class="author">
-        {% if user.is_authorized %}
+        {% if user.is_authenticated %}
           {% if user.profile.nickname %}
             {{user.profile.nickname}}     
           {% endif %}
@@ -28,12 +28,12 @@
           <a href="{% url 'onmap:add' %}"><i class="fa fa-file-image-o"></i> Add</a>
         </li>
         <li>
-          <a href="{% url 'onmap:popularlist' %}"><i class="fa fa-magic"></i>Popular</a>
+          <a href="{% url 'onmap:popularlist' %}"><i class="fa fa-magic"></i> Popular List</a>
         </li>
     {% if user.is_authenticated %}
-        <li><a href="{% url 'onmap:mylist' %}"><i class="fa fa-th-large"></i>My List</a></li>
+        <li><a href="{% url 'onmap:mylist' %}"><i class="fa fa-th-large"></i> My List</a></li>
         <li>
-          
+          <a href="{% url 'logout' %}"><i class="fa fa-th-large"></i>Logout</a>
         </li>
     {% else %}
         <li>

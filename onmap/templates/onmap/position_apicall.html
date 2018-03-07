@@ -34,7 +34,7 @@ body{
         <button class="btn-default btn-circle btn-lg" data-url="{{position.slug}}">
             <i class="fa fa-link fa-3"></i> 
         </button>
-        <span class="like-count"> {{position.views}} viewed</span>
+        <span> {{position.views}} {% trans "viewed" %}</span>
         &nbsp;&nbsp; &nbsp;&nbsp;
         <button class="btn-danger btn-circle btn-lg like" data-url="{{position.slug}}">
             <i class="fa fa-heart-o fa-3"></i> 
@@ -63,20 +63,14 @@ $("#map").height(map_height);
 // Like and Cancel
 $(document).on('click', '.like', function(){
   var slug = $(this).attr('data-url');
-  console.log('slug : ' + slug);
-
   $.ajax({
     type: 'POST',
     url: "{% url 'onmap:userlike' %}",
     data: {'slug': slug, 'csrfmiddlewaretoken': '{{csrf_token}}' },
     dataType: 'json',
-
-    // response expression from Server 
-    // { 'like_count': post.like_count, 'message': message }
     success: function(response){
       $("#likecount-"+slug).html(response.like_count);
     },
-
     error: function(request, status, error) {
         console.log(error);
     },
