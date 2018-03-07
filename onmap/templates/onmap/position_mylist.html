@@ -17,7 +17,23 @@ img {
     <div class="form-label-divider"><span>{% trans "My List" %}</span></div>
     <div class="form-divider"></div>
 
-    <div class="container" id="position_list">
+    <div class="list-box">
+      <div class="list-item">
+        <i class="fa fa-bookmark"></i>
+        <em class="seperate"></em>
+        <span class="list-item-title">Sorting (All or Summary)</span>
+
+        <div class="sweet-check">
+          <input type="checkbox" id="id_ptype" value="S" checked>
+          <div class="outline">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div id="position_list">
       {% include "onmap/position_mylist_ajax.html" %}
     </div>
 
@@ -37,7 +53,7 @@ img {
 <script>
 $("#callmorepost").click(function(){
     var page = $("#page").val();
-    callMorePostAjax(parseInt(page)+1);
+    callMorePostAjax(parseInt(page)+1, false);
     $("#page").val(parseInt(page)+1);
 });
 
@@ -47,21 +63,30 @@ $(window).scroll(function(){
     
     if (scrollHeight + 200 >= documentHeight){
         var page = $("#page").val();
-        callMorePostAjax(parseInt(page)+1);
+        callMorePostAjax(parseInt(page)+1, false);
         $("#page").val(parseInt(page)+1);
     }
 });
 
-function callMorePostAjax(page) {
+function callMorePostAjax(page, refresh) {
+    var ptype = $("#id_ptype").val();
     $.ajax( {
       type : 'GET',
       url: "{% url 'onmap:mylist_ajax' %}",
-      data: {'page': page, },
+      data: {'page': page, 'ptype':ptype},
       success: function(response){
-        $("#position_list").append(response.html);
-        console.log(response.next_page);
-        if(response.next_page == false ){
-          $("#callmorepost").hide();
+        if( refresh ){
+          console.log("refresh ok");
+          $("#position_list").html(response.html);
+          if(response.next_page == false ){
+            $("#callmorepost").hide();
+          }
+        } else {
+          console.log("no refresh");
+          $("#position_list").append(response.html);
+          if(response.next_page == false ){
+            $("#callmorepost").hide();
+          }
         }
       },
       dataType: 'json'
@@ -77,5 +102,15 @@ function copyToClipboard(id) {
   document.execCommand("Copy");
   alert("Copied the url: " + copyText.value);
 }
+
+$(document).on('click', '.sweet-check', function(){
+    if ($(this).hasClass('checked')) {
+        $("#id_ptype").val('S');
+    } else {
+        $("#id_ptype").val('A');
+    }
+    callMorePostAjax(1, true);
+    $("#callmorepost").show();
+});
 </script>
 {% endblock javascript %}

@@ -61,7 +61,7 @@ def _position_list_ajax(request, template, position_list):
     else:
         next_page = True
     print("Next Page : ", next_page)
-    context = {'positions': position_list}
+    context = {'positions': position_list, 'next_page':next_page}
     data["next_page"] = next_page
     data["html"] = render_to_string(template, context)
     return JsonResponse(data, safe=False)
@@ -71,13 +71,21 @@ def _position_list_ajax(request, template, position_list):
 @login_required
 def mylist(request):
     user = request.user
-    positions = Position.objects.prefetch_related('pictures').filter(author = user)
+    ptype = request.GET.get('ptype', 'S')
+    if ptype == 'S':
+        positions = Position.objects.prefetch_related('pictures').filter(author = user, ptype='S')
+    else:
+        positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return _position_list(request, "onmap/position_mylist.html", positions)
 
 @login_required
 def mylist_ajax(request):
     user = request.user
-    positions = Position.objects.prefetch_related('pictures').filter(author = user)
+    ptype = request.GET.get('ptype', 'S')
+    if ptype == 'S':
+        positions = Position.objects.prefetch_related('pictures').filter(author = user, ptype='S')
+    else:
+        positions = Position.objects.prefetch_related('pictures').filter(author = user)
     return _position_list_ajax(request, "onmap/position_mylist_ajax.html", positions)
 
 

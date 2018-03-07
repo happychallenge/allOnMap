@@ -1001,7 +1001,7 @@ select.form-element{
 	border-radius: 3px;
 	background-color: #FFF;
 	min-height: 100px;
-	margin: 5px 10px;
+	margin: 5px 0px;
 	-webkit-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
 	-moz-box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
 	box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.1);
