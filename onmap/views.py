@@ -15,7 +15,7 @@ from .forms import PositionForm, PositionEditForm
 
 # Create your views here.
 def home(request):
-    return render(request, "onmap/home.html", {'form': form})
+    return render(request, "onmap/home.html")
 
 
 def manual(request):
@@ -204,6 +204,7 @@ def add(request):
             public = request.POST.get('public')
             print("Public : ", public)
             position = form.save(commit=False)
+            position.ptype = 'S'
             if public == 'on':
                 position.public = True
                 print("Public : True")

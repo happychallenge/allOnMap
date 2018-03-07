@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+<meta charset="utf-8">
+<meta name=”keywords” content="ohtto,lbs,sns" > 
+<meta name="viewport" content="width=device-width,height=device-height, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Picture on Map">
+<meta name="author" content="pictureonmap ohtto.com">
+<link rel="icon" href="../../favicon.ico">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113713739-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113713739-1');
+</script>
+
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+-->
+<title>Picture On Map</title>
+
+<!-- Bootstrap core CSS --> 
+
+{% block header %}
+  
+{% endblock header %}
+</head>
+
+<body>
+<!-- Fixed navbar -->
+
+{% block body %}
+  
+{% endblock body %}
+
+<!--
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+-->
+
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script> 
+
+{% block tail %}
+    
+{% endblock tail %}
+
+</body>
+</html>
