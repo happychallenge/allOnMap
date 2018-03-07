@@ -13,7 +13,7 @@ class Position(models.Model):
     name = models.CharField("Name", max_length=300)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True)
     likes = models.IntegerField(default=0)
-    ptype = models.CharField("", default="E", max_length=1)
+    ptype = models.CharField("Type", default="E", max_length=1)
     views = models.IntegerField(default=0)
     public = models.BooleanField(default=True)
     pictures = models.ManyToManyField("Picture", related_name='positions')
