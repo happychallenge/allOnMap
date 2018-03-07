@@ -15,7 +15,6 @@ from .forms import PositionForm, PositionEditForm
 
 # Create your views here.
 def home(request):
-    form = PositionForm()
     return render(request, "onmap/home.html", {'form': form})
 
 
@@ -90,12 +89,12 @@ def mylist_ajax(request):
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')
+    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=1, public=True).order_by('-likes')
     return _position_list(request, "onmap/position_popularlist.html", positions)
 
 
 def popularlist_ajax(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')
+    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=1, public=True).order_by('-likes')
     return _position_list_ajax(request, "onmap/position_popularlist_ajax.html", positions)
 
 
