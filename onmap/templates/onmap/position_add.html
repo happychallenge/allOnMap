@@ -17,5 +17,14 @@
 {% block javascript %}
 
 <script src="{% static 'js/pictureadd.js' %}"></script>
+<script>
+$(document).on('click', '.sweet-check', function(){
+    if ($(this).hasClass('checked')) {
+        $("#id_public").val('on');
+    } else {
+        $("#id_public").val('off');
+    }
+});
+</script>
 
 {% endblock javascript %}

@@ -32,13 +32,16 @@ def _position_list(request, template, position_list):
         position_list = paginator.page(page)
     except PageNotAnInteger:
         position_list = paginator.page(1)
+        page = 1
     except EmptyPage:
         position_list = paginator.page(paginator.num_pages)
 
     if( page == paginator.num_pages):
         next_page = False
+        print("No More Pages")
     else:
         next_page = True
+        print("Has More Pages")
     return render(request, template, {'positions': position_list, 'next_page':next_page})
 
     
@@ -76,12 +79,12 @@ def mylist_ajax(request):
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5).order_by('-likes')[:8]
+    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')[:8]
     return _position_list(request, "onmap/position_popularlist.html", positions)
 
 
 def popularlist_ajax(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5).order_by('-likes')
+    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=5, public=True).order_by('-likes')
     return _position_list_ajax(request, "onmap/position_popularlist_ajax.html", positions)
 
 
@@ -105,7 +108,15 @@ def edit(request, slug):
     if request.method == "POST":
         form = PositionEditForm(request.POST, instance=position)
         if form.is_valid():
-            position = form.save()
+            position = form.save(commit=False)
+            public = request.POST.get('public')
+
+            if public == 'on':
+                position.public = True
+            else:
+                position.public = False
+
+            position.save()
 
             add_pictures = request.POST.getlist('add_pictures')
 
@@ -121,9 +132,7 @@ def edit(request, slug):
         pictures = position.pictures.all()
         picture_ids = [ picture.id for picture in pictures ]
         notpictures = Picture.objects.filter(author=user).all()
-        print(notpictures)
         notpictures = notpictures.exclude(id__in=picture_ids)
-        print(notpictures)
 
     return render(request, "onmap/position_edit.html", 
             {'form': form, 'pictures':pictures, 'notpictures':notpictures})
@@ -179,9 +188,18 @@ def add(request):
 
     if request.method == 'POST':
         form = PositionForm(request.POST, request.FILES)
+        
         if form.is_valid():
-            name = request.POST.get('name')
+            name = form.cleaned_data.get('name')
+            public = request.POST.get('public')
+            print("Public : ", public)
             position = form.save(commit=False)
+            if public == 'on':
+                position.public = True
+                print("Public : True")
+            else:
+                position.public = False
+                print("Public : False")
 
             if request.user.is_authenticated():
                 position.author = request.user

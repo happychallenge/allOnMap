@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-07 06:54+0000\n"
+"POT-Creation-Date: 2018-03-07 10:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgid "User name and Profile"
 msgstr "사용자 이름과 사진"
 
 #: accounts/templates/accounts/myprofile.html:57
-#: onmap/templates/onmap/partial/pos_add.html:48
-#: onmap/templates/onmap/position_edit.html:61
+#: onmap/templates/onmap/partial/pos_add.html:49
+#: onmap/templates/onmap/position_edit.html:71
 msgid "Confirm"
 msgstr "확인"
 
@@ -72,15 +72,25 @@ msgstr "한국어"
 msgid "More than 2 words...."
 msgstr "2글자 이상 입력"
 
+#: onmap/forms.py:9 onmap/forms.py:27
+#: onmap/templates/onmap/partial/pos_add.html:22
+#: onmap/templates/onmap/position_edit.html:31
+msgid "Do you want this posting to be public?"
+msgstr "당신은 이 콘텐츠를 다른 사람들이 볼 수 있도록 오픈 하겠습니까?"
+
 #: onmap/templates/onmap/home.html:17
 msgid ""
 "Just upload a picture of your smartphone or digital camera to the site and "
 "the location of the photo is displayed on the map."
-msgstr "스마트폰 또는 디지털 카메라의 사진을 Site에 올리기만 하면 사진을 찍은 위치가 지도에 표시됩니다."
+msgstr ""
+"스마트폰 또는 디지털 카메라의 사진을 Site에 올리기만 하면 사진을 찍은 위치가 "
+"지도에 표시됩니다."
 
 #: onmap/templates/onmap/home.html:18
 msgid "Please record your goals or accomplishments on your map."
-msgstr "자신이 정한 목표 또는 자신이 이룬 성취 하나 하나를 지도에 기록으로 남기시기 바랍니다."
+msgstr ""
+"자신이 정한 목표 또는 자신이 이룬 성취 하나 하나를 지도에 기록으로 남기시기 "
+"바랍니다."
 
 #: onmap/templates/onmap/home.html:20 onmap/templates/onmap/home.html:29
 #: onmap/templates/onmap/home.html:38 onmap/templates/onmap/home.html:47
@@ -96,7 +106,9 @@ msgstr "첫번째 Add 메뉴를 선택합니다."
 msgid ""
 "Second, please upload a picture of your smartphone or digital camera to the "
 "site based on the topic"
-msgstr "두번째, 스마트폰 또는 디지털 카메라의 사진을 주제를 작성한 후 사이트에 올리시기 바랍니다."
+msgstr ""
+"두번째, 스마트폰 또는 디지털 카메라의 사진을 주제를 작성한 후 사이트에 올리시"
+"기 바랍니다."
 
 #: onmap/templates/onmap/home.html:46
 msgid ""
@@ -107,14 +119,14 @@ msgstr "세번째, 자동으로 사진이 사진을 찍은 위치에 표시됩�
 msgid ""
 "Fourth, you can add photos that you uploaded elsewhere through editing to "
 "enrich the topic."
-msgstr ""
+msgstr "네번째, 편집을 통해 다른 곳에서 올린 사진을 추가하여 해당 주제를 풍부하게 할 수 있습니다."
 
 #: onmap/templates/onmap/home.html:64
 msgid "Fifth, you can share with map links posted by others.."
 msgstr "네번째, 해당 링크를 어디서든지 공유할 수 있습니다."
 
 #: onmap/templates/onmap/partial/pos_add.html:4
-#: onmap/templates/onmap/partial/pos_add.html:41
+#: onmap/templates/onmap/partial/pos_add.html:42
 msgid "Add Picture"
 msgstr "사진 추가"
 
@@ -155,29 +167,37 @@ msgstr "편집"
 msgid "Delete"
 msgstr "삭제"
 
-#: onmap/templates/onmap/position_detail.html:75
+#: onmap/templates/onmap/position_detail.html:69
+msgid "You chose 'Public'"
+msgstr "공개를 선택하셨습니다."
+
+#: onmap/templates/onmap/position_detail.html:71
+msgid "You chose 'Not Public'"
+msgstr "비공개를 선택하셨습니다."
+
+#: onmap/templates/onmap/position_detail.html:93
 msgid "Copy to clipboard"
 msgstr "메모리에 복사하기"
 
-#: onmap/templates/onmap/position_edit.html:16
+#: onmap/templates/onmap/position_edit.html:13
 #, fuzzy
 #| msgid "Edit Positions"
 msgid "Edit Position"
 msgstr "편집 사진들"
 
-#: onmap/templates/onmap/position_edit.html:34
+#: onmap/templates/onmap/position_edit.html:44
 msgid "Pictures which already were included"
 msgstr "이미 포함된 사진들"
 
-#: onmap/templates/onmap/position_edit.html:35
+#: onmap/templates/onmap/position_edit.html:45
 msgid "If you unselect it, it will be deleted from"
 msgstr "선택을 취소하시면 삭제가 됩니다."
 
-#: onmap/templates/onmap/position_edit.html:49
+#: onmap/templates/onmap/position_edit.html:59
 msgid "Pictures which were not included."
 msgstr "포함되지 않은 사진들...."
 
-#: onmap/templates/onmap/position_edit.html:50
+#: onmap/templates/onmap/position_edit.html:60
 msgid "If you select it, it will be added to"
 msgstr "만약 선택을 하시면, 추가될 것입니다."
 
@@ -185,8 +205,8 @@ msgstr "만약 선택을 하시면, 추가될 것입니다."
 msgid "My List"
 msgstr "내가 작성한 목록"
 
-#: onmap/templates/onmap/position_mylist.html:25
-#: onmap/templates/onmap/position_popularlist.html:26
+#: onmap/templates/onmap/position_mylist.html:26
+#: onmap/templates/onmap/position_popularlist.html:27
 #, fuzzy
 #| msgid "Edit Positions"
 msgid "More Positions"
@@ -196,7 +216,7 @@ msgstr "편집 사진들"
 msgid "Popular Map List"
 msgstr "인기 지도 목록"
 
-#: templates/call.html:56
+#: templates/call.html:57
 msgid "gives all content the vitality of location"
 msgstr "위치 정보를 부여함으로써 정보의 생명력을 높인다."
 

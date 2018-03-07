@@ -1,51 +1,52 @@
 {% load i18n bootstrap3 %}
 
-<div class="form-divider"></div>
-<div class="form-label-divider"><span>{% trans "Add Picture" %}</span></div>
-<div class="form-divider"></div>
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Add Picture" %}</span></div>
+    <div class="form-divider"></div>
 
-<form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
-    {% csrf_token %}
+    <form action="{% url 'onmap:add' %}" method="post" enctype="multipart/form-data" id="form-post"> 
+        {% csrf_token %}
 
-  {# Name #}
-    <div class="form-row-group with-icons">
-        <div class="form-row no-padding">
-            <i class="fa fa-vcard-o"></i>
-            <input type="text" name="name" id="id_name" class="form-element" placeholder="Name">
+      {# Name #}
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+                <i class="fa fa-vcard-o"></i>
+                <input type="text" name="name" id="id_name" class="form-element" placeholder="Name">
+            </div>
         </div>
-    </div>
-  
-  {# Public #}
-    <div class="form-mini-divider"></div>
-    <div class="list-box">
-      <div class="list-item">
-        <span class="list-item-title">Do you want this posting to be public?</span>
-        <div class="sweet-check">
-          <input type="checkbox" name="public" id="id_public" checked>
-          <div class="outline">
-            <span></span>
+      
+      {# Public #}
+        <div class="form-mini-divider"></div>
+        <div class="list-box">
+          <div class="list-item">
+            <span class="list-item-title">{% trans "Do you want this posting to be public?" %}</span>
+            <div class="sweet-check" id="id_check">
+              <input type="checkbox" checked>
+              <div class="outline">
+                <span></span>
+              </div>
+              <input type="hidden" name="public" id="id_public" value="on">
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-  {# Add Pictures #}
-    <div class="form-mini-divider"></div>
-    <div class="form-row-group with-icons">
-        <div class="form-row no-padding">
-            <input type="file" name="pictures" id="id_pictures" multiple>
+      {# Add Pictures #}
+        <div class="form-mini-divider"></div>
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+                <input type="file" name="pictures" id="id_pictures" multiple>
+            </div>
+            <div class="preview">
+              <div class="upload">
+                <span class="preview-bg"></span>
+                <p class="preview-title"> {% trans "Add Picture" %} </p>
+              </div>
+              <div id="img_id"></div>
+            </div>
         </div>
-        <div class="preview">
-          <div class="upload">
-            <span class="preview-bg"></span>
-            <p class="preview-title"> {% trans "Add Picture" %} </p>
-          </div>
-          <div id="img_id"></div>
-        </div>
-    </div>
 
-    <div class="form-row">
-      <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
-    </div>
-</form>
+        <div class="form-row">
+          <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
+        </div>
+    </form>
 

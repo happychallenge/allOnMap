@@ -302,7 +302,7 @@ main.no-header .TurboWrapper{
 }
 
 section.container{
-	padding: 0 10px;
+	padding: 0 5px;
 }
 
 footer.container{
@@ -993,6 +993,7 @@ select.form-element{
 	display: inline-block;
 	background-color: #F5F6F8;
 	padding: 0 10px;
+	font-size: 1.3em;
 }
 
 .post-item{

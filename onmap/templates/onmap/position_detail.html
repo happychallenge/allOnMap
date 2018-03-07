@@ -57,9 +57,27 @@
       </div>
     {# Button #}
       <div class="post-content">
-          <a href="{% url 'onmap:edit' position.slug %}" class="button darkblue"> {% trans "Edit" %} </a> 
-          <button class="button red" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
-      </div>   
+          <a href="{% url 'onmap:edit' position.slug %}" class="button circle darkblue"> {% trans "Edit" %} </a> 
+          <button class="button circle red" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
+      </div> 
+    {# Public #}
+      <div class="post-content">
+        <div class="list-box">
+          <div class="list-item">
+            <span>
+              {% if position.public %}
+                {% trans "You chose 'Public'" %}
+              {% else %}
+                {% trans "You chose 'Not Public'" %}
+              {% endif %}
+            </span>
+            <div class="sweet-check {% if position.public %}checked{% endif %}">
+              <input type="checkbox" {% if position.public %}checked{% endif %} >
+              <div class="outline"> </div>
+            </div> 
+          </div>
+        </div>
+      </div>     
     {# Pictures #}
       <div class="post-content">
           {% for picture in position.pictures.all %}

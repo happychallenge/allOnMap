@@ -7,7 +7,7 @@ from accounts.models import Profile
 class PositionAdmin(admin.ModelAdmin):
     class Meta:
         model = Position
-    list_display = ['slug', 'name', 'public', 'author']
+    list_display = ['slug', 'name', 'public', 'likes', 'author']
     list_editable = ['public',]
     prepopulated_fields = {'slug':('name',)} # 5
 
