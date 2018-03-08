@@ -1,6 +1,7 @@
 from .common import *
 import dj_database_url
 import raven
+import os
 
 
 AWSS3 = os.environ.get('STORAGE') == 'AWSS3' or DEBUG is False
