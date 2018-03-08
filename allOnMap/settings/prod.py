@@ -5,7 +5,7 @@ import raven
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-INSTALLED_APPS += [ 'raven.contrib.django.raven_compat', ]
+INSTALLED_APPS += [ 'raven.contrib.django.raven_compat',  'storages',]
 
 RAVEN_CONFIG = {
     'dsn': 'https://2c8ef02323ba4767b6b53998d63c7942:699ae787482c4efd8381f5605ea93fb8@sentry.io/295620',
