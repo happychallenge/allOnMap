@@ -5,6 +5,26 @@ import raven
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
+AWSS3 = True
+
+if AWSS3:
+
+    AWS_ACCESS_KEY_ID = 'AKIAJ2VNH6647EY5UFFA'
+    AWS_SECRET_ACCESS_KEY = '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'
+    AWS_STORAGE_BUCKET_NAME = 'usaofpicture'
+
+    STATICFILES_STORAGE = 'simpleMap.storages.StaticS3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'simpleMap.storages.MediaS3Boto3Storage'
+
+else:
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [ join(BASE_DIR, 'staticfiles'),]
+    STATIC_ROOT = join(BASE_DIR, 'static')
+
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = join(BASE_DIR, 'media')
+
+
 INSTALLED_APPS += [ 'raven.contrib.django.raven_compat',  'storages',]
 
 RAVEN_CONFIG = {
@@ -18,12 +38,6 @@ DATABASES = {
     'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/pictureonmap')
 }
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [ join(BASE_DIR, 'staticfiles'),]
-STATIC_ROOT = join(BASE_DIR, 'static')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = join(BASE_DIR, 'media')
 
 
 LOGGING = {

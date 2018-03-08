@@ -1,4 +1,6 @@
 -r commons.txt
 gunicorn
 raven
+django_storages
+boto3
 
