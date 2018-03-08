@@ -609,7 +609,30 @@ select.form-element{
 }
 /*end of part 12----------------------------------------------------*/
 
-
+.txt-red{
+	color: #F34954;
+}
+.txt-purple{
+	color: #7A5AAD;
+}
+.txt-turquoise{
+	color: #30BFBB;
+}
+.txt-green{
+	color: #27AE61;
+}
+.txt-blue{
+	color: #2A80BB;
+}
+.txt-yellow{
+	color: #CCA000;
+}
+.txt-default{
+	color: #667F97;
+}
+.txt-white{
+	color: #FFFFFF;
+}
 
 /*-------------------------------------------------------------------
 [13. Lists]

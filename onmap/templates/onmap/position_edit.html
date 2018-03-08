@@ -58,7 +58,7 @@
           <div class="form-row no-padding">
             <div class="txt-bold">{% trans "Pictures which were not included." %}</div>
             <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
-              <div>
+              <div style="display: block;">
                 {% for picture in notpictures %}
                   <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
                   <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
