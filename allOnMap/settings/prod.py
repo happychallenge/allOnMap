@@ -2,19 +2,33 @@ from .common import *
 import dj_database_url
 import raven
 
+CONFIG_SECRET = os.path.join(ROOT_DIR, '.config')
+CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET, 'settings_common.json')
+
+AWSS3 = os.environ.get('STORAGE') == 'AWSS3' or DEBUG is False
+
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-AWSS3 = True
-
 if AWSS3:
 
-    AWS_ACCESS_KEY_ID = 'AKIAJ2VNH6647EY5UFFA'
-    AWS_SECRET_ACCESS_KEY = '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'
-    AWS_STORAGE_BUCKET_NAME = 'usaofpicture'
+    AWS_ACCESSS_KEY_ID = config['aws']['access_key_id']
+    AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
+    AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 
-    STATICFILES_STORAGE = 'simpleMap.storages.StaticS3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'simpleMap.storages.MediaS3Boto3Storage'
+    STATICFILES_STORAGE = 'allOnMap.storages.StaticS3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'allOnMap.storages.MediaS3Boto3Storage'
+
+    STATIC_DIR = os.path.join(BASE_DIR, 'static')
+    STATICFILES_DIRS = (
+        STATIC_DIR,
+    )
+
+    STATIC_URL = 's3.{region}.amazonaws.com/{bucket_name}/'.format(
+        region=config['aws']['s3_region'],
+        bucket_name=config['aws']['s3_storage_bucket_name']
+    )
 
 else:
     STATIC_URL = '/static/'

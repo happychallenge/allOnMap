@@ -202,7 +202,6 @@ def add(request):
         if form.is_valid():
             name = form.cleaned_data.get('name')
             public = request.POST.get('public')
-            print("Public : ", public)
             position = form.save(commit=False)
             position.ptype = 'S'
             if public == 'on':
