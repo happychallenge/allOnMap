@@ -19,4 +19,4 @@ server {
 
 ## nginx.conf
 
-client_max_body_size 8m;
+client_max_body_size 120m;
