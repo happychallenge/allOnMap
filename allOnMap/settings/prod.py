@@ -2,8 +2,6 @@ from .common import *
 import dj_database_url
 import raven
 
-CONFIG_SECRET = os.path.join(ROOT_DIR, '.config')
-CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET, 'settings_common.json')
 
 AWSS3 = os.environ.get('STORAGE') == 'AWSS3' or DEBUG is False
 
@@ -11,6 +9,8 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 if AWSS3:
+    CONFIG_SECRET = os.path.join(ROOT_DIR, '.config')
+    CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET, 'settings_common.json')
 
     AWS_ACCESSS_KEY_ID = config['aws']['access_key_id']
     AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
