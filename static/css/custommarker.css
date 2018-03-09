@@ -1,0 +1,88 @@
+.customMarker {
+    position:absolute;
+    cursor:pointer;
+    background:#424242;
+    width:50px;
+    height:50px;
+    /* -width/2 */
+    margin-left:-25px;
+    /* -height + arrow */
+    margin-top:-55px;
+    border-radius:50%;
+    padding:0px;
+}
+.customMarker:after {
+    content:"";
+    position: absolute;
+    bottom: -10px;
+    left: 16px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #424242 transparent;
+    display: block;
+    width: 0;
+}
+.customMarker img {
+    width:45px;
+    height:45px;
+    margin:3px;
+    border-radius:50%;
+}
+#map{
+  width: 100%;
+}
+#floating-theme {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background-color: #eee;
+  font-size: 16px;
+  padding: 8px !important;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 14px;
+  border: solid #333 1px;
+  border-radius: 5px;
+}
+#floating-like {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 5;
+  background-color: #eee;
+  font-size: 16px;
+  padding: 8px !important;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 14px;
+  border: solid #333 1px;
+  border-radius: 5px;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-danger{
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.btn-default{
+  color: #fff;
+  background-color: #47a447;
+  border-color: #398439;
+}

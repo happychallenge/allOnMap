@@ -5,8 +5,8 @@ After=network.target
 [Service]
 User=pictureonmap
 Group=www-data
-WorkingDirectory=/home/pictureonmap/Project
-ExecStart=/home/pictureonmap/Project/virtual/bin/gunicorn --access-logfile - --workers 3 --bind 0.0.0.0:8000 allOnMap.wsgi:application
+WorkingDirectory=/home/pictureonmap/WWW
+ExecStart=/home/pictureonmap/virtual/bin/gunicorn --access-logfile - --workers 3 --bind 0.0.0.0:8000 allOnMap.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

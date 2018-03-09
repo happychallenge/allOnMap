@@ -3,10 +3,12 @@ import dj_database_url
 
 DEBUG = True
 
+AWSS3 = False
+
 INTERNAL_IPS = ["127.0.0.1"] # NOTE: djanog_debug_toolbar 용 설정 추가
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/pictureonmap')
+    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/picturemap')
 }
 
 STATIC_URL = '/static/'

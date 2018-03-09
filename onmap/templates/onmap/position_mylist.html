@@ -38,7 +38,7 @@ img {
     </div>
 
   {% if next_page %}
-    <button class="button circle block green" id="callmorepost">
+    <button class="button circle block green" id="btn_callmore">
       {% trans "More Positions" %}
     </button>
   {% endif %}
@@ -51,46 +51,48 @@ img {
 
 {% block javascript %}
 <script>
-$("#callmorepost").click(function(){
+$("#btn_callmore").click(function(){
     var page = $("#page").val();
     callMorePostAjax(parseInt(page)+1, false);
     $("#page").val(parseInt(page)+1);
 });
 
-$(window).scroll(function(){
-    var scrollHeight = $(window).scrollTop() + $(window).height();
-    var documentHeight = $(document).height();
+// $(window).scroll(function(){
+//     var scrollHeight = $(window).scrollTop() + $(window).height();
+//     var documentHeight = $(document).height();
     
-    if (scrollHeight + 200 >= documentHeight){
-        var page = $("#page").val();
-        callMorePostAjax(parseInt(page)+1, false);
-        $("#page").val(parseInt(page)+1);
-    }
-});
+//     if (scrollHeight + 200 >= documentHeight){
+//         var page = $("#page").val();
+//         callMorePostAjax(parseInt(page)+1, false);
+//         $("#page").val(parseInt(page)+1);
+//     }
+// });
 
 function callMorePostAjax(page, refresh) {
-    var ptype = $("#id_ptype").val();
-    $.ajax( {
-      type : 'GET',
-      url: "{% url 'onmap:mylist_ajax' %}",
-      data: {'page': page, 'ptype':ptype},
-      success: function(response){
-        if( refresh ){
-          console.log("refresh ok");
-          $("#position_list").html(response.html);
-          if(response.next_page == false ){
-            $("#callmorepost").hide();
-          }
-        } else {
-          console.log("no refresh");
-          $("#position_list").append(response.html);
-          if(response.next_page == false ){
-            $("#callmorepost").hide();
-          }
+  var ptype = $("#id_ptype").val();
+  $.ajax({
+    type : 'GET',
+    url: "{% url 'onmap:mylist_ajax' %}",
+    data: {'page': page, 'ptype':ptype},
+    dataType: 'json',
+    success: function(response){
+      if( refresh ){
+        $("#position_list").html(response.html);
+        if(response.next_page == true ){
+          $("#btn_callmore").show();
+        }else{
+          $("#btn_callmore").hide();
         }
-      },
-      dataType: 'json'
-    });
+      } else {
+        $("#position_list").append(response.html);
+        if(response.next_page == true ){
+          $("#btn_callmore").show();
+        }else{
+          $("#btn_callmore").hide();
+        }
+      }
+    },
+  });
 }
 </script>
 
@@ -109,8 +111,8 @@ $(document).on('click', '.sweet-check', function(){
     } else {
         $("#id_ptype").val('A');
     }
+    $("#btn_callmore").show();
     callMorePostAjax(1, true);
-    $("#callmorepost").show();
 });
 </script>
 {% endblock javascript %}

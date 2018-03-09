@@ -1,5 +1,4 @@
 django===1.11.8
-django-bootstrap3
 pillow
 python-dateutil
 dj-database-url

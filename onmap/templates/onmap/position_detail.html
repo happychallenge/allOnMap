@@ -179,7 +179,7 @@ var pictures = [
 
 function initialize(){
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 10,
+        zoom: 14,
         // center: new google.maps.LatLng(36.0078916666667, 128.260222222222),
     });
 
@@ -192,10 +192,12 @@ function initialize(){
         new CustomMarker(position, map, pictures[i].icon);
 
         bounds.extend(position);
-        // console.log("Position Lat : " + position.lat() + " " + position.lng());
-        // console.log("Bounds Lat :   " + bounds.f.b + " " + bounds.b.f );
     }
-    map.fitBounds(bounds)
+    if (pictures.length >= 2) {
+        map.fitBounds(bounds);
+    } else {
+        map.panTo(position);
+    }
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

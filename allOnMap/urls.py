@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^logout/$', login_views.logout, name='logout'),
     url(r'^myprofile/$', login_views.myprofile, name='myprofile'),
     url(r'^onmap/', include('onmap.urls', namespace="onmap")),
+    # url(r'^proposal/', include('proposal.urls', namespace="proposal")),
 ]
 
 handler404 = 'allOnMap.https.handler404'

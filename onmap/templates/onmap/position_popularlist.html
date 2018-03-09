@@ -23,7 +23,7 @@ img {
     </div>
 
     {% if next_page %}
-      <button class="button circle block green" id="callmorepost">
+      <button class="button circle block green" id="btn_callmore">
         {% trans "More Positions" %}
       </button>
     {% endif %}
@@ -35,7 +35,7 @@ img {
 
 {% block javascript %}
 <script>
-$("#callmorepost").click(function(){
+$("#btn_callmore").click(function(){
     var page = $("#page").val();
     callMorePostAjax(parseInt(page)+1);
     $("#page").val(parseInt(page)+1);
@@ -60,7 +60,7 @@ function callMorePostAjax(page) {
       success: function(response){
         $("#position_list").append(response.html);
         if(response.next_page == false){
-          $("#callmorepost").hidden();
+          $("#btn_callmore").hidden();
         }
       },
       dataType: 'html'

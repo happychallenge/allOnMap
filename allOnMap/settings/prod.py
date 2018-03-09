@@ -50,7 +50,7 @@ RAVEN_CONFIG = {
 }
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/pictureonmap')
+    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/picturemap')
 }
 
 

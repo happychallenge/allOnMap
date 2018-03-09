@@ -28,47 +28,13 @@
 }
 
 .dummy {
-  height: 200px;
+  height: 30px;
   width: 100%;
 }
 
-.sidebar-map {
-  position: fixed;
-  right: 0;
+.upload{
+  height: 80px;
 }
-
-.content_list{
-  margin-left: 10px;
-}
-
-#floating-panel {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  z-index: 5;
-  background-color: #fff;
-  padding: 1px;
-  /*border: 1px solid #999;*/
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 15px;
-  padding: 3px;
-}
-
-#floating-menu {
-  position: fixed;
-  top: 50px;
-  right: 10px;
-  z-index: 6;
-  background-color: #fff;
-  padding: 1px;
-/*  border: 1px solid #999;*/
-  text-align: center;
-  font-family: 'Roboto','sans-serif';
-  line-height: 15px;
-  padding: 3px;
-}
-
-.maptag {
-  border: 1px solid #23c6c8;
+.img{
+  margin: 2px 5px;
 }

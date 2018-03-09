@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 # 3rd party
-    'bootstrap3',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -53,6 +52,7 @@ INSTALLED_APPS = [
 # Mine
     'onmap',
     'accounts',
+    # 'proposal',
 ]
 
 AUTHENTICATION_BACKENDS = [ 

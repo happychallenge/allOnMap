@@ -6,13 +6,15 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
+from django.utils.translation import ugettext_lazy as _
 
 from PIL import Image
 from .getGPS import get_lat_lon_dt
 from .adjust_location import transform
-from .models import Position, Picture
+from .models import Position, Picture, IPaddress, PLikes, PositionPictures
 from .forms import PositionForm, PositionEditForm
 
+NUM_CONTENT = 6
 # Create your views here.
 def home(request):
     return render(request, "onmap/home.html")
@@ -26,7 +28,7 @@ def privacy(request):
     return render(request, "onmap/privacy-policy-html-english.html")
 
 def _position_list(request, template, position_list):
-    paginator = Paginator(position_list, 8)
+    paginator = Paginator(position_list, NUM_CONTENT)
     page = request.GET.get('page')
     try:
         position_list = paginator.page(page)
@@ -36,16 +38,18 @@ def _position_list(request, template, position_list):
     except EmptyPage:
         position_list = paginator.page(paginator.num_pages)
 
-    if( page == paginator.num_pages):
+    print("Page : ", page, " Paginator.num_pages : ", paginator.num_pages)
+    if( int(page) == paginator.num_pages):
         next_page = False
     else:
         next_page = True
+    print("Next Page : ", next_page)
     return render(request, template, {'positions': position_list, 'next_page':next_page})
 
     
 def _position_list_ajax(request, template, position_list):
     data = {}
-    paginator = Paginator(position_list, 8)
+    paginator = Paginator(position_list, NUM_CONTENT)
     page = request.GET.get('page')
     try:
         position_list = paginator.page(page)
@@ -66,7 +70,6 @@ def _position_list_ajax(request, template, position_list):
     return JsonResponse(data, safe=False)
 
 
-
 @login_required
 def mylist(request):
     user = request.user
@@ -75,7 +78,10 @@ def mylist(request):
         positions = Position.objects.prefetch_related('pictures').filter(author = user, ptype='S')
     else:
         positions = Position.objects.prefetch_related('pictures').filter(author = user)
+
+    print("Length of List : ", positions.count())
     return _position_list(request, "onmap/position_mylist.html", positions)
+
 
 @login_required
 def mylist_ajax(request):
@@ -89,18 +95,21 @@ def mylist_ajax(request):
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=1, public=True).order_by('-likes')
+    positions = Position.objects.prefetch_related('pictures').filter(views__gte=1, public=True).order_by('-views')
     return _position_list(request, "onmap/position_popularlist.html", positions)
 
 
 def popularlist_ajax(request):
-    positions = Position.objects.prefetch_related('pictures').filter(likes__gte=1, public=True).order_by('-likes')
+    positions = Position.objects.prefetch_related('pictures').filter(views__gte=1, public=True).order_by('-views')
     return _position_list_ajax(request, "onmap/position_popularlist_ajax.html", positions)
 
 
 def detail(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
+
     client_ip = request.META['REMOTE_ADDR']
+    print("IP :", client_ip);
+
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":
         context = {'position': position, 'china': True}
@@ -113,7 +122,6 @@ def detail(request, slug):
 def edit(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
     user = request.user 
-    add_picture_set = []
 
     if request.method == "POST":
         form = PositionEditForm(request.POST, instance=position)
@@ -132,9 +140,8 @@ def edit(request, slug):
 
             for picture_id in add_pictures:
                 picture = get_object_or_404(Picture, id=picture_id)
-                add_picture_set.append(picture)
-
-            position.pictures.set(add_picture_set)
+                obj, created = PositionPictures.objects.get_or_create( \
+                    position=position, picture=picture)
 
             return redirect(position)
     else:
@@ -180,12 +187,21 @@ def apicall(request, slug):
 
 @require_POST
 def userlike(request):
+    data = {}
     slug = request.POST.get('slug', None)
     position = get_object_or_404(Position, slug=slug)
-    position.likes = F('likes') + 1;
-    position.save()
-    position.refresh_from_db()
-    return JsonResponse({'like_count': position.likes })
+
+    client_ip = request.META['REMOTE_ADDR']
+    obj, created = IPaddress.objects.get_or_create(ipaddress=client_ip)
+
+    obj, created = PLikes.objects.get_or_create(position=position, ipaddress=obj)
+    if created:
+        data["created"] = True
+        data["like_count"] = position.plikes.count()
+    else:
+        data["created"] = False
+        data["message"] = client_ip + "This IP address has clicked already."
+    return JsonResponse(data)
 
 
 import sys
@@ -213,7 +229,9 @@ def add(request):
 
             if request.user.is_authenticated():
                 position.author = request.user
-            
+
+            position.save()
+
             pictures = request.FILES.getlist('pictures')
 
             index = 0
@@ -269,7 +287,6 @@ def add(request):
                         'image/jpeg', sys.getsizeof(output), None)
 
                 picture.save()
-                picture_files.append(picture)
 
                 if file_length >= 2:
                     pos = Position()
@@ -278,17 +295,16 @@ def add(request):
                         pos.author = request.user
                     pos.save()
 
-                    pos.pictures.add(picture)
+                    obj, created = PositionPictures.objects.get_or_create(position=pos, picture=picture)
 
-
-            position.save()
-            position.pictures.set(picture_files)
+                obj, created = PositionPictures.objects.get_or_create(position=position, picture=picture)
             
             return redirect(position)
 
     else:
         form = PositionForm()
-        return render(request, 'onmap/position_add.html', {'form': form})
+    
+    return render(request, 'onmap/position_add.html', {'form': form})
 
 import requests
 import json

@@ -12,11 +12,12 @@ class Position(models.Model):
     """
     name = models.CharField("Name", max_length=300)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True)
-    likes = models.IntegerField(default=0)
     ptype = models.CharField("Type", default="E", max_length=1)
     views = models.IntegerField(default=0)
     public = models.BooleanField(default=True)
-    pictures = models.ManyToManyField("Picture", related_name='positions')
+    pictures = models.ManyToManyField("Picture",
+        through="PositionPictures", related_name='positions')
+    plikes = models.ManyToManyField("IPaddress", through="PLikes", related_name='poslikes')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='positions', blank=True, null=True)
     create_dt = models.DateTimeField(auto_now_add=True)
 
@@ -42,6 +43,10 @@ class Position(models.Model):
         print(self)
         return self.pictures.count()
 
+    # @property
+    # def likes(self):
+    #     return self.plikes.count()
+
 
 class Picture(models.Model):
     """
@@ -60,3 +65,26 @@ class Picture(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.id, self.name)
+
+
+class PositionPictures(models.Model):
+    position = models.ForeignKey(Position)
+    picture = models.ForeignKey(Picture)
+
+    class Meta:
+        unique_together = (
+            ('position', 'picture'),
+        )
+
+class IPaddress(models.Model):
+    ipaddress = models.CharField(max_length=50)
+
+
+class PLikes(models.Model):
+    position = models.ForeignKey(Position, related_name='pp')
+    ipaddress = models.ForeignKey(IPaddress)
+
+    class Meta:
+        unique_together = (
+            ('position', 'ipaddress'),
+        )

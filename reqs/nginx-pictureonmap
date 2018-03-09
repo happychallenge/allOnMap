@@ -3,11 +3,11 @@ server {
     server_name pictureonmap.com www.pictureonmap.com;
 
     location /static/ {
-        root /home/pictureonmap/Project;
+        root /home/pictureonmap/WWW;
     }
 
     location /media/ {
-        root /home/pictureonmap/Project;
+        root /home/pictureonmap/WWW;
     }
 
     location / {
