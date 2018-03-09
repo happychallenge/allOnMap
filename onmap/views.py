@@ -28,6 +28,7 @@ def privacy(request):
     return render(request, "onmap/privacy-policy-html-english.html")
 
 def _position_list(request, template, position_list):
+    data = {}
     paginator = Paginator(position_list, NUM_CONTENT)
     page = request.GET.get('page')
     try:
@@ -38,70 +39,47 @@ def _position_list(request, template, position_list):
     except EmptyPage:
         position_list = paginator.page(paginator.num_pages)
 
-    print("Page : ", page, " Paginator.num_pages : ", paginator.num_pages)
     if( int(page) == paginator.num_pages):
         next_page = False
     else:
         next_page = True
-    print("Next Page : ", next_page)
-    return render(request, template, {'positions': position_list, 'next_page':next_page})
 
-    
-def _position_list_ajax(request, template, position_list):
-    data = {}
-    paginator = Paginator(position_list, NUM_CONTENT)
-    page = request.GET.get('page')
-    try:
-        position_list = paginator.page(page)
-    except PageNotAnInteger:
-        position_list = paginator.page(1)
-    except EmptyPage:
-        position_list = paginator.page(paginator.num_pages)
-
-    print("Page : ", page, " Paginator.num_pages : ", paginator.num_pages)
-    if( int(page) == paginator.num_pages):
-        next_page = False
+    if request.is_ajax():
+        context = {'positions': position_list, 'next_page':next_page}
+        data["next_page"] = next_page
+        data["html"] = render_to_string(template, context)
+        return JsonResponse(data, safe=False)
     else:
-        next_page = True
-    print("Next Page : ", next_page)
-    context = {'positions': position_list, 'next_page':next_page}
-    data["next_page"] = next_page
-    data["html"] = render_to_string(template, context)
-    return JsonResponse(data, safe=False)
+        return render(request, template, {'positions': position_list, 'next_page':next_page})
 
-
+ 
 @login_required
 def mylist(request):
     user = request.user
     ptype = request.GET.get('ptype', 'S')
     if ptype == 'S':
-        positions = Position.objects.prefetch_related('pictures').filter(author = user, ptype='S')
+        positions = Position.objects.prefetch_related(
+                'pictures', 'plikes').filter(author = user, ptype='S')
     else:
-        positions = Position.objects.prefetch_related('pictures').filter(author = user)
-
-    print("Length of List : ", positions.count())
-    return _position_list(request, "onmap/position_mylist.html", positions)
-
-
-@login_required
-def mylist_ajax(request):
-    user = request.user
-    ptype = request.GET.get('ptype', 'S')
-    if ptype == 'S':
-        positions = Position.objects.prefetch_related('pictures').filter(author = user, ptype='S')
+        positions = Position.objects.prefetch_related(
+                'pictures', 'plikes').filter(author = user)
+    if request.is_ajax():
+        template = "onmap/position_mylist_ajax.html"
     else:
-        positions = Position.objects.prefetch_related('pictures').filter(author = user)
-    return _position_list_ajax(request, "onmap/position_mylist_ajax.html", positions)
+        template = "onmap/position_mylist.html"
+    return _position_list(request, template, positions)
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related('pictures').filter(views__gte=1, public=True).order_by('-views')
-    return _position_list(request, "onmap/position_popularlist.html", positions)
+    positions = Position.objects.prefetch_related(
+            'pictures', 'plikes').select_related('author__profile').filter(
+            views__gte=1, public=True).order_by('-views')
+    if request.is_ajax():
+        template = "onmap/position_popularlist_ajax.html"
+    else:
+        template = "onmap/position_popularlist.html"
+    return _position_list(request, template, positions)
 
-
-def popularlist_ajax(request):
-    positions = Position.objects.prefetch_related('pictures').filter(views__gte=1, public=True).order_by('-views')
-    return _position_list_ajax(request, "onmap/position_popularlist_ajax.html", positions)
 
 
 def detail(request, slug):

@@ -15,7 +15,7 @@
           <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
           <span class="post-comment">
             <i class="fa fa-comments"></i> {{position.views}} {% trans "viewed" %} &nbsp;&nbsp;&nbsp;
-            <i class="fa fa-heart"></i> {{position.likes}} {% trans "likes" %}
+            <i class="fa fa-heart"></i> {{position.plikes.count}} {% trans "likes" %}
           </span>
         </div>
       </div>
@@ -24,7 +24,7 @@
           {% for picture in position.get_pictures %}
               <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
           {% endfor %}
-          total : # {{ position.pictures.all | length }} pictures
+          total : # <strong style="color: blue;">{{ position.pictures.all | length }}</strong> pictures
       </div>    
     </div>
 

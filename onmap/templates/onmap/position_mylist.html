@@ -72,7 +72,7 @@ function callMorePostAjax(page, refresh) {
   var ptype = $("#id_ptype").val();
   $.ajax({
     type : 'GET',
-    url: "{% url 'onmap:mylist_ajax' %}",
+    url: "{% url 'onmap:mylist' %}",
     data: {'page': page, 'ptype':ptype},
     dataType: 'json',
     success: function(response){

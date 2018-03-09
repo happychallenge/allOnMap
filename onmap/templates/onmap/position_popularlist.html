@@ -55,15 +55,17 @@ $(window).scroll(function(){
 function callMorePostAjax(page) {
     $.ajax( {
       type : 'GET',
-      url: "{% url 'onmap:popularlist_ajax' %}",
+      url: "{% url 'onmap:popularlist' %}",
       data: {'page': page, },
+      dataType: 'json',
       success: function(response){
         $("#position_list").append(response.html);
-        if(response.next_page == false){
-          $("#btn_callmore").hidden();
+        if(response.next_page == true ){
+          $("#btn_callmore").show();
+        }else{
+          $("#btn_callmore").hide();
         }
       },
-      dataType: 'html'
     });
 }
 </script>

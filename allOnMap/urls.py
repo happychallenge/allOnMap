@@ -24,6 +24,11 @@ handler404 = 'allOnMap.https.handler404'
 handler500 = 'allOnMap.https.handler500'
 
 if settings.DEBUG and settings.AWSS3 is False:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
+    
     from django.conf.urls.static import static
     # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
