@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-09 23:56+0000\n"
+"POT-Creation-Date: 2018-03-10 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,48 +18,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: accounts/templates/accounts/login.html:10
+#: accounts/forms.py:73
+#, python-brace-format
+msgid "Password must be at least {0} characters long."
+msgstr "비밀번호는 {0} 자 이상으로 입력하세요."
+
+#: accounts/forms.py:76
+msgid "Password must contain at least 1 digit."
+msgstr "비밀번호는 한자 이상의 숫자를 포함해야 합니다."
+
+#: accounts/forms.py:80
+msgid "Password must contain at least 1 letter."
+msgstr "비밀번혼느 한자 이상의 특수 문자를 포함해야 합니다."
+
+#: accounts/templates/accounts/login.html:9
 msgid "User Privacy Policy"
 msgstr "사용자 프라이버시 정책 "
 
-#: accounts/templates/accounts/login.html:17
+#: accounts/templates/accounts/login.html:12
+msgid "Social Login"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:19
 msgid "Sign in with Facebook"
 msgstr "페이스북으로 로그인"
 
-#: accounts/templates/accounts/login.html:22
+#: accounts/templates/accounts/login.html:24
 msgid "Sign in with Google"
 msgstr "구글로 로그인"
 
-#: accounts/templates/accounts/login.html:28
+#: accounts/templates/accounts/login.html:30
 msgid "Sign in with Naver"
 msgstr "네이버로 로그인"
 
-#: accounts/templates/accounts/login.html:33
+#: accounts/templates/accounts/login.html:35
 msgid "Sign in with Kakao"
 msgstr "카카오로 로그인"
 
-#: accounts/templates/accounts/myprofile.html:24
-msgid "User name and Profile"
-msgstr "사용자 이름과 사진"
+#: accounts/templates/accounts/login.html:46
+msgid "Not Social Login"
+msgstr ""
 
-#: accounts/templates/accounts/myprofile.html:57
+#: accounts/templates/accounts/login.html:54
+msgid "My Phone or Email Login"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:8
+msgid "Phone or Email Login"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:47
+#: accounts/templates/accounts/myprofile.html:60
+#: accounts/templates/accounts/signup.html:67
 #: onmap/templates/onmap/partial/pos_add.html:49
 #: onmap/templates/onmap/position_edit.html:71
 #: proposal/templates/proposal/proposal_add.html:50
 msgid "Confirm"
 msgstr "확인"
 
-#: accounts/templates/accounts/myprofile.html:67
+#: accounts/templates/accounts/login_email.html:54
+msgid "Email SignUp"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:57
+msgid "My Email Sign Up"
+msgstr ""
+
+#: accounts/templates/accounts/myprofile.html:27
+#: accounts/templates/accounts/otherprofile.html:27
+msgid "User name and Profile"
+msgstr "사용자 이름과 사진"
+
+#: accounts/templates/accounts/myprofile.html:68
+#: accounts/templates/accounts/otherprofile.html:54
 msgid "User map and Pictures"
 msgstr "사용자가 만든 맵과 사진들"
 
-#: accounts/templates/accounts/myprofile.html:86
+#: accounts/templates/accounts/myprofile.html:85
+msgid "My Map List (Summery only)"
+msgstr ""
+
+#: accounts/templates/accounts/myprofile.html:95
+#: accounts/templates/accounts/otherprofile.html:80
+#: onmap/templates/onmap/position_mylist.html:42
+#: onmap/templates/onmap/position_popularlist.html:27
+#, fuzzy
+#| msgid "Edit Positions"
+msgid "More Positions"
+msgstr "편집 사진들"
+
+#: accounts/templates/accounts/myprofile.html:107
+#: accounts/templates/accounts/otherprofile.html:92
 msgid "Crop the photo"
 msgstr "사진 편집"
 
-#: accounts/templates/accounts/myprofile.html:94
+#: accounts/templates/accounts/myprofile.html:118
+#: accounts/templates/accounts/otherprofile.html:103
 msgid "Crop and Upload"
 msgstr "사진확정후 업로드"
+
+#: accounts/templates/accounts/otherprofile.html:70
+msgid " Map List (Summery only)"
+msgstr ""
+
+#: accounts/templates/accounts/signup.html:8
+msgid "Email Signup"
+msgstr ""
+
+#: accounts/templates/accounts/signup.html:61
+msgid ""
+"Password : more than 8 character including special character and number "
+msgstr "비밀번호는 8자 이상으로 숫자와 특수 문자를 포함해야 합니다."
 
 #: allOnMap/settings/common.py:120
 msgid "English"
@@ -68,6 +137,10 @@ msgstr "영어"
 #: allOnMap/settings/common.py:121
 msgid "Korean"
 msgstr "한국어"
+
+#: allOnMap/settings/common.py:122
+msgid "Chinese"
+msgstr "中国语"
 
 #: onmap/forms.py:8 onmap/forms.py:26
 msgid "More than 2 words...."
@@ -139,47 +212,47 @@ msgid "This contents is not public. You don't have a access privilages."
 msgstr "해당 콘텐츠는 공개되지 않았습니다. 당신께서는 접근 권한이 없습니다."
 
 #: onmap/templates/onmap/position_apicall.html:40
-#: onmap/templates/onmap/position_detail.html:53
+#: onmap/templates/onmap/position_detail.html:54
 #: onmap/templates/onmap/position_mylist_ajax.html:17
-#: onmap/templates/onmap/position_popularlist_ajax.html:17
+#: onmap/templates/onmap/position_popularlist_ajax.html:25
 msgid "viewed"
 msgstr "번 보여짐"
 
-#: onmap/templates/onmap/position_detail.html:32
+#: onmap/templates/onmap/position_detail.html:31
 msgid "Infomation"
 msgstr "정보"
 
-#: onmap/templates/onmap/position_detail.html:35
+#: onmap/templates/onmap/position_detail.html:36
 msgid "If you sign up, all records will be saved and available for future use."
 msgstr "로그인을 하시면, 모든 것을 기록으로 남기고 관리할 수 있습니다."
 
-#: onmap/templates/onmap/position_detail.html:51
+#: onmap/templates/onmap/position_detail.html:52
 msgid "create time"
 msgstr "생성 시간"
 
-#: onmap/templates/onmap/position_detail.html:54
+#: onmap/templates/onmap/position_detail.html:55
 #: onmap/templates/onmap/position_mylist_ajax.html:18
-#: onmap/templates/onmap/position_popularlist_ajax.html:18
+#: onmap/templates/onmap/position_popularlist_ajax.html:26
 msgid "likes"
 msgstr "좋아함"
 
-#: onmap/templates/onmap/position_detail.html:60
+#: onmap/templates/onmap/position_detail.html:62
 msgid "Edit"
 msgstr "편집"
 
-#: onmap/templates/onmap/position_detail.html:61
+#: onmap/templates/onmap/position_detail.html:63
 msgid "Delete"
 msgstr "삭제"
 
-#: onmap/templates/onmap/position_detail.html:69
+#: onmap/templates/onmap/position_detail.html:72
 msgid "You chose 'Public'"
 msgstr "공개를 선택하셨습니다."
 
-#: onmap/templates/onmap/position_detail.html:71
+#: onmap/templates/onmap/position_detail.html:74
 msgid "You chose 'Not Public'"
 msgstr "비공개를 선택하셨습니다."
 
-#: onmap/templates/onmap/position_detail.html:93
+#: onmap/templates/onmap/position_detail.html:96
 msgid "Copy to clipboard"
 msgstr "메모리에 복사하기"
 
@@ -209,13 +282,6 @@ msgstr "만약 선택을 하시면, 추가될 것입니다."
 msgid "My List"
 msgstr "내가 작성한 목록"
 
-#: onmap/templates/onmap/position_mylist.html:42
-#: onmap/templates/onmap/position_popularlist.html:27
-#, fuzzy
-#| msgid "Edit Positions"
-msgid "More Positions"
-msgstr "편집 사진들"
-
 #: onmap/templates/onmap/position_popularlist.html:18
 msgid "Popular Map List"
 msgstr "인기 지도 목록"
@@ -228,7 +294,7 @@ msgstr "PictureOnMap에 대한 개선 제안"
 msgid "gives all content the vitality of location"
 msgstr "위치 정보를 부여함으로써 정보의 생명력을 높인다."
 
-#: templates/header_menu.html:16 templates/header_menu.html:44
+#: templates/header_menu.html:18 templates/header_menu.html:54
 #, fuzzy
 #| msgid "Sign Up"
 msgid "Login/SignUp"

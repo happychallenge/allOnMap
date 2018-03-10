@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-09 23:58+0000\n"
+"POT-Creation-Date: 2018-03-10 08:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,48 +17,115 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: accounts/templates/accounts/login.html:10
+#: accounts/forms.py:73
+#, python-brace-format
+msgid "Password must be at least {0} characters long."
+msgstr ""
+
+#: accounts/forms.py:76
+msgid "Password must contain at least 1 digit."
+msgstr ""
+
+#: accounts/forms.py:80
+msgid "Password must contain at least 1 letter."
+msgstr ""
+
+#: accounts/templates/accounts/login.html:9
 msgid "User Privacy Policy"
 msgstr "用户政策"
 
-#: accounts/templates/accounts/login.html:17
+#: accounts/templates/accounts/login.html:12
+msgid "Social Login"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:19
 msgid "Sign in with Facebook"
 msgstr "通过 FACEBOOK 登陆"
 
-#: accounts/templates/accounts/login.html:22
+#: accounts/templates/accounts/login.html:24
 msgid "Sign in with Google"
 msgstr "通过 GOOGLE 登陆"
 
-#: accounts/templates/accounts/login.html:28
+#: accounts/templates/accounts/login.html:30
 msgid "Sign in with Naver"
 msgstr ""
 
-#: accounts/templates/accounts/login.html:33
+#: accounts/templates/accounts/login.html:35
 msgid "Sign in with Kakao"
 msgstr ""
 
-#: accounts/templates/accounts/myprofile.html:24
-msgid "User name and Profile"
-msgstr "个人名字和照片"
+#: accounts/templates/accounts/login.html:46
+msgid "Not Social Login"
+msgstr ""
 
-#: accounts/templates/accounts/myprofile.html:57
+#: accounts/templates/accounts/login.html:54
+msgid "My Phone or Email Login"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:8
+msgid "Phone or Email Login"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:47
+#: accounts/templates/accounts/myprofile.html:60
+#: accounts/templates/accounts/signup.html:67
 #: onmap/templates/onmap/partial/pos_add.html:49
 #: onmap/templates/onmap/position_edit.html:71
 #: proposal/templates/proposal/proposal_add.html:50
 msgid "Confirm"
 msgstr "确认"
 
-#: accounts/templates/accounts/myprofile.html:67
+#: accounts/templates/accounts/login_email.html:54
+msgid "Email SignUp"
+msgstr ""
+
+#: accounts/templates/accounts/login_email.html:57
+msgid "My Email Sign Up"
+msgstr ""
+
+#: accounts/templates/accounts/myprofile.html:27
+#: accounts/templates/accounts/otherprofile.html:27
+msgid "User name and Profile"
+msgstr "个人名字和照片"
+
+#: accounts/templates/accounts/myprofile.html:68
+#: accounts/templates/accounts/otherprofile.html:54
 msgid "User map and Pictures"
 msgstr "用户地图和照片"
 
-#: accounts/templates/accounts/myprofile.html:86
+#: accounts/templates/accounts/myprofile.html:85
+msgid "My Map List (Summery only)"
+msgstr ""
+
+#: accounts/templates/accounts/myprofile.html:95
+#: accounts/templates/accounts/otherprofile.html:80
+#: onmap/templates/onmap/position_mylist.html:42
+#: onmap/templates/onmap/position_popularlist.html:27
+msgid "More Positions"
+msgstr ""
+
+#: accounts/templates/accounts/myprofile.html:107
+#: accounts/templates/accounts/otherprofile.html:92
 msgid "Crop the photo"
 msgstr "照片编辑"
 
-#: accounts/templates/accounts/myprofile.html:94
+#: accounts/templates/accounts/myprofile.html:118
+#: accounts/templates/accounts/otherprofile.html:103
 msgid "Crop and Upload"
 msgstr "编辑后上传"
+
+#: accounts/templates/accounts/otherprofile.html:70
+msgid " Map List (Summery only)"
+msgstr ""
+
+#: accounts/templates/accounts/signup.html:8
+msgid "Email Signup"
+msgstr ""
+
+#: accounts/templates/accounts/signup.html:61
+msgid ""
+"Password : more than 8 character including special character and number "
+msgstr ""
 
 #: allOnMap/settings/common.py:120
 msgid "English"
@@ -86,7 +153,8 @@ msgstr "您希望这地图共享别人？"
 msgid ""
 "Just upload a picture of your smartphone or digital camera to the site and "
 "the location of the photo is displayed on the map."
-msgstr "只需将您的智能手机或数码相机的图片上传到该网站，照片的位置就会显示在地图上。"
+msgstr ""
+"只需将您的智能手机或数码相机的图片上传到该网站，照片的位置就会显示在地图上。"
 
 #: onmap/templates/onmap/home.html:18
 msgid "Please record your goals or accomplishments on your map."
@@ -134,47 +202,47 @@ msgid "This contents is not public. You don't have a access privilages."
 msgstr "此内容不公开。 您没有访问权限。"
 
 #: onmap/templates/onmap/position_apicall.html:40
-#: onmap/templates/onmap/position_detail.html:53
+#: onmap/templates/onmap/position_detail.html:54
 #: onmap/templates/onmap/position_mylist_ajax.html:17
-#: onmap/templates/onmap/position_popularlist_ajax.html:17
+#: onmap/templates/onmap/position_popularlist_ajax.html:25
 msgid "viewed"
 msgstr "次 看着"
 
-#: onmap/templates/onmap/position_detail.html:32
+#: onmap/templates/onmap/position_detail.html:31
 msgid "Infomation"
 msgstr "情报"
 
-#: onmap/templates/onmap/position_detail.html:35
+#: onmap/templates/onmap/position_detail.html:36
 msgid "If you sign up, all records will be saved and available for future use."
 msgstr "如果您注册，所有记录将被保存并可供将来使用。"
 
-#: onmap/templates/onmap/position_detail.html:51
+#: onmap/templates/onmap/position_detail.html:52
 msgid "create time"
 msgstr "编辑时间"
 
-#: onmap/templates/onmap/position_detail.html:54
+#: onmap/templates/onmap/position_detail.html:55
 #: onmap/templates/onmap/position_mylist_ajax.html:18
-#: onmap/templates/onmap/position_popularlist_ajax.html:18
+#: onmap/templates/onmap/position_popularlist_ajax.html:26
 msgid "likes"
 msgstr "喜欢"
 
-#: onmap/templates/onmap/position_detail.html:60
+#: onmap/templates/onmap/position_detail.html:62
 msgid "Edit"
 msgstr "编辑"
 
-#: onmap/templates/onmap/position_detail.html:61
+#: onmap/templates/onmap/position_detail.html:63
 msgid "Delete"
 msgstr "删除"
 
-#: onmap/templates/onmap/position_detail.html:69
+#: onmap/templates/onmap/position_detail.html:72
 msgid "You chose 'Public'"
 msgstr "您选择‘公开’"
 
-#: onmap/templates/onmap/position_detail.html:71
+#: onmap/templates/onmap/position_detail.html:74
 msgid "You chose 'Not Public'"
 msgstr "您选择‘不公开’"
 
-#: onmap/templates/onmap/position_detail.html:93
+#: onmap/templates/onmap/position_detail.html:96
 msgid "Copy to clipboard"
 msgstr "拷贝内存"
 
@@ -202,11 +270,6 @@ msgstr "如果选择的话， 增加到地图"
 msgid "My List"
 msgstr "我的目录"
 
-#: onmap/templates/onmap/position_mylist.html:42
-#: onmap/templates/onmap/position_popularlist.html:27
-msgid "More Positions"
-msgstr ""
-
 #: onmap/templates/onmap/position_popularlist.html:18
 msgid "Popular Map List"
 msgstr ""
@@ -219,6 +282,6 @@ msgstr ""
 msgid "gives all content the vitality of location"
 msgstr ""
 
-#: templates/header_menu.html:16 templates/header_menu.html:44
+#: templates/header_menu.html:18 templates/header_menu.html:54
 msgid "Login/SignUp"
 msgstr ""

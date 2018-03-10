@@ -5,7 +5,7 @@
 {% block main %}
 
     <div class="form-divider"></div>
-    <div class="form-label-divider"><span>{% trans "Phone or Email Signup" %}</span></div>
+    <div class="form-label-divider"><span>{% trans "Email Signup" %}</span></div>
     <div class="form-divider"></div>
 
     <form action="" method="post" id="form-post"> 
@@ -13,8 +13,8 @@
 
         <div class="form-row-group with-icons">
             <div class="form-row no-padding">
-                {% for error in form.non_field_errors %} <!-- non 필드 errors 목록 노출 -->
-                        <label class="txt-red">{{ error }}</label>
+                {% for error in form.non_field_errors %} 
+                    <label class="txt-red">{{ error }}</label>
                 {% endfor %}
             </div>
         </div>
