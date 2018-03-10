@@ -24,7 +24,7 @@
       <div class="form-mini-divider"></div>
         <div class="form-row-group with-icons">
             <div class="form-row no-padding">
-            {% for error in form.username.errors %}
+            {% for error in form.email.errors %}
                 <label class="txt-red">{{ error }}</label>
             {% endfor %}
             </div>
@@ -38,7 +38,7 @@
         <div class="form-mini-divider"></div>
         <div class="form-row-group with-icons">
             <div class="form-row no-padding">
-            {% for error in form.nickname.errors %}
+            {% for error in form.first_name.errors %}
                 <label class="txt-red">{{ error }}</label>
             {% endfor %}
             </div>
