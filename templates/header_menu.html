@@ -28,15 +28,13 @@
           <a href="{% url 'onmap:add' %}"><i class="fa fa-file-image-o"></i> Add</a>
         </li>
         <li>
-          <a href="{% url 'onmap:popularlist' %}"><i class="fa fa-magic"></i> Popular List</a>
+          <a href="{% url 'onmap:popularlist' %}"><i class="fa fa-heart-o"></i> Popular List</a>
         </li>
-        <li>
-          <a href=""><i class="fa fa-magic"></i> Proposal</a>
-        </li>
+        
     {% if user.is_authenticated %}
         <li><a href="{% url 'onmap:mylist' %}"><i class="fa fa-th-large"></i> My List</a></li>
         <li>
-          <a href="{% url 'logout' %}"><i class="fa fa-th-large"></i>Logout</a>
+          <a href="{% url 'logout' %}"><i class="fa fa-logout"></i>Logout</a>
         </li>
     {% else %}
         <li>

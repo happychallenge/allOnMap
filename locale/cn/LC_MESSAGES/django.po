@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-09 23:56+0000\n"
+"POT-Creation-Date: 2018-03-09 23:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,244 +16,209 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: accounts/templates/accounts/login.html:10
 msgid "User Privacy Policy"
-msgstr "사용자 프라이버시 정책 "
+msgstr "用户政策"
 
 #: accounts/templates/accounts/login.html:17
 msgid "Sign in with Facebook"
-msgstr "페이스북으로 로그인"
+msgstr "通过 FACEBOOK 登陆"
 
 #: accounts/templates/accounts/login.html:22
 msgid "Sign in with Google"
-msgstr "구글로 로그인"
+msgstr "通过 GOOGLE 登陆"
 
 #: accounts/templates/accounts/login.html:28
 msgid "Sign in with Naver"
-msgstr "네이버로 로그인"
+msgstr ""
 
 #: accounts/templates/accounts/login.html:33
 msgid "Sign in with Kakao"
-msgstr "카카오로 로그인"
+msgstr ""
 
 #: accounts/templates/accounts/myprofile.html:24
 msgid "User name and Profile"
-msgstr "사용자 이름과 사진"
+msgstr "个人名字和照片"
 
 #: accounts/templates/accounts/myprofile.html:57
 #: onmap/templates/onmap/partial/pos_add.html:49
 #: onmap/templates/onmap/position_edit.html:71
 #: proposal/templates/proposal/proposal_add.html:50
 msgid "Confirm"
-msgstr "확인"
+msgstr "确认"
 
 #: accounts/templates/accounts/myprofile.html:67
 msgid "User map and Pictures"
-msgstr "사용자가 만든 맵과 사진들"
+msgstr "用户地图和照片"
 
 #: accounts/templates/accounts/myprofile.html:86
 msgid "Crop the photo"
-msgstr "사진 편집"
+msgstr "照片编辑"
 
 #: accounts/templates/accounts/myprofile.html:94
 msgid "Crop and Upload"
-msgstr "사진확정후 업로드"
+msgstr "编辑后上传"
 
 #: allOnMap/settings/common.py:120
 msgid "English"
-msgstr "영어"
+msgstr ""
 
 #: allOnMap/settings/common.py:121
 msgid "Korean"
-msgstr "한국어"
+msgstr ""
+
+#: allOnMap/settings/common.py:122
+msgid "Chinese"
+msgstr ""
 
 #: onmap/forms.py:8 onmap/forms.py:26
 msgid "More than 2 words...."
-msgstr "2글자 이상 입력"
+msgstr "两个字以上"
 
 #: onmap/forms.py:9 onmap/forms.py:27
 #: onmap/templates/onmap/partial/pos_add.html:22
 #: onmap/templates/onmap/position_edit.html:31
 msgid "Do you want this posting to be public?"
-msgstr "당신은 이 콘텐츠를 다른 사람들이 볼 수 있도록 오픈 하겠습니까?"
+msgstr "您希望这地图共享别人？"
 
 #: onmap/templates/onmap/home.html:17
 msgid ""
 "Just upload a picture of your smartphone or digital camera to the site and "
 "the location of the photo is displayed on the map."
-msgstr ""
-"스마트폰 또는 디지털 카메라의 사진을 Site에 올리기만 하면 사진을 찍은 위치가 "
-"지도에 표시됩니다."
+msgstr "只需将您的智能手机或数码相机的图片上传到该网站，照片的位置就会显示在地图上。"
 
 #: onmap/templates/onmap/home.html:18
 msgid "Please record your goals or accomplishments on your map."
-msgstr ""
-"자신이 정한 목표 또는 자신이 이룬 성취 하나 하나를 지도에 기록으로 남기시기 "
-"바랍니다."
+msgstr "请在你的地图上记录你的目标或成就。"
 
 #: onmap/templates/onmap/home.html:20 onmap/templates/onmap/home.html:29
 #: onmap/templates/onmap/home.html:38 onmap/templates/onmap/home.html:47
 #: onmap/templates/onmap/home.html:56 onmap/templates/onmap/home.html:65
 msgid "Try..."
-msgstr "한번 해 볼까...."
+msgstr "试试看看"
 
 #: onmap/templates/onmap/home.html:28
 msgid "Select the first Add menu."
-msgstr "첫번째 Add 메뉴를 선택합니다."
+msgstr "选择”ADD”菜单。"
 
 #: onmap/templates/onmap/home.html:37
 msgid ""
 "Second, please upload a picture of your smartphone or digital camera to the "
 "site based on the topic"
-msgstr ""
-"두번째, 스마트폰 또는 디지털 카메라의 사진을 주제를 작성한 후 사이트에 올리시"
-"기 바랍니다."
+msgstr "其次，请智能手机或数码相机的图片上传到网站"
 
 #: onmap/templates/onmap/home.html:46
 msgid ""
 "Third, the photo automatically displays on map where the picture was taken."
-msgstr "세번째, 자동으로 사진이 사진을 찍은 위치에 표시됩니다."
+msgstr "该照片会自动显示在拍摄照片的地图上。"
 
 #: onmap/templates/onmap/home.html:55
 msgid ""
 "Fourth, you can add photos that you uploaded elsewhere through editing to "
 "enrich the topic."
-msgstr ""
-"네번째, 편집을 통해 다른 곳에서 올린 사진을 추가하여 해당 주제를 풍부하게 할 "
-"수 있습니다."
+msgstr "您可以通过编辑添加您在其他位置上传的照片以丰富主题"
 
 #: onmap/templates/onmap/home.html:64
 msgid "Fifth, you can share with map links posted by others.."
-msgstr "네번째, 해당 링크를 어디서든지 공유할 수 있습니다."
+msgstr "您可以与其他人发布的地图链接分享"
 
 #: onmap/templates/onmap/partial/pos_add.html:4
 #: onmap/templates/onmap/partial/pos_add.html:42
 #: proposal/templates/proposal/proposal_add.html:43
 msgid "Add Picture"
-msgstr "사진 추가"
+msgstr "增加照片"
 
 #: onmap/templates/onmap/position_apicall.html:26
 msgid "This contents is not public. You don't have a access privilages."
-msgstr "해당 콘텐츠는 공개되지 않았습니다. 당신께서는 접근 권한이 없습니다."
+msgstr "此内容不公开。 您没有访问权限。"
 
 #: onmap/templates/onmap/position_apicall.html:40
 #: onmap/templates/onmap/position_detail.html:53
 #: onmap/templates/onmap/position_mylist_ajax.html:17
 #: onmap/templates/onmap/position_popularlist_ajax.html:17
 msgid "viewed"
-msgstr "번 보여짐"
+msgstr "次 看着"
 
 #: onmap/templates/onmap/position_detail.html:32
 msgid "Infomation"
-msgstr "정보"
+msgstr "情报"
 
 #: onmap/templates/onmap/position_detail.html:35
 msgid "If you sign up, all records will be saved and available for future use."
-msgstr "로그인을 하시면, 모든 것을 기록으로 남기고 관리할 수 있습니다."
+msgstr "如果您注册，所有记录将被保存并可供将来使用。"
 
 #: onmap/templates/onmap/position_detail.html:51
 msgid "create time"
-msgstr "생성 시간"
+msgstr "编辑时间"
 
 #: onmap/templates/onmap/position_detail.html:54
 #: onmap/templates/onmap/position_mylist_ajax.html:18
 #: onmap/templates/onmap/position_popularlist_ajax.html:18
 msgid "likes"
-msgstr "좋아함"
+msgstr "喜欢"
 
 #: onmap/templates/onmap/position_detail.html:60
 msgid "Edit"
-msgstr "편집"
+msgstr "编辑"
 
 #: onmap/templates/onmap/position_detail.html:61
 msgid "Delete"
-msgstr "삭제"
+msgstr "删除"
 
 #: onmap/templates/onmap/position_detail.html:69
 msgid "You chose 'Public'"
-msgstr "공개를 선택하셨습니다."
+msgstr "您选择‘公开’"
 
 #: onmap/templates/onmap/position_detail.html:71
 msgid "You chose 'Not Public'"
-msgstr "비공개를 선택하셨습니다."
+msgstr "您选择‘不公开’"
 
 #: onmap/templates/onmap/position_detail.html:93
 msgid "Copy to clipboard"
-msgstr "메모리에 복사하기"
+msgstr "拷贝内存"
 
 #: onmap/templates/onmap/position_edit.html:13
-#, fuzzy
-#| msgid "Edit Positions"
 msgid "Edit Position"
-msgstr "편집 사진들"
+msgstr "编辑地图"
 
 #: onmap/templates/onmap/position_edit.html:44
 msgid "Pictures which already were included"
-msgstr "이미 포함된 사진들"
+msgstr "已经包括的照片"
 
 #: onmap/templates/onmap/position_edit.html:45
 msgid "If you unselect it, it will be deleted from"
-msgstr "선택을 취소하시면 삭제가 됩니다."
+msgstr "如果不选择的话，地图上删除的"
 
 #: onmap/templates/onmap/position_edit.html:59
 msgid "Pictures which were not included."
-msgstr "포함되지 않은 사진들...."
+msgstr "还没有包括的照片"
 
 #: onmap/templates/onmap/position_edit.html:60
 msgid "If you select it, it will be added to"
-msgstr "만약 선택을 하시면, 추가될 것입니다."
+msgstr "如果选择的话， 增加到地图"
 
 #: onmap/templates/onmap/position_mylist.html:17
 msgid "My List"
-msgstr "내가 작성한 목록"
+msgstr "我的目录"
 
 #: onmap/templates/onmap/position_mylist.html:42
 #: onmap/templates/onmap/position_popularlist.html:27
-#, fuzzy
-#| msgid "Edit Positions"
 msgid "More Positions"
-msgstr "편집 사진들"
+msgstr ""
 
 #: onmap/templates/onmap/position_popularlist.html:18
 msgid "Popular Map List"
-msgstr "인기 지도 목록"
+msgstr ""
 
 #: proposal/templates/proposal/proposal_add.html:13
 msgid "Proposal about PictureOnMap"
-msgstr "PictureOnMap에 대한 개선 제안"
+msgstr ""
 
 #: templates/base.html:61
 msgid "gives all content the vitality of location"
-msgstr "위치 정보를 부여함으로써 정보의 생명력을 높인다."
+msgstr ""
 
 #: templates/header_menu.html:16 templates/header_menu.html:44
-#, fuzzy
-#| msgid "Sign Up"
 msgid "Login/SignUp"
-msgstr "사용자 등록"
-
-#~ msgid "This IP address has clicked already."
-#~ msgstr "이 IP는 이미 좋아함을 누르셨습니다."
-
-#~ msgid "Sign in with WeChat"
-#~ msgstr "WeChat으로 로그인"
-
-#~ msgid "Picture on Map"
-#~ msgstr "지도 위에 사진을"
-
-#~ msgid "Please see the location of all the photos on the map."
-#~ msgstr "지도에서 사진의 위치를 확인해 보세요"
-
-#~ msgid "Learn more"
-#~ msgstr "상세 내용 이해하기"
-
-#~ msgid "Add picture"
-#~ msgstr "사진 추가"
-
-#~ msgid "Anchor"
-#~ msgstr "Url 링크"
-
-#~ msgid "Pictures"
-#~ msgstr "사진들"
+msgstr ""
