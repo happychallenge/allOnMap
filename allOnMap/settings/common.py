@@ -140,9 +140,9 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-LOGIN_URL = reverse_lazy('login')
+LOGIN_URL = reverse_lazy('myprofile')
 LOGOUT_URL = reverse_lazy('logout')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_REDIRECT_URL = reverse_lazy('myprofile')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 ALLOW_UNICODE_SLUGS = True

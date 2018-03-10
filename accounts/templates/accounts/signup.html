@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+{% block main %}
+
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Phone or Email Signup" %}</span></div>
+    <div class="form-divider"></div>
+
+    <form action="" method="post" id="form-post"> 
+        {% csrf_token %}
+
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+                {% for error in form.non_field_errors %} <!-- non 필드 errors 목록 노출 -->
+                        <label class="txt-red">{{ error }}</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="form-row-group">
+            <div class="form-row no-padding">
+                <label class="form-element">
+                    <input type="checkbox" name="agree" value="agree"> Agree Company Policy
+                </label>
+            </div>
+        </div>
+
+      {# Email or Phone UID #}
+      <div class="form-mini-divider"></div>
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+            {% for error in form.username.errors %}
+                <label class="txt-red">{{ error }}</label>
+            {% endfor %}
+            </div>
+            <div class="form-row no-padding">
+                <i class="fa fa-envelope-o"></i>
+                <input type="hidden" name="username" id="id_username" class="form-element" value="{{form.instance.username}}" placeholder="User ID : Email or Phone">
+                <input type="text" name="email" id="id_email" class="form-element" value="{{form.instance.email}}" placeholder="User ID : Email or Phone">
+            </div>
+        </div>
+
+        <div class="form-mini-divider"></div>
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+            {% for error in form.nickname.errors %}
+                <label class="txt-red">{{ error }}</label>
+            {% endfor %}
+            </div>
+            <div class="form-row no-padding">
+                <i class="fa fa-vcard-o"></i>
+                <input type="text" name="first_name" id="id_first_name" class="form-element" value="{{form.instance.first_name}}" placeholder="Name">
+                
+            </div>
+        </div>
+        
+        <div class="form-mini-divider"></div>
+        <div class="form-row-group with-icons">
+            {% for error in form.password.errors %}
+                <label class="control-label">{{ error }}</label>
+            {% endfor %}
+            <div class="form-row no-padding">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" class="form-element" 
+                placeholder={% trans "Password : more than 8 character including special character and number " %}>
+            </div>
+        </div>
+
+        <div class="form-mini-divider"></div>
+        <div class="form-row-group with-icons">
+            {% for error in form.password.errors %}
+                <label class="control-label">{{ error }}</label>
+            {% endfor %}
+            <div class="form-row no-padding">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="confirm_password" class="form-element" placeholder="Password Confirm">
+            </div>
+        </div>
+
+        <div class="form-mini-divider"></div>
+        <div class="form-row">
+          <button id="btn_ok" type="button" class="button circle block green">{% trans "Confirm" %}</button>
+        </div>
+        <div class="form-divider"></div>
+    </form>
+
+
+{% endblock main %}
+
+{% block javascript %}
+<script>
+$('#btn_ok').click(function(){
+    var username = $('#id_email').val();
+    $('#id_username').val(username);
+    $('#form-post').submit();
+});
+</script>
+{% endblock javascript %}

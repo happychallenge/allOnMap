@@ -2,38 +2,59 @@
 
 {% load socialaccount static i18n %}
 
-{% block main %}
 
-    <div><h3> &nbsp; Social Login</h3></div>
+{% block main %}
     
     <div class="container"> 
         {% trans "User Privacy Policy" %} : <a href="{% url 'onmap:privacy' %}"> privacy-policy-html-english </a>
     </div>
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Social Login" %}</span></div>
+    <div class="form-divider"></div>
+    <div class="list-box">
+    {% for provider in providers %}
+        {% if provider.name == 'Facebook'  %}
+        <div class="form-row">
+            <a href="{% provider_login_url provider.id %}" class="button circle block blue"> 
+                <i class="fa fa-facebook"></i> {% trans "Sign in with Facebook" %} </a>
+        </div>
+        {% endif %}
+        {% if provider.name == 'Google'  %}
+        <div class="form-row">
+            <a href="{% provider_login_url provider.id %}" class="button circle block red"><i class="fa fa-google"></i> {% trans "Sign in with Google" %} </a>
+        </div>
+        {% endif %}
+        
+        {% if provider.name == 'Naver'  %}
+        <div class="form-row">
+            <a href="{% provider_login_url provider.id %}" class="button circle block green"><i class="fa fa-naver"></i> {% trans "Sign in with Naver" %} </a>
+        </div>
+        {% endif %}
+        {% if provider.name == 'Kakao'  %}
+        <div class="form-row">
+            <a href="{% provider_login_url provider.id %}" class="button circle block yellow"><i class="fa fa-naver"></i> {% trans "Sign in with Kakao" %} </a>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
 
-{% for provider in providers %}
-    {% if provider.name == 'Facebook'  %}
-    <div class="form-row">
-        <a href="{% provider_login_url provider.id %}" class="button circle block blue"> 
-            <i class="fa fa-facebook"></i> {% trans "Sign in with Facebook" %} </a>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Not Social Login" %}</span></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+    <div class="list-box"> 
+        <a href="{% url 'login_email' %}" class="button circle block green">
+            <i class="fa fa-mobile fa-lg"></i> 
+            <i class="fa fa-envelope"></i> 
+            {% trans "My Phone or Email Login" %} </a>
     </div>
-    {% endif %}
-    {% if provider.name == 'Google'  %}
-    <div class="form-row">
-        <a href="{% provider_login_url provider.id %}" class="button circle block red"><i class="fa fa-google"></i> {% trans "Sign in with Google" %} </a>
-    </div>
-    {% endif %}
-    
-    {% if provider.name == 'Naver'  %}
-    <div class="form-row">
-        <a href="{% provider_login_url provider.id %}" class="button circle block green"><i class="fa fa-naver"></i> {% trans "Sign in with Naver" %} </a>
-    </div>
-    {% endif %}
-    {% if provider.name == 'Kakao'  %}
-    <div class="form-row">
-        <a href="{% provider_login_url provider.id %}" class="button circle block yellow"><i class="fa fa-naver"></i> {% trans "Sign in with Kakao" %} </a>
-    </div>
-    {% endif %}
-{% endfor %}
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
 
 
 {% endblock main %}

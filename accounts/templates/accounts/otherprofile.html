@@ -27,14 +27,12 @@
     <div class="form-label-divider"><span>{% trans "User name and Profile" %}</span></div>
     <div class="form-divider"></div>
 
-    <form method="POST" enctype='multipart/form-data' class="form-horizontal" 
-        id="formProfile">
-        {% csrf_token %}
-      <div class="form-row-group with-icons">
+
+    <div class="form-row-group with-icons">
         <div class="form-row no-padding">
           <i class="fa fa-vcard-o"></i>
           <input type="text" name="nickname" id="id_nickname" 
-            class="form-element" value="{{form.instance.nickname}}">
+            class="form-element" value="{{author.profile.nickname}}">
         </div>
       </div>
 
@@ -42,25 +40,13 @@
         <div class="form-row no-padding">
             <div class="center">
                 <div class="profile-image">
-                    <img class="avatar-img" alt="User Avatar" src="{% if user.profile.picture %} {{ user.profile.picture.url }} {% else %} {% static 'images/nouser.png' %}{% endif %}" width="150px">
-                    <a class="update-btn"><i class="fa fa-camera i-camera"></i></a>
+                    <img class="avatar-img" alt="User Avatar" src="{% if author.profile.picture %} {{ author.profile.picture.url }} {% else %} {% static 'images/nouser.png' %}{% endif %}" width="150px">
                 </div>
-                <input type="file" name="picture" hidden title="" accept="image/*" id="id_picture" class="">
-                <input type="hidden" name="x" id="id_x">
-                <input type="hidden" name="y" id="id_y">
-                <input type="hidden" name="width" id="id_width">
-                <input type="hidden" name="height" id="id_height">
             </div>
         </div>
-      </div>  
+    </div>  
 
-      <div class="form-row">
-        <button id="btn-profile" type="submit" 
-            class="button circle block green" style="display: none;">
-            {% trans "Confirm" %}
-        </button>
-      </div>
-    </form>
+
 
 {# Summary #}
     <div class="form-divider"></div>
@@ -78,11 +64,10 @@
       </div>
     </div>
 
-
 {# List of Map #}
     <div class="form-divider"></div>
     <div class="form-label-divider">
-        <span>{% trans "My Map List (Summery only)" %} </span>
+        <span>{{author.profile.nickname}}'s {% trans " Map List (Summery only)" %} </span>
     </div>
     <div class="form-divider"></div>
 
@@ -125,17 +110,6 @@
 
 {% block javascript %}
 <script src="{% static 'js/cropper.min.js' %}"></script>
-<script src="{% static 'js/profile.js' %}"></script>
-
-<script>
-$('#id_nickname').bind('input', function() { 
-    $("#btn-profile").show();
-});
-
-$(".i-camera").click(function(){
-    $("#id_picture").click();
-})
-</script> 
 
 <script>
 $("#btn_callmore").click(function(){

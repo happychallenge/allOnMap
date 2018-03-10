@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% load static i18n %}
+
+{% block main %}
+
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Phone or Email Login" %}</span></div>
+    <div class="form-divider"></div>
+
+    <form action="" method="post" id="form-post"> 
+        {% csrf_token %}
+
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+                {% for error in form.non_field_errors %} <!-- non 필드 errors 목록 노출 -->
+                        <label class="txt-red">{{ error }}</label>
+                {% endfor %}
+            </div>
+        </div>
+      {# Name #}
+        <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
+            {% for error in form.username.errors %}
+                <label class="txt-red">{{ error }}</label>
+            {% endfor %}
+            </div>
+            <div class="form-row no-padding">
+                <i class="fa fa-vcard-o"></i>
+                <input type="text" name="username" id="id_username" class="form-element" value="{{form.instance.username}}" placeholder="Email or Phone">
+                
+            </div>
+        </div>
+
+        <div class="form-divider"></div>
+        <div class="form-row-group with-icons">
+            {% for error in form.password.errors %}
+                <label class="control-label">{{ error }}</label>
+            {% endfor %}
+            <div class="form-row no-padding">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" class="form-element" placeholder="Password">
+            </div>
+        </div>
+
+        <div class="form-row">
+          <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
+        </div>
+        <div class="form-divider"></div>
+    </form>
+
+    <div class="form-divider"></div>
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Phoen or Email SignUp" %}</span></div>
+    <div class="form-divider"></div>
+    <div class="list-box">
+        <a href="{% url 'signup' %}" class="button circle block green"><i class="fa fa-mail"></i> {% trans "My Phone or Email Sign Up" %} </a> 
+    </div>
+    <div class="form-mini-divider"></div>
+    <div class="form-mini-divider"></div>
+
+{% endblock main %}

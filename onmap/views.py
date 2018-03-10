@@ -14,7 +14,7 @@ from .adjust_location import transform
 from .models import Position, Picture, IPaddress, PLikes, PositionPictures
 from .forms import PositionForm, PositionEditForm
 
-NUM_CONTENT = 6
+NUM_CONTENT = 5
 # Create your views here.
 def home(request):
     return render(request, "onmap/home.html")
@@ -226,7 +226,8 @@ def add(request):
                     tempname = name
 
                 picture.name = tempname
-                picture.author = request.user
+                if request.user.is_authenticated():
+                    picture.author = request.user
                 image = Image.open(filename)
             # 위도 경도 값 가져오기
                 lat, lng, dt = get_lat_lon_dt(image)

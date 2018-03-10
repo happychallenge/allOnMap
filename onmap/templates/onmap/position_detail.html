@@ -27,11 +27,12 @@
 
   {# Notification for Signup #}
     {% if not user.is_authenticated %}
-    <div class="comment-container">
-      <div class="comment-header">
-        <span class="user-name">{% trans "Infomation" %}</span>
-      </div>
-      <div class="comment-content">
+    <div class="form-divider"></div>
+    <div class="form-label-divider"><span>{% trans "Infomation" %}</span></div>
+    <div class="form-divider"></div>
+
+    <div class="post-item">
+      <div class="post-content">
         <h4> {% trans "If you sign up, all records will be saved and available for future use." %}
         <a href="{% url 'login' %}"> 
           <button class="button darkblue">Sign Up</button> </a></h4>
@@ -56,10 +57,12 @@
         </div>
       </div>
     {# Button #}
+    {% if user.is_authenticated %}
       <div class="post-content">
           <a href="{% url 'onmap:edit' position.slug %}" class="button circle darkblue"> {% trans "Edit" %} </a> 
           <button class="button circle red" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
-      </div> 
+      </div>
+    {% endif %}
     {# Public #}
       <div class="post-content">
         <div class="list-box">

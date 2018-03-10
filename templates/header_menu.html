@@ -10,7 +10,9 @@
       <h3 class="author">
         {% if user.is_authenticated %}
           {% if user.profile.nickname %}
-            {{user.profile.nickname}}     
+            <a href="{% url 'myprofile' %}" style="color: white;">
+              {{user.profile.nickname}}
+            </a>   
           {% endif %}
         {% else %}
           <a href="{% url 'login' %}">{% trans "Login/SignUp" %}</a> 
@@ -33,9 +35,7 @@
         
     {% if user.is_authenticated %}
         <li><a href="{% url 'onmap:mylist' %}"><i class="fa fa-th-large"></i> My List</a></li>
-        <li>
-          <a href="{% url 'logout' %}"><i class="fa fa-logout"></i>Logout</a>
-        </li>
+        
     {% else %}
         <li>
           <a href="{% url 'login' %}"> 
