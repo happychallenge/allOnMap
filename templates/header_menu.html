@@ -35,7 +35,9 @@
         
     {% if user.is_authenticated %}
         <li><a href="{% url 'onmap:mylist' %}"><i class="fa fa-th-large"></i> My List</a></li>
-        
+        <li>
+          <a href="{% url 'logout' %}"><i class="fa fa-logout"></i>Logout</a>
+        </li>
     {% else %}
         <li>
           <a href="{% url 'login' %}"> 
