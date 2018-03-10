@@ -31,7 +31,7 @@
             <div class="form-row no-padding">
                 <i class="fa fa-envelope-o"></i>
                 <input type="hidden" name="username" id="id_username" class="form-element" value="{{form.instance.username}}" placeholder="User ID : Email or Phone">
-                <input type="text" name="email" id="id_email" class="form-element" value="{{form.instance.email}}" placeholder="User ID : Email or Phone">
+                <input type="text" name="email" id="id_email" class="form-element" value="{{form.instance.email}}" placeholder="input Email ">
             </div>
         </div>
 
@@ -51,9 +51,11 @@
         
         <div class="form-mini-divider"></div>
         <div class="form-row-group with-icons">
+            <div class="form-row no-padding">
             {% for error in form.password.errors %}
                 <label class="control-label">{{ error }}</label>
             {% endfor %}
+            <div class="form-row no-padding">
             <div class="form-row no-padding">
                 <i class="fa fa-lock"></i>
                 <input type="password" name="password" class="form-element" 
