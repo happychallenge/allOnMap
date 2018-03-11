@@ -19,6 +19,9 @@
   font-size: 13px;
   line-height: 16px;
 }
+.post-content > img {
+  border-radius: 50%;
+}
 </style>
 {% endblock css %}
 
@@ -59,8 +62,8 @@
     {# Button #}
     {% if user.is_authenticated %}
       <div class="post-content">
-          <a href="{% url 'onmap:edit' position.slug %}" class="button circle darkblue"> {% trans "Edit" %} </a> 
-          <button class="button circle red" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
+          <a href="{% url 'onmap:edit' position.slug %}" class="button circle darkblue"> {% trans "Edit" %} </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="button circle red" id="btn-delete" data-url="{{position.slug}}"> {% trans "Delete" %} </a>
       </div>
     {% endif %}
     {# Public #}
@@ -83,9 +86,9 @@
       </div>     
     {# Pictures #}
       <div class="post-content">
-          {% for picture in position.pictures.all %}
-              <img src="{{picture.file.url}}" alt="{{picture.name}}">
-          {% endfor %}
+        {% for picture in position.pictures.all %}
+            <img src="{{picture.file.url}}" alt="{{picture.name}}-{{picture.id}}">
+        {% endfor %}
       </div>   
     {# URL Copy #}
       <div class="post-content">
@@ -120,63 +123,17 @@ target='_blank'&gt;
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
 {% endif %}
 
+<script src="{% static 'js/custommarker.js' %}"></script>
+
 <script>
 
-function CustomMarker(latlng, map, imageSrc) {
-    this.latlng_ = latlng;
-    this.imageSrc = imageSrc;
-    // Once the LatLng and text are set, add the overlay to the map.  This will
-    // trigger a call to panes_changed which should in turn call draw.
-    this.setMap(map);
-}
 
-CustomMarker.prototype = new google.maps.OverlayView();
-
-CustomMarker.prototype.draw = function () {
-    // Check if the div has been created.
-    var div = this.div_;
-    if (!div) {
-        // Create a overlay text DIV
-        div = this.div_ = document.createElement('div');
-        // Create the DIV representing our CustomMarker
-        div.className = "customMarker"
-
-
-        var img = document.createElement("img");
-        img.src = this.imageSrc;
-        div.appendChild(img);
-        // google.maps.event.addDomListener(div, "click", function (event) {
-        //     google.maps.event.trigger(me, "click");
-        // });
-
-        // Then add the overlay to the DOM
-        var panes = this.getPanes();
-        panes.overlayImage.appendChild(div);
-    }
-
-    // Position the overlay 
-    var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
-    if (point) {
-        div.style.left = point.x + 'px';
-        div.style.top = point.y + 'px';
-    }
-};
-
-CustomMarker.prototype.remove = function () {
-    // Check if the overlay was on the map and needs to be removed.
-    if (this.div_) {
-        this.div_.parentNode.removeChild(this.div_);
-        this.div_ = null;
-    }
-};
-
-CustomMarker.prototype.getPosition = function () {
-    return this.latlng_;
-};
 
 var pictures = [
     {% for picture in position.pictures.all %}
+      {% if picture.lat and picture.lat != 0.0 and picture.lat is not None %}  
         {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+      {% endif %}
     {% endfor %}
 ];
 
@@ -207,6 +164,41 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 <script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getCookie('csrftoken');
+
+$("#btn-delete").click(function(event){
+    event.preventDefault();
+    var slug = $(this).attr('data-url');
+    var title = "{{position.name}}";
+    var result = confirm( "Are you confirm to delete " + title);
+    if (result == true){
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'onmap:delete' %}",
+            data: {'slug': slug, 'csrfmiddlewaretoken': csrftoken},
+            dataType: 'json',
+            success: function(response){
+               window.location.href = 'http://www.pictureonmap.com/onmap/mylist/'
+            }
+        })
+    }
+})
+
 function copyToClipboard() {
   var copyText = document.getElementById("id_copyurl");
   copyText.select();

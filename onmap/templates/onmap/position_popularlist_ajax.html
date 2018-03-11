@@ -30,7 +30,7 @@
       </div>
       <div class="post-content">
           {% for picture in position.get_pictures %}
-              <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+              <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}">
           {% endfor %}
           total : # <strong style="color: blue;">{{ position.pictures.all | length }} </strong> pictures
       </div>    

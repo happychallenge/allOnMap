@@ -114,8 +114,13 @@ def edit(request, slug):
 
             position.save()
 
-            add_pictures = request.POST.getlist('add_pictures')
+            delete_pictures = request.POST.getlist('delete_pictures')
+            for picture_id in delete_pictures:
+                picture = get_object_or_404(Picture, id=picture_id)
+                PositionPictures.objects.get(
+                    position=position, picture=picture).delete()
 
+            add_pictures = request.POST.getlist('add_pictures')
             for picture_id in add_pictures:
                 picture = get_object_or_404(Picture, id=picture_id)
                 obj, created = PositionPictures.objects.get_or_create( \
@@ -257,7 +262,7 @@ def add(request):
             
             # 사진 축약 
                 output = BytesIO()
-                image = image.resize((80,80))
+                image = image.resize((120,120))
                 image.save(output, format='JPEG', quality=90)
                 output.seek(0)
 

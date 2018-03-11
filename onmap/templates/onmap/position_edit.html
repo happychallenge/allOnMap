@@ -42,11 +42,11 @@
         <div class="form-row-group with-icons">
           <div class="form-row no-padding">
             <div class="txt-bold"> {% trans "Pictures which already were included" %}  </div>
-            <div class="txt-blue"> {% trans "If you unselect it, it will be deleted from" %} [{{form.instance.name}}] </div>
+            <div class="txt-blue"> {% trans "If you select it, it will be deleted from" %} [{{form.instance.name}}] </div>
               <div>
                 {% for picture in pictures %}
-                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
-                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" checked value="{{picture.id}}" >
+                  <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}-{{picture.id}}">
+                  <input class="form-check-input position-static" type="checkbox" name="delete_pictures" value="{{picture.id}}" >
                 {% endfor %}
               </div>
           </div>
@@ -60,7 +60,7 @@
             <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
               <div style="display: block;">
                 {% for picture in notpictures %}
-                  <img class="ratio img-circle" src="{{picture.file.url}}" alt="{{picture.name}}">
+                  <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}">
                   <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
                 {% endfor %}
               </div>
