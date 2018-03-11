@@ -59,10 +59,10 @@ def mylist(request):
     ptype = request.GET.get('ptype', 'S')
     if ptype == 'S':
         positions = Position.objects.prefetch_related(
-                'pictures', 'plikes').filter(author = user, ptype='S')
+                'pictures', 'plikes').filter(author = user, ptype='S').order_by("-views")
     else:
         positions = Position.objects.prefetch_related(
-                'pictures', 'plikes').filter(author = user)
+                'pictures', 'plikes').filter(author = user).order_by("-views")
     if request.is_ajax():
         template = "onmap/position_mylist_ajax.html"
     else:
