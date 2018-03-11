@@ -37,11 +37,12 @@ img {
       {% include "onmap/position_mylist_ajax.html" %}
     </div>
 
-  {% if next_page %}
-    <button class="button circle block green" id="btn_callmore">
+  
+    <button class="button circle block green" id="btn_callmore"  
+      {% if not next_page %}style="display: none;"{% endif %}
+    >
       {% trans "More Positions" %}
     </button>
-  {% endif %}
     <input type="hidden" id="page" value="1"> 
 
 
