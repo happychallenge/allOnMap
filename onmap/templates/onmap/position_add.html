@@ -25,6 +25,15 @@ $(document).on('click', '.sweet-check', function(){
         $("#id_public").val('off');
     }
 });
+$("#btn_ok").click(function(evt){
+    evt.preventDefault();
+    var name = $("#id_name").val();
+    if (name.length >= 2){
+        $("#form-post").submit();
+    } else {
+        $("#id-label-name").html("Name is required");
+    }
+})
 </script>
 
 {% endblock javascript %}

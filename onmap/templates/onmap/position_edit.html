@@ -18,60 +18,59 @@
 
     {# Map Name #}
       <div class="form-row-group with-icons">
-          <div class="form-row no-padding">
-              <i class="fa fa-vcard-o"></i>
-              <input type="text" name="name" id="id_name" class="form-element" value="{{form.instance.name}}">
-          </div>
+        <div class="form-row no-padding">
+            <i class="fa fa-vcard-o"></i>
+            <input type="text" name="name" id="id_name" class="form-element" value="{{form.instance.name}}">
+        </div>
       </div>
 
-      {# Public #}
-        <div class="form-mini-divider"></div>
-        <div class="list-box">
-          <div class="list-item">
-            <span class="list-item-title">{% trans "Do you want this posting to be public?" %}</span>
-            <div class="sweet-check {% if form.instance.public %}checked{% endif %}">
-              <input type="checkbox" {% if form.instance.public %}checked{% endif %} >
-              <div class="outline"> </div>
-              <input type="hidden" name="public" id="id_public" value="on">
+    {# Public #}
+      <div class="form-mini-divider"></div>
+      <div class="list-box">
+        <div class="list-item">
+          <span class="list-item-title">{% trans "Do you want this posting to be public?" %}</span>
+          <div class="sweet-check {% if form.instance.public %}checked{% endif %}">
+            <input type="checkbox" {% if form.instance.public %}checked{% endif %} >
+            <div class="outline"> </div>
+            <input type="hidden" name="public" id="id_public" value="on">
+          </div>
+        </div>
+      </div>
+
+    {# Pictures Included #}
+      <div class="form-mini-divider"></div>
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <div class="txt-bold"> {% trans "Pictures which already were included" %}  </div>
+          <div class="txt-blue"> {% trans "If you select it, it will be deleted from" %} [{{form.instance.name}}] </div>
+            <div>
+              {% for picture in pictures %}
+                <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}-{{picture.id}}">
+                <input class="form-check-input position-static" type="checkbox" name="delete_pictures" value="{{picture.id}}" >
+              {% endfor %}
             </div>
-          </div>
         </div>
+      </div>
+    
+    {# Pictures Not included #}
+      <div class="form-mini-divider"></div>
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <div class="txt-bold">{% trans "Pictures which were not included." %}</div>
+          <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
+            <div style="display: block;">
+              {% for picture in notpictures %}
+                <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}">
+                <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
+              {% endfor %}
+            </div>
+        </div>
+      </div>
 
-      {# Pictures Included #}
-        <div class="form-mini-divider"></div>
-        <div class="form-row-group with-icons">
-          <div class="form-row no-padding">
-            <div class="txt-bold"> {% trans "Pictures which already were included" %}  </div>
-            <div class="txt-blue"> {% trans "If you select it, it will be deleted from" %} [{{form.instance.name}}] </div>
-              <div>
-                {% for picture in pictures %}
-                  <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}-{{picture.id}}">
-                  <input class="form-check-input position-static" type="checkbox" name="delete_pictures" value="{{picture.id}}" >
-                {% endfor %}
-              </div>
-          </div>
-        </div>
-      
-      {# Pictures Not included #}
-        <div class="form-mini-divider"></div>
-        <div class="form-row-group with-icons">
-          <div class="form-row no-padding">
-            <div class="txt-bold">{% trans "Pictures which were not included." %}</div>
-            <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
-              <div style="display: block;">
-                {% for picture in notpictures %}
-                  <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}">
-                  <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">
-                {% endfor %}
-              </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
-        </div>
+      <div class="form-row">
+        <button id="btn_ok" type="submit" class="button circle block green">{% trans "Confirm" %}</button>
+      </div>
     </form>
-
 
 {% endblock main %}
 

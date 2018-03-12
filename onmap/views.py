@@ -96,6 +96,20 @@ def detail(request, slug):
     return render(request, "onmap/position_detail.html", context)
 
 
+def call_detail(request):
+    picture_id = request.GET.get('id')
+    print(picture_id)
+    picture = Picture.objects.get(id=picture_id)
+    client_ip = request.META['REMOTE_ADDR']
+
+    country = getCountry(client_ip)
+    if country == "CN" or country == "ZZ":
+        context = {'picture': picture, 'china': True}
+    else:
+        context = {'picture': picture, 'china': False}
+    return render(request, "onmap/partial/call_detail.html", context)
+
+
 @login_required
 def edit(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
@@ -205,10 +219,8 @@ def add(request):
             position.ptype = 'S'
             if public == 'on':
                 position.public = True
-                print("Public : True")
             else:
                 position.public = False
-                print("Public : False")
 
             if request.user.is_authenticated():
                 position.author = request.user
@@ -262,7 +274,7 @@ def add(request):
             
             # 사진 축약 
                 output = BytesIO()
-                image = image.resize((120,120))
+                image = image.resize((240,240))
                 image.save(output, format='JPEG', quality=90)
                 output.seek(0)
 

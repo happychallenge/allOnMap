@@ -87,7 +87,7 @@
     {# Pictures #}
       <div class="post-content">
         {% for picture in position.pictures.all %}
-            <img src="{{picture.file.url}}" alt="{{picture.name}}-{{picture.id}}">
+            <img src="{{picture.file.url}}" width="120px" alt="{{picture.name}}-{{picture.id}}">
         {% endfor %}
       </div>   
     {# URL Copy #}
