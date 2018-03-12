@@ -12,12 +12,14 @@
         </strong>
         <small> written by : 
           {% if user == position.author %}
-            <a href="{% url 'myprofile' %}"> 
+            <a href="{% url 'myprofile' %}"> {{position.author.profile.nickname}} <i class="fa fa-link"></i></a>
           {% else %}
-            <a href="{% url 'otherprofile' position.author.username %}">
+            {% if position.author %}
+              <a href="{% url 'otherprofile' position.author.username %}">{{position.author.profile.nickname}} <i class="fa fa-link"></i></a>
+            {% else %}
+              NotSignUp
+            {% endif %}
           {% endif %}
-              {{position.author.profile.nickname}} <i class="fa fa-link"></i>
-            </a>
         </small>
         <div>
           <span class="post-date"><i class="fa fa-clock-o"></i> create time: {{position.create_dt|naturaltime }} </span>
