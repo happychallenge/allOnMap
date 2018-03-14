@@ -16,11 +16,11 @@ urlpatterns = [
     url(r'^login/$', user_login.login, name='login'),
     url(r'^logout/$', user_login.logout, name='logout'),
     url(r'^myprofile/$', user_login.myprofile, name='myprofile'),
-    url(r'^otherprofile/(?P<username>[-_@\.\w]+)/$', user_login.otherprofile, name='otherprofile'),
     url(r'^login_email', django_login.login, 
         {'template_name': 'accounts/login_email.html'}, name='login_email'),
-
     url(r'^onmap/', include('onmap.urls', namespace="onmap")),
+    
+    url(r'^(?P<username>[-_@\.\w]+)/$', user_login.otherprofile, name='otherprofile'),
     # url(r'^proposal/', include('proposal.urls', namespace="proposal")),
 ]
 

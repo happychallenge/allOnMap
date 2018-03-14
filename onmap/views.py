@@ -182,6 +182,20 @@ def apicall(request, slug):
         context = {'error': True}
     return render(request, "onmap/position_apicall.html", context)
 
+def testcall(request, slug):
+    position = Position.objects.select_related('author') \
+        .prefetch_related('pictures').get(slug=slug)
+
+        client_ip = request.META['REMOTE_ADDR']
+        country = getCountry(client_ip)
+        if country == "CN" or country == "ZZ":
+            context = {'position': position, 'china': True}
+        else:
+            context = {'position': position, 'china': False}
+    else:
+        context = {'error': True}
+    return render(request, "onmap/position_testcall.html", context)
+
 
 @require_POST
 def userlike(request):

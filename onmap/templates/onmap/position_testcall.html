@@ -1,0 +1,163 @@
+{% extends "home.html" %}
+{% load static i18n %}
+
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/custommarker.css' %}">
+{% if china %}
+    
+{% else %}
+<script src="https://use.fontawesome.com/658bb4caf7.js"></script>
+{% endif %}
+
+<style>
+#message{
+    background-color: #eee;
+    color: red;
+}
+</style>
+
+{% endblock header %}
+
+
+{% block body %}
+
+{% if error %}
+    <h3> {% trans "This contents is not public. You don't have a access privilages." %} </h3>
+{% else %}
+ 
+<div id="map"></div>
+<div id="floating-theme">
+    {% if position.author %}
+        {{position.author.profile.nickname}}
+    {% else %}
+        NoName
+    {% endif %}
+    's {{position.name}} 
+</div>
+<div id="floating-like">
+    <a href="http://www.pictureonmap.com">
+    <button class="btn btn-default btn-circle btn-lg">
+        <i class="fa fa-home fa-3"></i>
+    </button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="pull-right">
+
+        <span> {{position.views}} {% trans "viewed" %}</span>
+        &nbsp;&nbsp; &nbsp;&nbsp;
+        <button class="btn-danger btn-circle btn-lg like" data-url="{{position.slug}}">
+            <i class="fa fa-heart-o fa-3"></i> 
+        </button>
+        <span class="like-count" id="likecount-{{position.slug}}"> {{position.plikes.count}} </span>
+    </div>
+</div>
+<div id="messages" style="display: none;"></div>
+{% endif %}
+
+{% endblock body %}
+
+
+{% block tail %}
+  
+{% if china %}
+<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+{% else %}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD03p1K9oToraWXg-EsjsV7I06xwKaQ1do"></script>
+{% endif %}
+
+<script>
+var map_height = $(window).height();
+$("#map").height(map_height);
+
+// Like and Cancel
+$(document).on('click', '.like', function(){
+  var slug = $(this).attr('data-url');
+  $(this).prop("disabled", true);
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'onmap:userlike' %}",
+    data: {'slug': slug, 'csrfmiddlewaretoken': '{{csrf_token}}'},
+    dataType: 'json',
+    success: function(response){
+      if (response.created) {
+        $("#likecount-"+slug).html(response.like_count);
+      } else {
+        $("#messages").show();
+        $("#messages").val(response.messages);
+      }
+      
+    },
+    error: function(request, status, error) {
+        console.log(error);
+    },
+  });
+});
+
+</script>
+<script src="{% static 'js/custommarker.js' %}"></script>
+<script>
+var pictures = [
+    {% for picture in position.pictures.all %}
+        {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+    {% endfor %}
+];
+
+var position;
+
+function initialize(){
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        // center: new google.maps.LatLng(36.0078916666667, 128.260222222222),
+    });
+
+    var infoWindow = new google.maps.InfoWindow();
+
+    var bounds = new google.maps.LatLngBounds();
+    for (var i = 0; i < pictures.length; i++) {
+        position = new google.maps.LatLng( pictures[i].location );
+        var id = pictures[i].id;
+        var icon = pictures[i].icon;
+
+        var marker = new CustomMarker(position, map, icon, id);
+        console.log(marker);
+
+        // marker.addListener('click',  function() {
+        //     populateInfoWindow(self, map, infoWindow)
+        // });
+
+        bounds.extend(position);
+    }
+
+    if (pictures.length >= 2) {
+        map.fitBounds(bounds);
+    } else {
+        map.panTo(position);
+    }
+}
+
+function populateInfoWindow(marker, map, infoWindow) {
+    // infoWindow.marker = marker;
+    console.log(marker);
+    $.ajax({
+      type: 'GET',
+      async: true,
+      data: {'id': marker.id},
+      url: "{% url 'onmap:call_detail' %}",
+      dataType: 'html',
+      success: function(data){
+        infoWindow.setContent(data);
+      }
+    });
+    infoWindow.open(map, marker);
+
+    infoWindow.addListener('closeclick',function() {
+        infoWindow.setMarker(null);
+    });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+{% endblock tail %}
+
+
+

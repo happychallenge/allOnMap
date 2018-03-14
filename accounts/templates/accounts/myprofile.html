@@ -30,6 +30,27 @@
     <form method="POST" enctype='multipart/form-data' class="form-horizontal" 
         id="formProfile">
         {% csrf_token %}
+
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <label class="txt-blue"><strong>User ID</strong></label>
+        </div>
+      </div>
+
+      <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+          <i class="fa fa-vcard-o"></i>
+          <input type="text" name="username" id="id_username" disabled 
+            class="form-element" value="{{user.username}}">
+        </div>
+      </div>
+
+      <div class="form-mini-divider"></div>
+      <div class="form-row-group with-icons">
+          <div class="form-row no-padding">
+            <label class="txt-blue"><strong>Name </strong>(possible change)</label>
+          </div>
+      </div>
       <div class="form-row-group with-icons">
         <div class="form-row no-padding">
           <i class="fa fa-vcard-o"></i>
@@ -38,6 +59,7 @@
         </div>
       </div>
 
+      <div class="form-mini-divider"></div>
       <div class="form-row-group with-icons">
         <div class="form-row no-padding">
             <div class="center">
