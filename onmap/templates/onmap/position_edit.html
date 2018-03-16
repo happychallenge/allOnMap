@@ -4,6 +4,11 @@
 
 {% block css %}
 <link href="{% static 'css/picture.css' %}" rel="stylesheet" > 
+<style>
+.post-content > img {
+  border-radius: 10%;
+}
+</style>
 {% endblock css %}
 
 
@@ -43,7 +48,7 @@
         <div class="form-row no-padding">
           <div class="txt-bold"> {% trans "Pictures which already were included" %}  </div>
           <div class="txt-blue"> {% trans "If you select it, it will be deleted from" %} [{{form.instance.name}}] </div>
-            <div>
+            <div class="post-content">
               {% for picture in pictures %}
                 <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}-{{picture.id}}">
                 <input class="form-check-input position-static" type="checkbox" name="delete_pictures" value="{{picture.id}}" >
@@ -58,7 +63,7 @@
         <div class="form-row no-padding">
           <div class="txt-bold">{% trans "Pictures which were not included." %}</div>
           <div class="txt-blue">{% trans "If you select it, it will be added to" %} [{{form.instance.name}}] </div>
-            <div style="display: block;">
+            <div class="post-content" style="display: block;">
               {% for picture in notpictures %}
                 <img class="ratio img-circle" src="{{picture.file.url}}" width="120px" alt="{{picture.name}}">
                 <input class="form-check-input position-static" type="checkbox" name="add_pictures" value="{{picture.id}}">

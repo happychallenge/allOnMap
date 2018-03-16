@@ -43,6 +43,7 @@ CustomMarker.prototype.draw = function () {
 };
 
 CustomMarker.prototype.remove = function () {
+    console.log("2 CustomMarker.prototype.remove");
     // Check if the overlay was on the map and needs to be removed.
     if (this.div_) {
         this.div_.parentNode.removeChild(this.div_);
@@ -51,5 +52,6 @@ CustomMarker.prototype.remove = function () {
 };
 
 CustomMarker.prototype.getPosition = function () {
+    console.log("2 CustomMarker.prototype.getPosition");
     return this.latlng_;
 };
