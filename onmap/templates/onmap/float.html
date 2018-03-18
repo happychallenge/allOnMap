@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Float</title>
+
+<style>
+body{
+    background-color: #222;
+}
+.grid{
+    width: 500px;
+    margin: 0 auto;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    justify-content: center;
+}
+.grid-item{
+    width: 100px;
+    height: 100px;
+    float: left;
+    opacity: 0.7;
+}
+.grid-item.a {background-color: orange;}
+.grid-item.b {background-color: yellow;}
+.grid-item.c {background-color: red;}
+
+.content{
+    border: 10px solid blue;
+}
+</style>
+</head>
+<body>
+    <div>
+        
+    </div>
+
+    <div class="grid">
+        <div class="grid-item a"></div>
+        <div class="grid-item b"></div>
+        <div class="grid-item c"></div>
+       
+    </div>
+</body>
+</html>

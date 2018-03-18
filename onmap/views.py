@@ -73,7 +73,7 @@ def mylist(request):
 def popularlist(request):
     positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
-            views__gte=1, public=True).order_by('-views')
+            public=True).order_by('-views')
 
     if request.is_ajax():
         template = "onmap/position_popularlist_ajax.html"
