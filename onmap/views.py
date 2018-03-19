@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import F
 from django.template import RequestContext
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from PIL import Image
@@ -75,12 +76,13 @@ def popularlist(request):
     if keyword:
         positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
-            public=True, name__contains=keyword).order_by('-views')
+            Q(public=True) & (Q(name__contains=keyword) | 
+            Q(author__profile__nickname__contains=keyword) )).order_by('-views')
     else:
         positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
             public=True).order_by('-views')
-        
+
     if request.is_ajax():
         template = "onmap/position_popularlist_ajax.html"
     else:
