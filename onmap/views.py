@@ -71,16 +71,23 @@ def mylist(request):
 
 
 def popularlist(request):
-    positions = Position.objects.prefetch_related(
+    keyword = request.GET.get('keyword')
+    if keyword:
+        positions = Position.objects.prefetch_related(
+            'pictures', 'plikes').select_related('author__profile').filter(
+            public=True, name__contains=keyword).order_by('-views')
+        print(positions)
+    else:
+        positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
             public=True).order_by('-views')
-
+        print("No Keyword")
+        
     if request.is_ajax():
         template = "onmap/position_popularlist_ajax.html"
     else:
         template = "onmap/position_popularlist.html"
     return _position_list(request, template, positions)
-
 
 
 def detail(request, slug):
@@ -317,6 +324,7 @@ def add(request):
         form = PositionForm()
     
     return render(request, 'onmap/position_add.html', {'form': form})
+
 
 import requests
 import json

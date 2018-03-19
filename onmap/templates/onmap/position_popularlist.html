@@ -18,6 +18,13 @@ img {
     <div class="form-label-divider"><span>{% trans "Popular Map List" %}</span></div>
     <div class="form-divider"></div>
 
+    <div class="form-row-group with-icons">
+        <div class="form-row no-padding">
+            <i class="fa fa-search"></i>
+            <input type="text" name="keyword" id="id_keyword" class="form-element" value="" placeholder="input keyword for Search...">
+        </div>
+    </div>
+
     <div class="container" id="position_list">
       {% include "onmap/position_popularlist_ajax.html" %}
     </div>
@@ -37,7 +44,8 @@ img {
 <script>
 $("#btn_callmore").click(function(){
     var page = $("#page").val();
-    callMorePostAjax(parseInt(page)+1);
+    var keyword = $("#id_keyword").val();
+    callMorePostAjax(parseInt(page)+1, keyword, false);
     $("#page").val(parseInt(page)+1);
 });
 
@@ -47,19 +55,23 @@ $(window).scroll(function(){
     
     if (scrollHeight + 50 >= documentHeight){
         var page = $("#page").val();
-        callMorePostAjax(parseInt(page)+1);
+        callMorePostAjax(parseInt(page)+1, "", false);
         $("#page").val(parseInt(page)+1);
     }
 });
 
-function callMorePostAjax(page) {
+function callMorePostAjax(page, keyword, refresh) {
     $.ajax( {
       type : 'GET',
       url: "{% url 'onmap:popularlist' %}",
-      data: {'page': page, },
+      data: {'page': page, 'keyword':keyword },
       dataType: 'json',
       success: function(response){
-        $("#position_list").append(response.html);
+        if (refresh ){
+          $("#position_list").html(response.html);
+        } else {
+          $("#position_list").append(response.html);
+        }
         if(response.next_page == true ){
           $("#btn_callmore").show();
         }else{
@@ -68,15 +80,16 @@ function callMorePostAjax(page) {
       },
     });
 }
+
+$(document).on("keyup", "#id_keyword", function(evt){
+
+    if (evt.keyCode == 13) {
+        var keyword = $(this).val();
+        callMorePostAjax(1, keyword, true);   
+    }
+    return false;
+});
+
 </script>
 
-
-<script>
-function copyToClipboard(id) {
-  var copyText = document.getElementById(id);
-  copyText.select();
-  document.execCommand("Copy");
-  alert("Copied the url: " + copyText.value);
-}
-</script>
 {% endblock javascript %}

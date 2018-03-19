@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^mylist/$', views.mylist, name="mylist"),
     url(r'^popularlist/$', views.popularlist, name="popularlist"),
     url(r'^like/$', views.userlike, name="userlike"),
-    url(r'^call/(?P<slug>[-_@\w]+)/$', views.apicall, name="apicall"),
+    url(r'^(?P<slug>[-_@\w]+)/$', views.apicall, name="apicall"),
     url(r'^test/(?P<slug>[-\w]+)/$', views.testcall, name="testcall"),
 ]
