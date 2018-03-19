@@ -76,12 +76,10 @@ def popularlist(request):
         positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
             public=True, name__contains=keyword).order_by('-views')
-        print(positions)
     else:
         positions = Position.objects.prefetch_related(
             'pictures', 'plikes').select_related('author__profile').filter(
             public=True).order_by('-views')
-        print("No Keyword")
         
     if request.is_ajax():
         template = "onmap/position_popularlist_ajax.html"
