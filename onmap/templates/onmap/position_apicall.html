@@ -97,32 +97,35 @@ $(document).on('click', '.like', function(){
 <script>
 var pictures = [
     {% for picture in position.pictures.all %}
+      {% if picture.lat and picture.lat != 0.0 and picture.lat is not None %}
         {id: {{picture.id}}, location: {lat: {{picture.lat}}, lng: {{picture.lng}} }, icon: '{{picture.file.url}}' },
+      {% endif %}
     {% endfor %}
 ];
 
 var position;
+var map;
 
 function initialize(){
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         // center: new google.maps.LatLng(36.0078916666667, 128.260222222222),
     });
 
     var infoWindow = new google.maps.InfoWindow();
-
     var bounds = new google.maps.LatLngBounds();
+
     for (var i = 0; i < pictures.length; i++) {
         position = new google.maps.LatLng( pictures[i].location );
         var id = pictures[i].id;
         var icon = pictures[i].icon;
 
-        var marker = new CustomMarker(position, map, icon, id);
-        console.log(marker);
+        let overlay = new CustomMarker(position, map, icon, id);
 
-        // marker.addListener('click',  function() {
-        //     populateInfoWindow(self, map, infoWindow)
-        // });
+        google.maps.event.addListener(overlay, 'click', function(event) {
+            console.log("overlay touched event happened");
+            populateInfoWindow(overlay, map, infoWindow);
+        });
 
         bounds.extend(position);
     }
@@ -132,6 +135,11 @@ function initialize(){
     } else {
         map.panTo(position);
     }
+
+    google.maps.event.addListener(map, 'click', function(event){
+        console.log("Map Event");
+        // populateInfoWindow(self, map, infoWindow);
+    })
 }
 
 function populateInfoWindow(marker, map, infoWindow) {
