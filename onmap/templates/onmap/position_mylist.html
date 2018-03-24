@@ -79,18 +79,13 @@ function callMorePostAjax(page, refresh) {
     success: function(response){
       if( refresh ){
         $("#position_list").html(response.html);
-        if(response.next_page == true ){
-          $("#btn_callmore").show();
-        }else{
-          $("#btn_callmore").hide();
-        }
       } else {
         $("#position_list").append(response.html);
-        if(response.next_page == true ){
-          $("#btn_callmore").show();
-        }else{
-          $("#btn_callmore").hide();
-        }
+      }
+      if(response.next_page == true ){
+        $("#btn_callmore").show();
+      }else{
+        $("#btn_callmore").hide();
       }
     },
   });
