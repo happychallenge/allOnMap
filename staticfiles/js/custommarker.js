@@ -13,6 +13,7 @@ CustomMarker.prototype = new google.maps.OverlayView();
 CustomMarker.prototype.draw = function () {
     // Check if the div has been created.
     var div = this.div_;
+    // console.log(div);
     if (!div) {
         // Create a overlay text DIV
         div = this.div_ = document.createElement('div');
@@ -25,7 +26,6 @@ CustomMarker.prototype.draw = function () {
         div.appendChild(img);
         // google.maps.event.addDomListener(div, "click", populateInfoWindow);
         google.maps.event.addDomListener(div, "click", function(event) {
-            console.log(event);
             google.maps.event.trigger(self, "click");
         });
 
@@ -43,7 +43,6 @@ CustomMarker.prototype.draw = function () {
 };
 
 CustomMarker.prototype.remove = function () {
-    console.log("2 CustomMarker.prototype.remove");
     // Check if the overlay was on the map and needs to be removed.
     if (this.div_) {
         this.div_.parentNode.removeChild(this.div_);
@@ -52,6 +51,5 @@ CustomMarker.prototype.remove = function () {
 };
 
 CustomMarker.prototype.getPosition = function () {
-    console.log("2 CustomMarker.prototype.getPosition");
     return this.latlng_;
 };

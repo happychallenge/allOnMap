@@ -9,6 +9,7 @@ class PositionAdmin(admin.ModelAdmin):
         model = Position
     list_display = ['slug', 'name', 'ptype', 'views', 'public', 'author']
     list_editable = ['public','ptype']
+    search_fields = ['name']
     prepopulated_fields = {'slug':('name',)} # 5
 
 
