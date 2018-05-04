@@ -6,7 +6,7 @@
 <link href="{% static 'css/cropper.min.css' %}" rel="stylesheet">
 <style>
 .post-content img {
-  border-radius: 50%;
+  border-radius: 10%;
 }
 .center{
     text-align: center;
@@ -94,8 +94,8 @@
     <div class="form-row-group with-icons">
       <div class="form-row no-padding">
         <div class="post-content" style="padding: 10px;">
-          # map : {{ user.profile.positions_count }} <br>
-          # pictures : {{ user.profile.pictures_count }}
+          # of map : {{ user.profile.positions_count }} <br>
+          # of pictures : {{ user.profile.pictures_count }}
         </div>
       </div>
     </div>

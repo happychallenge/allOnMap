@@ -53,6 +53,10 @@ DATABASES = {
     'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/picturemap')
 }
 
+import sys
+import codecs
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
 
 LOGGING = {
