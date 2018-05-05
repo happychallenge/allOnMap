@@ -117,7 +117,8 @@ def myprofile(request):
 
 
 def otherprofile(request, username):
-    author = get_user_model().objects.get(username=username)
+    User = get_user_model()
+    author = User.objects.get(username=username)
 
     positions = Position.objects.prefetch_related(
                 'pictures', 'plikes').filter(author = author, ptype='S', public=True)
