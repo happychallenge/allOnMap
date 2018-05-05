@@ -94,7 +94,6 @@ def detail(request, slug):
     position = Position.objects.prefetch_related('pictures').get(slug=slug)
 
     client_ip = request.META['REMOTE_ADDR']
-    print("IP :", client_ip);
 
     country = getCountry(client_ip)
     if country == "CN" or country == "ZZ":
@@ -106,7 +105,6 @@ def detail(request, slug):
 
 def call_detail(request):
     picture_id = request.GET.get('id')
-    print(picture_id)
     picture = Picture.objects.get(id=picture_id)
     client_ip = request.META['REMOTE_ADDR']
 
@@ -174,6 +172,7 @@ def delete(request, slug):
 def apicall(request, slug):
     position = Position.objects.select_related('author') \
         .prefetch_related('pictures').get(slug=slug)
+
     if position.public == True:
         position.views = F('views') + 1;
         position.save();
@@ -188,21 +187,6 @@ def apicall(request, slug):
     else:
         context = {'error': True}
     return render(request, "onmap/position_apicall.html", context)
-
-def testcall(request, slug):
-    position = Position.objects.select_related('author') \
-            .prefetch_related('pictures').get(slug=slug)
-            
-    if position.public == True:
-        client_ip = request.META['REMOTE_ADDR']
-        country = getCountry(client_ip)
-        if country == "CN" or country == "ZZ":
-            context = {'position': position, 'china': True}
-        else:
-            context = {'position': position, 'china': False}    
-    else:
-        context = {'error': True}
-    return render(request, "onmap/position_testcall.html", context)
 
 
 @require_POST
