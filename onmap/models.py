@@ -22,7 +22,7 @@ class Position(models.Model):
     create_dt = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ('-views',)
+        ordering = ('-id',)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -40,7 +40,6 @@ class Position(models.Model):
         return self.pictures.all()[:3]
 
     def get_picture_count(self):
-        print(self)
         return self.pictures.count()
 
     # @property
