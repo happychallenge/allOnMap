@@ -7,37 +7,15 @@ import os
 AWSS3 = os.environ.get('STORAGE') == 'AWSS3' or DEBUG is False
 
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['pictureonmap.com', 'www.pictureonmap.com']
 
-if AWSS3:
-    CONFIG_SECRET = os.path.join(ROOT_DIR, '.config')
-    CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET, 'settings_common.json')
 
-    AWS_ACCESSS_KEY_ID = config['aws']['access_key_id']
-    AWS_SECRET_ACCESS_KEY = config['aws']['secret_access_key']
-    AWS_STORAGE_BUCKET_NAME = config['aws']['s3_bucket_name']
-    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ join(BASE_DIR, 'staticfiles'),]
+STATIC_ROOT = join(BASE_DIR, 'static')
 
-    STATICFILES_STORAGE = 'allOnMap.storages.StaticS3Boto3Storage'
-    DEFAULT_FILE_STORAGE = 'allOnMap.storages.MediaS3Boto3Storage'
-
-    STATIC_DIR = os.path.join(BASE_DIR, 'static')
-    STATICFILES_DIRS = (
-        STATIC_DIR,
-    )
-
-    STATIC_URL = 's3.{region}.amazonaws.com/{bucket_name}/'.format(
-        region=config['aws']['s3_region'],
-        bucket_name=config['aws']['s3_storage_bucket_name']
-    )
-
-else:
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = [ join(BASE_DIR, 'staticfiles'),]
-    STATIC_ROOT = join(BASE_DIR, 'static')
-
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = join(BASE_DIR, 'media')
 
 
 INSTALLED_APPS += [ 'raven.contrib.django.raven_compat',  'storages',]
@@ -50,7 +28,7 @@ RAVEN_CONFIG = {
 }
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/picturemap')
+    'default': dj_database_url.parse('postgres://pictureonmap:Tjdrb00$$@localhost:5432/picturemap_db')
 }
 
 # import sys
